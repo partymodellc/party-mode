@@ -1,19 +1,13 @@
-//const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const stripe = require(config.stripe.apikey);
 
-/* Customers API in stripe*/
+/* Customers for stripe*/
 
-const createCustomer = (user_id,ticketName,username,email,price,quantity,ticketImg,eventName) => {
- return stripe.customers.create({
+const createCustomer = (cust_id,user_id,ticketName,username,email,price,quantity,ticketImg,eventName) => {
+return await stripe.customers.create({
 
- "id": user._id,
-  "object": "customer",
-  "address": null,
-  "currency": "usd",
-  "description": "My First Test Customer (created for API docs at https://www.stripe.com/docs/api)",
-  "discount": null,
-  "email": "test@test.com", 	
+ "id": cust_id, 	
   "metadata" : {
-	"userId" : user._id,
+	"userId" : user_id,
 	"ticketName" : ticketName,
 	"username" : username,
 	"email": email,
@@ -26,30 +20,30 @@ const createCustomer = (user_id,ticketName,username,email,price,quantity,ticketI
 
 }
 
-const retrieveCustomer = (userId) => {
-	return stripe.customers.retrieve(userId);
+const retrieveCustomer = (user_id) => {
+	returnrawait stripe.customers.retrieve(user_id);
 }
 
 
-const deleteCustomer = (userId) => {
- await stripe.customers.del(userId);
+const deleteCustomer = (user_id) => {
+return await stripe.customers.del(user_id);
 
 }
 
-const listCustomers = ()=> {
- await stripe.customers.list({
-  limit: 3,
+const listCustomers = (list_num)=> {
+return await stripe.customers.list({
+  limit:list_num,
 });
 }
 
 const searchCustomers = (email) => {
-	await stripe.customers.search({
+return	await stripe.customers.search({
   query: email
   });
 }
 
 const updateCustomer = (userId,ticketName,username,email,price,quantity,ticketImg,eventName) => {
-  return stripe.customers.update(userId, {
+  return await stripe.customers.update(userId, {
     metadata : {
 	"ticketName" : ticketName,
 	"username" : username,
@@ -64,142 +58,143 @@ const updateCustomer = (userId,ticketName,username,email,price,quantity,ticketIm
 );
 }
 
-/* End of Customers API in stripe*/
+/* End of Customers for stripe*/
 
-/*Payment Intent API in stripe*/
-const createPaymentIntent = (amount,currency,payment_method) => {
-  await stripe.paymentIntents.create({
-  amount: 2000,
-  currency: 'usd',
-  automatic_payment_methods: {enabled: true},
+/*Payment Intent for stripe*/
+const createPaymentIntent = (pay_amount,pay_currency,auth_meth) => {
+ return await stripe.paymentIntents.create({
+  amount: pay_amount,
+  currency: pay_currency,
+  automatic_payment_methods: {enabled: auth_meth},
 });
 
 }
 
 const retrievePaymentIntent = (payment_id) => {
-	await stripe.paymentIntents.retrieve(payment_id);
+return	await stripe.paymentIntents.retrieve(payment_id);
 }
 
 const updatePaymentIntent = (payment_id,ticketName) => {
-	 await stripe.paymentIntents.update(
+	return await stripe.paymentIntents.update(
   payment_id,
   {metadata: {order_id: ticketName}}
 );
 }
 
-const confirmPaymentIntent = (payment_id) => {
-	await stripe.paymentIntents.confirm(
+const confirmPaymentIntent = (payment_id,payment_mode) => {
+return	await stripe.paymentIntents.confirm(
   payment_id,
-  {payment_method: 'pm_card_visa'}
+  {payment_method: payment_mode}
 );
 }
 
 const cancelPaymentIntent= (payment_id) => {
-	 await stripe.paymentIntents.cancel(payment_id);
+	return await stripe.paymentIntents.cancel(payment_id);
 }
 
-/*End of Payment Intent API in stripe.*/
+/*End of Payment Intent for stripe.*/
+ 
 
-
-/*Payment Method API in stripe*/
-const createPayment = () =>{
-	 await stripe.paymentMethods.create({
+/*Payment Method for stripe*/
+const createPayment = (crd_num,crd_exp_mth,crd_exp_yr,crd_cvc) =>{
+	return await stripe.paymentMethods.create({
   type: 'card',
   card: {
-    number: '4242424242424242',
-    exp_month: 12,
-    exp_year: 2034,
-    cvc: '314',
+    number: crd_num,
+    exp_month: crd_exp_mth,
+    exp_year:crd_exp_yr,
+    cvc: crd_cvc,
   },
 });
 }
 
 const retrievePayment = (paymeth_id) => {
-	await stripe.paymentMethods.retrieve(paymeth_id);
+return	await stripe.paymentMethods.retrieve(paymeth_id);
 }
 
 const retrieveCustomersPayment = (user_id,paymeth_id) => {
-	await stripe.customers.retrievePaymentMethod(user_id,paymeth_id);
+return	await stripe.customers.retrievePaymentMethod(user_id,paymeth_id);
 }
 
-const updatePayment = (paymeth_id) => {
-	await stripe.paymentMethods.update(
+const updatePayment = (paymeth_id,order_id) => {
+return	await stripe.paymentMethods.update(
    paymeth_id,
-   {metadata: {order_id: '6735'}}
+   {metadata: {order_id: order_id}}
    );
 }
 
-const listPaymentMethods = (user_id) => {
-	 await stripe.paymentMethods.list({
+const listPaymentMethods = (user_id,pay_type) => {
+	return await stripe.paymentMethods.list({
   customer: user_id,
-  type: 'card',
+  type: pay_type,
 });
 }
 
-const listCustomersPaymentMethod = (user_id) => {
-	await stripe.customers.listPaymentMethods(
+const listCustomersPaymentMethod = (user_id,pay_type) => {
+return	await stripe.customers.listPaymentMethods(
   user_id,
-  {type: 'card'}
+  {type: pay_type}
 );
 }
 
-const attachPaymentToCustomer= (user_id) => {
-	await stripe.customers.listPaymentMethods(
+const attachPaymentToCustomer= (user_id,pay_type) => {
+return	await stripe.customers.listPaymentMethods(
   user_id,
-  {type: 'card'}
+  {type: pay_type}
 );
 }
 
-const attachPaymentToCustomer = (paymeth_id) => {
-	await stripe.customers.listPaymentMethods(
+const attachPaymentToCustomer = (paymeth_id,cus_id) => {
+return	await stripe.customers.listPaymentMethods(
   paymeth_id,
-  {customer: 'cus_9s6XKzkNRiz8i3'});
+  {customer: cus_id});
 }
 
 
-const detachPaymentFromCustomer = (paymeth_id) =>{
+const detachPaymentFromCustomer = (paymeth_id) =>{return
 await stripe.paymentMethods.detach(
   paymeth_id
 );
 }
 
-/*End of Payment Method API in stripe*/
+/*End of Payment Method for stripe*/
 
-/*Refund API in stripe*/
-const createRefund = () => {
-	await stripe.refunds.create({
-  charge: 'ch_1Nl7u02eZvKYlo2CtGgiKr63'
+/*Refund for stripe*/
+const createRefund = (ref_id) => {
+return	await stripe.refunds.create({
+  charge: ref_id
 });
 }
 
 const retrieveRefund = (ref_id) => {
-	stripe.refunds.retrieve(ref_id);
+	return await	stripe.refunds.retrieve(ref_id);
 }
 
-const updateRefund = (ref_id) => {
-	await stripe.refunds.update(
+const updateRefund = (ref_id,order_id) => {
+return	await stripe.refunds.update(
   ref_id,
-  {metadata: {order_id: '6735'}}
+  {metadata: {order_id: order_id}}
 );
 
 }
 
 const cancelRefund = (ref_id) => {
-	stripe.refunds.cancel(ref_id);
+	return await	stripe.refunds.cancel(ref_id);
 }
 
-const listRefund = () => {
-	await stripe.refunds.list({
-    limit: 3,
+const listRefund = (list_num) => {
+return	await stripe.refunds.list({
+    limit:list_num,
      });
 
 }
-/*End of Refund API in stripe*/
+/*End of Refund for stripe*/
 
 
-/*Bank Account API in stripe*/
+
+/*Bank Account for stripe*/
 const createAcct = (user_id,acct_id) => {
-	stripe.customers.createSource(
+	return await stripe.customers.createSource(
   user_id,
   {source: acct_id}
 );
@@ -207,121 +202,110 @@ const createAcct = (user_id,acct_id) => {
 }
 
 const retrieveAcct = (user_id,acct_id) => {
-	stripe.customers.createSource(
+	return await stripe.customers.retrieveSource(
   user_id,
   {source: acct_id}
 );
 
 }
 
-const updateAcct = (user_id) => {
-	stripe.customers.updateSource(
+const updateAcct = (user_id,update_id,order_id) => {
+	return await stripe.customers.updateSource(
   user_id,
-  'ba_1NmOBY2eZvKYlo2CjWvTQlk4',
-  {metadata: {order_id: '6735'}}
+  update_id,
+  {metadata: {order_id: order_id}}
 );
 }
 
-const verifyAcct = (user_id) => {
-	stripe.customers.verifySource(
-  user_id,
-  'ba_1NmOBY2eZvKYlo2CjWvTQlk4',
-  {amounts: [32, 45]}
-);
+const verifyAcct = (user_id,del_id,amt) => {
+	return await stripe.customers.verifySource( user_id,del_id, {amounts: [amt]});
 }
 
-const deleteAcct = (user_id) => {
-	 stripe.customers.deleteSource(
-  user_id,
-  'ba_1NmOBY2eZvKYlo2CjWvTQlk4'
-);
+const deleteAcct = (user_id,del_id) => {
+	return await stripe.customers.deleteSource(
+  user_id,del_id);
 
 }
 
-const listAcct = (user_id) => {
-	stripe.customers.listSources(
-  user_id,
-  {object: 'bank_account', limit: 3}
-);
+const listAcct = (user_id,acct_type,list_num) => {
+	return await	stripe.customers.listSources(user_id,{object: acct_type, limit: list_num});
 }
 
-/*End of Bank Account API in stripe*/
+/*End of Bank Account for stripe*/
 
-/*Create Product API in stripe*/
-const createProduct = () =>  {
-	stripe.products.create({
-  name: 'Gold Special',
-   });
+/*Create Product for stripe*/
+const createProduct = (prod_name) => {
+ return await	stripe.products.create({name: prod_name,});
 }
 
 const retrieveProduct = (prod_id) => {
-	stripe.products.retrieve(prod_id);
+	return await stripe.products.retrieve(prod_id);
 }
 
-const updateProduct = () => {
-	 stripe.products.update(
+const updateProduct = (prod_id,update_id) =>{
+ return await stripe.products.update(
    prod_id,
-  {metadata: {order_id: '6735'}}
+  {metadata: {order_id: update_id}}
 );
 }
 
-const listProduct = () => {
-	 stripe.products.list({
-  limit: 3,
+const listProduct = (list_num) => {
+return await stripe.products.list({
+  limit:list_num,
 });
 }
 
-const deleteProduct = () => {
-	stripe.products.del(prod_id)
+const deleteProduct = (prod_id) => {
+	return await stripe.products.del(prod_id);
 }
 
 const searchProduct = (prod_name) => {
-	stripe.products.search({
+	return await stripe.products.search({
   query: prod_name,
 });
 }
-/*End of Create Product API in stripe*/
+/*End of Create Product for stripe*/
 
-/*Prices API in stripe*/
-const createPrice = (amount,prod_id) => {
-	stripe.prices.create({
+/*Prices for stripe*/
+const createPrice = (amount,curr_type,interval_type,prod_id) => {
+	return await stripe.prices.create({
   unit_amount: amount,
-  currency: 'usd',
-  recurring: {interval: 'month'},
+  currency: curr_type,
+  recurring: {interval: interval_type},
   product: prod_id,
 });
 
 }
 
 const retrievePrice = (price_id) => {
-	 stripe.prices.retrieve(price_id);
+return await stripe.prices.retrieve(price_id);
 }
-const updatePrice = () => {
-stripe.prices.update(
+const updatePrice = (price_id,update_id) => {
+	return await stripe.prices.update(
   price_id,
-  {metadata: {order_id: '6735'}}
+  {metadata: {order_id: update_id}}
 );
 
 
 }
-const listPrice = () => {
-stripe.prices.list({
-  limit: 3,
+const listPrice = (list_num) => {
+	return await stripe.prices.list({
+  limit: list_num,
 });
 
 }
-const searchPrice = () => {
- stripe.prices.search({
-  query: 'active:\'true\' AND metadata[\'order_id\']:\'6735\'',
+const searchPrice = (price) => {
+	return await stripe.prices.search({
+  query:price,
 });
 
 
 }
-/*End of prices API in stripe*/
+/*End of prices for stripe*/
 
-/*End of Checkout Session API in stripe*/
+/*End of Checkout Session for stripe*/
 const createSession = (success_url,cancel_url,price,quantity,payment_mode) => {
-	return stripe.checkout.sessions.create({
+	return await stripe.checkout.sessions.create({
   "success_url" : success_url,
   "cancel_url" : cancel_url,
   line_items: [
@@ -334,74 +318,29 @@ const createSession = (success_url,cancel_url,price,quantity,payment_mode) => {
 }
 
 const expireSession = (session_id) => {
+	return await
 stripe.checkout.sessions.expire(session_id);
 }
 
-const retrieveSession = () => {
-stripe.checkout.sessions.retrieve(session_id);
+const retrieveSession = (session_id)=> {
+	return await stripe.checkout.sessions.retrieve(session_id);
 }
 
-const listSession = () => {
-	 stripe.checkout.sessions.list({
-  limit: 3,
+const listSession = (list_num)=> {
+ return await stripe.checkout.sessions.list({
+  limit: list_num,
 });
 }
 
-/*End of Checkout Session API in stripe*/
+/*End of Checkout Session for stripe*/
 module.exports = {createCustomer,retrieveCustomer,
 	deleteCustomer,listCustomers,searchCustomers,updateCustomer,
 createPaymentIntent,retrievePaymentIntent,updatePaymentIntent,confirmPaymentIntent,cancelPaymentIntent,
-createPayment,retrievePayment,retrieveCustomersPayment,updatePayment,listPaymentMethods,listCustomersPaymentMethod,
-detachPaymentFromCustomer}; 
-
-/*
-const createCustomer = (user_id,ticketName,username,email,price,quantity,ticketImg,eventName) => {
- return stripe.customers.create({
-"metadata" : {
-	"userId" : user._id,
-	"ticketName" : ticketName,
-	"username" : username,
-	"email": email,
-	"price": price,
-	"quantity" : qunatity,
-	"ticketImg" : ticketImg,
-	"eventName" : eventName
-}
-});
-
-}
-
-const retrieveCustomer = (userId) => {
-	return stripe.customers.retrieve(userId);
-}
-
-const updateCustomer = (userId,ticketName,username,email,price,quantity,ticketImg,eventName) => {
-  return stripe.customers.update(userId, {
-    metadata : {
-	"ticketName" : ticketName,
-	"username" : username,
-	"email": email,
-	"price": price,
-	"quantity" : quantity,
-	"ticketImg" : ticketImg,
-	"eventName" : eventName
-}
-
-  }
-);
-}
-
-const checkoutSession = (success_url,cancel_url,price,quantity,payment_mode) => {
-	return stripe.checkout.sessions.create({
-  "success_url" : success_url,
-  "cancel_url" : cancel_url,
-  line_items: [
-    {"price": price,
-     "quantity": quantity
-    }
-  ],
-  mode: payment_mode,
-});
-}
-module.exports = {createCustomer,retrieveCustomer,updateCustomer,checkoutSession}; 
-*/
+createPayment,retrievePayment,retrieveCustomersPayment,updatePayment,
+listPaymentMethods,listPaymentMethods,listCustomersPaymentMethod,
+attachPaymentToCustomer,detachPaymentFromCustomer,
+createRefund,updateRefund,retrieveRefund,cancelRefund,listRefund,
+createAcct,retrieveAcct,updateAcct,verifyAcct,deleteAcct,listAcct,
+createProduct,retrieveProduct,updateProduct,listProduct,retrieveProduct,deleteProduct,searchProduct,
+createPrice,retrievePrice,updatePrice,listPrice,searchPrice,
+createSession,expireSession,retrieveSession,listSession}; 
