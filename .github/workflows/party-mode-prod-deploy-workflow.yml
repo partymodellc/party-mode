@@ -1,0 +1,95 @@
+name: party-mode-prod-deploy
+'on':
+  push:
+    branches:
+      - develop
+  workflow_dispatch: {}
+concurrency:
+  group: 'party-mode-prod-deploy-${{ github.ref }}'
+  cancel-in-progress: true
+jobs:
+  prod-deploy:
+    env:
+      GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Deploy Party Mode Website
+        uses: fifsky/ssh-action@v0.0.6
+        with:
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          user: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          pass: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+          command: |
+            sudo su
+
+            # verify app directory
+            mkdir /app
+
+            # re-clone repo
+            cd /app
+            rm -rf party-mode
+            git clone --branch bins https://github.com/partymodellc/party-mode.git
+
+            # re-setup node cli
+            cd /app/party-mode/bin/nodejs
+
+            xz -d -v node-v18.17.1-linux-x64.tar.xz
+            tar -xf node-v18.17.1-linux-x64.tar
+
+            rm /usr/bin/node
+            mv node-v18.17.1-linux-x64/bin/node /usr/bin/
+
+            # re-create systemd service
+            cat > /etc/systemd/system/party-mode-backend.service << EOF
+            [Unit]
+            Description=Party Mode Backend
+            After=network.target
+            StartLimitIntervalSec=10
+
+            [Service]
+            Type=simple
+            Restart=always
+            RestartSec=1
+            StartLimitBurst=5
+            StartLimitIntervalSec=15
+            User=pmadmin
+            ExecStart=node /app/party-mode/backend/index.js
+
+            [Install]
+            WantedBy=multi-user.target
+            EOF
+
+            cat > /etc/systemd/system/party-mode-frontend.service << EOF
+            [Unit]
+            Description=Party Mode Frontend
+            After=network.target
+            StartLimitIntervalSec=10
+
+            [Service]
+            Type=simple
+            Restart=always
+            RestartSec=1
+            StartLimitBurst=5
+            StartLimitIntervalSec=15
+            User=pmadmin
+            ExecStart=node /app/party-mode/frontend/index.js
+
+            [Install]
+            WantedBy=multi-user.target
+            EOF
+
+            # npm install
+            set NODE_ENV=production
+
+            cd /app/party-mode/backend
+            /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
+
+            cd /app/party-mode/frontend
+            /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
+
+            # restart service
+            service party-mode-backend restart
+            service party-mode-frontend restart
