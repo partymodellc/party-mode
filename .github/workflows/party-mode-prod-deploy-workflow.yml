@@ -20,11 +20,8 @@ jobs:
         uses: garygrossgarten/github-action-ssh@release
         with:
           host: '${{ secrets.DEPLOY_SERVER_HOST }}'
-          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
           password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
           command: |
-            sudo su
-            
             # verify app directory
             mkdir /app
             
