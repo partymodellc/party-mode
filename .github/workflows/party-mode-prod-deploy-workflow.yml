@@ -80,13 +80,11 @@ jobs:
             EOF
             
             # npm install
-            set NODE_ENV=production
-            
             cd /app/party-mode/backend
-            /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
+            NODE_ENV=production /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
             
             cd /app/party-mode/frontend
-            /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
+            NODE_ENV=production /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
             
             # restart service
             service party-mode-backend restart
