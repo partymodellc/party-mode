@@ -17,10 +17,10 @@ jobs:
         with:
           fetch-depth: 0
       - name: Deploy Party Mode Website
-        uses: fifsky/ssh-action@v0.0.6
+        uses: garygrossgarten/github-action-ssh@release
         with:
           host: '${{ secrets.DEPLOY_SERVER_HOST }}'
-          user: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
-          pass: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
           command: |
             touch we-made-it-baby.txt
