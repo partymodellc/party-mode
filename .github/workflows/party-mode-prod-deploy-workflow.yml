@@ -50,7 +50,7 @@ jobs:
             
             openssl rsa -passin pass:'${{ secrets.DEPLOY_SERVER_SSL_CERT_PASS }}' -in /etc/nginx/ssl/party-mode.pem -out /etc/nginx/ssl/nginx.key
             
-            cat > /etc/nginx/ssl/ssl.pass << EOF
+            cat > /etc/nginx/ssl/ssl.pass << 'EOF'
             ${{ secrets.DEPLOY_SERVER_SSL_CERT_PASS }}
             EOF
       - name: Set Nginx Application Configuration
