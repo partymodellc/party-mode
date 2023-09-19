@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup Firewall
-        uses: garygrossgarten/github-action-ssh@release
+        uses: garygrossgarten/github-action-ssh@0.7.0
         with:
           host: '${{ secrets.DEPLOY_SERVER_HOST }}'
           username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
@@ -30,7 +30,7 @@ jobs:
             ufw default allow outgoing
             ufw status verbose
       - name: Install Nginx App Server
-        uses: garygrossgarten/github-action-ssh@release
+        uses: garygrossgarten/github-action-ssh@0.7.0
         with:
           host: '${{ secrets.DEPLOY_SERVER_HOST }}'
           username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
@@ -48,7 +48,11 @@ jobs:
             ${{ secrets.DEPLOY_SERVER_SSL_CERT }}
             EOF
             
-            openssl rsa -in /etc/nginx/ssl/party-mode.pem -out /etc/nginx/ssl/nginx.key
+            openssl rsa -passin pass:'${{ secrets.DEPLOY_SERVER_SSL_CERT_PASS }}' -in /etc/nginx/ssl/party-mode.pem -out /etc/nginx/ssl/nginx.key
+            
+            cat > /etc/nginx/ssl/ssl.pass << EOF
+            ${{ secrets.DEPLOY_SERVER_SSL_CERT_PASS }}
+            EOF
       - name: Set Nginx Application Configuration
         uses: TwanLuttik/gh-action-scp@1.0.1
         with:
@@ -74,7 +78,7 @@ jobs:
           username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
           password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
       - name: Start Nginx App Server
-        uses: garygrossgarten/github-action-ssh@release
+        uses: garygrossgarten/github-action-ssh@0.7.0
         with:
           host: '${{ secrets.DEPLOY_SERVER_HOST }}'
           username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
@@ -84,7 +88,7 @@ jobs:
             ln -s /etc/nginx/sites-available/party-mode-backend /etc/nginx/sites-enabled/party-mode-backend
             service nginx restart
       - name: Deploy Party Mode Website Application
-        uses: garygrossgarten/github-action-ssh@release
+        uses: garygrossgarten/github-action-ssh@0.7.0
         with:
           host: '${{ secrets.DEPLOY_SERVER_HOST }}'
           username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'

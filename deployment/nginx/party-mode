@@ -3,6 +3,7 @@ server {
   server_name $host;
   ssl_certificate /etc/nginx/ssl/party-mode.pem;
   ssl_certificate_key /etc/nginx/ssl/nginx.key;
+  ssl_password_file /etc/nginx/ssl/ssl.pass;
 
   location / {
     proxy_set_header Host $host;
