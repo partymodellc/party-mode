@@ -38,16 +38,17 @@ jobs:
           command: |
             apt install -y nginx
             rm /etc/nginx/nginx.conf
+            rm /etc/nginx/sites-available/default
             rm /etc/nginx/sites-enabled/default
             
             # setup ssl certificate and key
             mkdir /etc/nginx/ssl
-            
-            openssl rsa -in /etc/nginx/ssl/party-mode.pem -out /etc/nginx/ssl/nginx.key
                   
             cat > /etc/nginx/ssl/party-mode.pem << EOF
             ${{ secrets.DEPLOY_SERVER_SSL_CERT }}
             EOF
+            
+            openssl rsa -in /etc/nginx/ssl/party-mode.pem -out /etc/nginx/ssl/nginx.key
       - name: Set Nginx Application Configuration
         uses: TwanLuttik/gh-action-scp@1.0.1
         with:
@@ -64,6 +65,14 @@ jobs:
           host: '${{ secrets.DEPLOY_SERVER_HOST }}'
           username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
           password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+      - name: Set Nginx Server Configuration (Backend)
+        uses: TwanLuttik/gh-action-scp@1.0.1
+        with:
+          local: deployment/nginx/party-mode-backend
+          remote: /etc/nginx/sites-available/party-mode-backend
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
       - name: Start Nginx App Server
         uses: garygrossgarten/github-action-ssh@release
         with:
@@ -72,6 +81,7 @@ jobs:
           password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
           command: |
             ln -s /etc/nginx/sites-available/party-mode /etc/nginx/sites-enabled/party-mode
+            ln -s /etc/nginx/sites-available/party-mode-backend /etc/nginx/sites-enabled/party-mode-backend
             service nginx restart
       - name: Deploy Party Mode Website Application
         uses: garygrossgarten/github-action-ssh@release
