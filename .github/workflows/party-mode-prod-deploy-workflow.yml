@@ -118,7 +118,7 @@ jobs:
             
             # re-set environment variables
             mkdir /etc/party-mode
-            cat > /etc/party-mode/party-mode-backend.conf << EOF
+            cat > /etc/party-mode/party-mode-backend.conf << 'EOF'
             NODE_ENV=production
             PORT=8081
             LOG_LEVEL=info
