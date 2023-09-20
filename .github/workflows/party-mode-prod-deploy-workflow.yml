@@ -50,9 +50,7 @@ jobs:
             
             openssl rsa -passin pass:'${{ secrets.DEPLOY_SERVER_SSL_CERT_PASS }}' -in /etc/nginx/ssl/party-mode.pem -out /etc/nginx/ssl/nginx.key
             
-            cat > /etc/nginx/ssl/ssl.pass << 'EOF'
-            ${{ secrets.DEPLOY_SERVER_SSL_CERT_PASS }}
-            EOF
+            echo '${{ secrets.DEPLOY_SERVER_SSL_CERT_PASS }}' > /etc/nginx/ssl/ssl.pass
       - name: Set Nginx Application Configuration
         uses: TwanLuttik/gh-action-scp@1.0.1
         with:
@@ -120,7 +118,7 @@ jobs:
             
             # re-set environment variables
             mkdir /etc/party-mode
-            cat > /etc/party-mode/party-mode-backend.conf << 'EOF'
+            cat > /etc/party-mode/party-mode-backend.conf << EOF
             NODE_ENV=production
             PORT=8081
             LOG_LEVEL=info
