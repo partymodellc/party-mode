@@ -3,13 +3,13 @@ services:
   mongodb:
     image: mongo:6.0.8
     ports:
-      - 27017:27017
+      - "27017:27017"
   party-mode-backend:
     build:
       context: backend
     environment:
       TEST: TEST
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
       - mongodb

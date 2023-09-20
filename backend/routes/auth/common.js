@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const authZ = require('../../middleware/auth/authorization')
+const authZ = require('../auth-helper')
 
 router.get('/login/success',
     authZ.requireAuthentication,
