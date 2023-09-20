@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const event = require('../model/event')
+const event = require('../repository/model/event')
 const authHelper = require('./auth-helper')
 
 router.get('/', (req, res) => {

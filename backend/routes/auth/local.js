@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const passport = require('passport')
-const User = require("../../model/user")
+const User = require("../../repository/model/user")
 const bcrypt = require("bcrypt")
 
 router.post('/register',
@@ -39,7 +39,7 @@ router.post('/register',
                 })
             })
         } catch (error) {
-            res.status(500).json({message: error.message})
+            return res.status(500).json({message: error.message})
         }
     }
 )

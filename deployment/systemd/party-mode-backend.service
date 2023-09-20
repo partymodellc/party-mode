@@ -1,0 +1,17 @@
+[Unit]
+Description=Party Mode Backend
+After=network.target
+StartLimitIntervalSec=10
+
+[Service]
+EnvironmentFile=/etc/party-mode/party-mode-backend.conf
+Type=simple
+Restart=always
+RestartSec=1
+StartLimitBurst=5
+StartLimitIntervalSec=30
+User=pmadmin
+ExecStart=node /app/party-mode/backend/index.js
+
+[Install]
+WantedBy=multi-user.target

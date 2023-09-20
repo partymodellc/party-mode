@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const User = require('../model/user')
+const User = require('../repository/model/user')
 const authHelper = require('./auth-helper')
 
 router.put('/',
@@ -10,9 +10,9 @@ router.put('/',
 
         User.updateUser(req.user.id, {username, password, picture}, (err, result) => {
             if (err) {
-                res.status(500).json({message: err.message})
+                return res.status(500).json({message: err.message})
             } else {
-                res.status(204)
+                return res.status(204)
             }
         })
     }

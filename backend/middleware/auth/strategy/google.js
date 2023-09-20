@@ -1,7 +1,7 @@
 const config = require('../../../config')
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
-const User = require('../../../model/user')
+const User = require('../../../repository/model/user')
 
 passport.use('google', new GoogleStrategy({
         clientID: config.auth.google.clientId,
@@ -10,7 +10,7 @@ passport.use('google', new GoogleStrategy({
         passReqToCallback: true,
     },
     function (req, accessToken, refreshToken, profile, done) {
-        const {emails, displayName, provider} = profile
+        const {emails, displayName, provider} = profile || {}
 
         if (!emails) {
             done(new Error('Cannot authenticate via Google without an email'), null)
