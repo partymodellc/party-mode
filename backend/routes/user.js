@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const User = require('../repository/model/user')
+const User = require('../model/user')
 const authHelper = require('./auth-helper')
 
 router.put('/',

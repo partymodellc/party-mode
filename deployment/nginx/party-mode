@@ -23,7 +23,7 @@ server {
   }
 
   error_page 503 /maintenance_on.html;
-    location = /maintenance_on.html {
-      root /usr/share/nginx/html/;
-    }
+  location = /maintenance_on.html {
+    root /usr/share/nginx/html/;
+  }
 }

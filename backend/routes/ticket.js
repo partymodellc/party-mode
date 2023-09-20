@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Ticket = require('../repository/model/ticket')
+const Ticket = require('../model/ticket')
 
 router.get('/:eventId', (req, res) => {
     Ticket.getTicketsByEventId(req.params.eventId, function (err, tickets) {
