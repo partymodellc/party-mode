@@ -2,7 +2,7 @@ const config = require('../../config')
 const session = require("express-session")
 const MongoDBStore = require('connect-mongodb-session')(session)
 const passport = require('passport')
-const User = require("../../repository/model/user")
+const User = require("../../model/user")
 
 module.exports.configure = (app) => {
     const mongodbStore = new MongoDBStore({

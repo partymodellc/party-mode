@@ -4,9 +4,7 @@ const express = require('express')
 const morgan = require('morgan')
 const middleware = require('./middleware')
 const routes = require('./routes')
-
-// connect to MongoDB
-require('./repository')
+const mongoose = require('mongoose').default
 
 // create server
 const app = express()
@@ -27,6 +25,20 @@ middleware.configure(app)
 routes.configure(app)
 
 // start server
-app.listen(config.port, () => {
-    logger.info(`Server running on http://localhost:${config.port}`)
+// connect to MongoDB
+mongoose.set('strictQuery', false)
+mongoose.connect(config.mongo.connectionString, {
+    dbName: config.mongo.databaseName,
+    autoIndex: false,
+}, function (err) {
+    if (err && err instanceof Error) {
+        throw new Error(`Error connecting to MongoDB: ${err.message}`)
+    }
+
+    logger.debug("Connected to MongoDB")
+
+    app.listen(config.port, '127.0.0.1', () => {
+        logger.info(`Express server listening on port ${config.port} in mode ${config.nodeEnv}`)
+    })
 })
+

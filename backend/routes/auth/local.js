@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const passport = require('passport')
-const User = require("../../repository/model/user")
+const User = require("../../model/user")
 const bcrypt = require("bcrypt")
 
 router.post('/register',

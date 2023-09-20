@@ -8,8 +8,16 @@ services:
     build:
       context: backend
     environment:
-      TEST: TEST
+      NODE_ENV: development
+      PORT: 8081
+      LOG_LEVEL: debug
+      CORS_ORIGIN: http://127.0.0.1:8080
+      SESSION_SECRET: secret
+      SESSION_MAX_AGE: 172800000
+      SESSION_COLLECTIONNAME: session
+      MONGODB_CONNECTIONSTRING: mongodb://localhost:27017
+      MONGODB_DATABASENAME: party-mode
     ports:
-      - "8080:8080"
+      - "8081:8081"
     depends_on:
       - mongodb

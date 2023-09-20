@@ -10,6 +10,6 @@ module.exports.configure = (app) => {
     app.use('/user', userRoute)
     app.use('/event', eventRoute)
     app.use('/ticket', ticketRoute)
-    app.use('/comment.js', commentRoute)
+    app.use('/comment', commentRoute)
     app.use('/health', healthRoute)
 }

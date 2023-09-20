@@ -1,5 +1,5 @@
 const {Schema, model} = require('mongoose')
-const logger = require('../../logger')
+const logger = require('../logger')
 
 const user = model('user', new Schema({
         username: {
