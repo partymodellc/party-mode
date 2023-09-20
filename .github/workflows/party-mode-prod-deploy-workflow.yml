@@ -128,6 +128,8 @@ jobs:
             MONGODB_CONNECTIONSTRING=${{ secrets.BACKEND_MONGODB_CONNECTIONSTRING }}
             AUTH_GOOGLE_CLIENT_ID=${{ secrets.BACKEND_AUTH_GOOGLE_CLIENT_ID }}
             AUTH_GOOGLE_CLIENT_SECRET=${{ secrets.BACKEND_AUTH_GOOGLE_CLIENT_SECRET }}
+            AUTH_FACEBOOK_CLIENT_ID=${{ secrets.BACKEND_AUTH_FACEBOOK_CLIENT_ID }}
+            AUTH_FACEBOOK_CLIENT_SECRET=${{ secrets.BACKEND_AUTH_FACEBOOK_CLIENT_SECRET }}
             EOF
       - name: Set Backend System Service
         uses: TwanLuttik/gh-action-scp@1.0.1
