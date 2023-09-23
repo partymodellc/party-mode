@@ -2,7 +2,7 @@ let config = {}
 
 // common
 config.nodeEnv = process.env.NODE_ENV || 'development'
-config.port = process.env.PORT || 8081
+config.port = process.env.PORT || 8080
 config.baseUrl = `http://127.0.0.1:${config.port}`
 config.logLevel = process.env.LOG_LEVEL || 'debug'
 
