@@ -115,6 +115,7 @@ jobs:
             
             cd /app/party-mode/frontend
             NODE_ENV=production /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
+            /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js run build
             
             # re-set environment variables
             mkdir /etc/party-mode
@@ -139,14 +140,6 @@ jobs:
           host: '${{ secrets.DEPLOY_SERVER_HOST }}'
           username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
           password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
-      - name: Set Frontend System Service
-        uses: TwanLuttik/gh-action-scp@1.0.1
-        with:
-          local: deployment/systemd/party-mode-frontend.service
-          remote: /etc/systemd/system/party-mode-frontend.service
-          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
-          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
-          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
       - name: Start Application
         uses: garygrossgarten/github-action-ssh@0.7.0
         with:
@@ -156,4 +149,3 @@ jobs:
           command: |
             systemctl daemon-reload
             service party-mode-backend restart
-            service party-mode-frontend restart
