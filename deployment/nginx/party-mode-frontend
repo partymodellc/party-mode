@@ -1,0 +1,8 @@
+server {
+  listen 8081;
+
+  location / {
+    root /app/party-mode/frontend/dist;
+    index index.html;
+  }
+}

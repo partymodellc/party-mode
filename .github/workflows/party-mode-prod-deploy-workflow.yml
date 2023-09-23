@@ -67,6 +67,14 @@ jobs:
           host: '${{ secrets.DEPLOY_SERVER_HOST }}'
           username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
           password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+      - name: Set Nginx Server Configuration (Frontend)
+        uses: TwanLuttik/gh-action-scp@1.0.1
+        with:
+          local: deployment/nginx/party-mode-frontend
+          remote: /etc/nginx/sites-available/party-mode-frontend
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
       - name: Set Nginx Server Configuration (Backend)
         uses: TwanLuttik/gh-action-scp@1.0.1
         with:
@@ -83,6 +91,7 @@ jobs:
           password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
           command: |
             ln -s /etc/nginx/sites-available/party-mode /etc/nginx/sites-enabled/party-mode
+            ln -s /etc/nginx/sites-available/party-mode-frontend /etc/nginx/sites-enabled/party-mode-frontend
             ln -s /etc/nginx/sites-available/party-mode-backend /etc/nginx/sites-enabled/party-mode-backend
             service nginx restart
       - name: Install Application
@@ -121,7 +130,7 @@ jobs:
             mkdir /etc/party-mode
             cat > /etc/party-mode/party-mode-backend.conf << 'EOF'
             NODE_ENV=production
-            PORT=8081
+            PORT=8080
             LOG_LEVEL=info
             CORS_ORIGIN=http://localhost:8080
             SESSION_SECRET=${{ secrets.BACKEND_SESSION_SECRET }}
