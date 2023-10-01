@@ -17,28 +17,25 @@ export default function Signup({ }: Props) {
     })
     const navigate = useNavigate();
 
-
-    console.log("Input Field", user)
-
     let name, value;
-    const inputhandler = (e : any) => {
+    const inputhandler = (e: any) => {
         name = e.target.name;
         value = e.target.value;
         setUser({
             ...user, [name]: value
         })
     }
-    const registerUser = async (e : any) => {
+    const registerUser = async (e: any) => {
         e.preventDefault();
-        const userData = await axios.post('http://localhost:8000/api/users/register', user)
-        .then(()=>{
-            alert("You'r reigstered Successfully.");
-            navigate("/login");
+        const userData = await axios.post('http://localhost:8080/auth/register', user)
+            .then(() => {
+                alert("You're reigstered Successfully.");
+                navigate("/login");
 
-        })
-        .catch((error)=>{
-            alert(error)
-        })
+            })
+            .catch((error) => {
+                alert(error)
+            })
 
 
     }
@@ -80,7 +77,7 @@ export default function Signup({ }: Props) {
                         </div>
 
                         {/* <Link to="/interests"> */}
-                        <Button onClick={registerUser} whileHover={{ background: "#fff", border: "3px solid #FB4A04", color: "#FB4A04" }} width="27.608069164265128vw" height='57px' text="SignUp" style={{ background: "#FB4A04", color: "#fff", marginTop: "25px", minWidth: "100%" }}  />
+                        <Button onClick={registerUser} whileHover={{ background: "#fff", border: "3px solid #FB4A04", color: "#FB4A04" }} width="27.608069164265128vw" height='57px' text="SignUp" style={{ background: "#FB4A04", color: "#fff", marginTop: "25px", minWidth: "100%" }} />
                         {/* </Link> */}
 
                         <div className='flex justify-between items-center mt-[37px]'>

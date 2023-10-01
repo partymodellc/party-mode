@@ -37,7 +37,7 @@ mongoose.connect(config.mongo.connectionString, {
 
     logger.debug("Connected to MongoDB")
 
-    app.listen(config.port, '127.0.0.1', () => {
+    app.listen(config.port, '0.0.0.0', () => {
         logger.info(`Express server listening on port ${config.port} in mode ${config.nodeEnv}`)
     })
 })

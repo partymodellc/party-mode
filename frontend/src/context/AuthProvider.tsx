@@ -1,5 +1,5 @@
-import {ReactNode, FC, createContext, useContext, useState, useEffect} from 'react'
-import {useNavigate} from "react-router-dom";
+import { ReactNode, FC, createContext, useContext, useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 
 type User = {
     picture: string
@@ -10,6 +10,7 @@ type authContextType = {
     user: User
     login: () => void;
     logout: () => void;
+    getUserData: () => void;
 };
 const authContextDefaultValues: authContextType = {
     user: {
@@ -21,6 +22,8 @@ const authContextDefaultValues: authContextType = {
     },
     logout: () => {
     },
+    getUserData: () => {
+    }
 };
 
 type Props = {
@@ -33,43 +36,35 @@ export function useAuth() {
     return useContext(AuthenticationContext);
 }
 
-export function AuthProvider({children}: Props) {
+export function AuthProvider({ children }: Props) {
     const navigate = useNavigate();
 
     const [user, setUser] = useState<User | null>(null);
 
-
-    useEffect(() => {
-        const getUserData = async () => {
-            const headers: HeadersInit = {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Credentials": "true",
-            }
-
-            const response = await fetch('http://localhost:8000/auth/login/success', {
-                method: "GET",
-                credentials: "include",
-                headers: headers,
-            });
-            console.log("Response,", response);
-
-            const data = await response.json();
-            console.log("After Fetch,", data);
-            setUser(data);
+    const getUserData = async () => {
+        const headers: HeadersInit = {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": "true",
         }
 
-        getUserData();
-
-    }, [])
-
-    const login = () => {
-        setUser({
-            picture: "",
-            username: "",
-            email: ""
+        const response = await fetch('http://localhost:8080/user/me', {
+            method: "GET",
+            credentials: "include",
+            headers: headers,
         });
 
+        const data = await response.json();
+        setUser(data);
+    }
+
+
+    useEffect(() => {
+        getUserData();
+    }, [])
+
+    const login = async () => {
+        await getUserData()
     };
 
     const logout = async () => {
@@ -79,7 +74,7 @@ export function AuthProvider({children}: Props) {
             "Access-Control-Allow-Credentials": "true",
         }
 
-        await fetch('http://localhost:8000/api/users/logout', {
+        await fetch('http://localhost:8080/auth/logout', {
             method: "GET",
             credentials: "include",
             headers: headers,
@@ -92,8 +87,8 @@ export function AuthProvider({children}: Props) {
         user: user!,
         login: login,
         logout: logout,
+        getUserData: getUserData
     };
-    console.log("ALL User Data => ", user)
 
     return (
         <>
