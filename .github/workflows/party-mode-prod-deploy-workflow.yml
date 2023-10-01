@@ -134,7 +134,7 @@ jobs:
             NODE_ENV=production
             PORT=8080
             LOG_LEVEL=info
-            CORS_ORIGIN=http://localhost:8080
+            CORS_ORIGIN=https://partymode.com:8081
             SESSION_SECRET=${{ secrets.BACKEND_SESSION_SECRET }}
             SESSION_MAX_AGE=604800000
             MONGODB_CONNECTIONSTRING=${{ secrets.BACKEND_MONGODB_CONNECTIONSTRING }}
