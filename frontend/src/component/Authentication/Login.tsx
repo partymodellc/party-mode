@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import LazyImage from "../General/LazyImage";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { config } from '../../config/Config';
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
@@ -35,11 +36,10 @@ export default function Login({ }: Props) {
   };
 
   const LoginUser = async (e: any) => {
-    console.log("Logining in...");
     e.preventDefault();
     setLoading(true);
 
-    const reponse = await fetch("http://localhost:8080/auth/login", {
+    const reponse = await fetch(`${config.backendBaseUri}/auth/login`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -49,22 +49,24 @@ export default function Login({ }: Props) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ email: user.email, password: user.password }),
-    });
-
-    if (reponse.status == 200) {
-      setLoading(false);
-      toast.success("You have successfully logged in!");
-      await authContext.login()
-      navigate("/");
-    } else {
-      setLoading(false);
-
-      toast.error("Invalid credentials!");
-    }
+    }).then(async (response) => {
+      if (response.status == 200) {
+        setLoading(false);
+        toast.success("You have successfully logged in!");
+        await authContext.login()
+        navigate("/");
+      } else {
+        setLoading(false);
+        toast.error("Invalid credentials!");
+      }
+    }).catch((error) => {
+      setLoading(false)
+      toast.error("Unexpected error logging in. Please try again later.")
+    })
   };
 
   const loginAsGoogle = () => {
-    window.open("http://localhost:8080/auth/google", "_self");
+    window.open(`${config.backendBaseUri}/auth/google`, "_self");
   };
 
   return (
