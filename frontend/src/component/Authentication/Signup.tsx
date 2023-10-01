@@ -4,6 +4,7 @@ import LazyImage from '../General/LazyImage'
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { config } from '../../config/Config';
 
 import { useNavigate } from "react-router-dom";
 
@@ -27,11 +28,10 @@ export default function Signup({ }: Props) {
     }
     const registerUser = async (e: any) => {
         e.preventDefault();
-        const userData = await axios.post('http://localhost:8080/auth/register', user)
+        const userData = await axios.post(`${config.backendBaseUri}/auth/register`, user)
             .then(() => {
                 alert("You're reigstered Successfully.");
                 navigate("/login");
-
             })
             .catch((error) => {
                 alert(error)

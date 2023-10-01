@@ -1,5 +1,6 @@
 import { ReactNode, FC, createContext, useContext, useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import { config } from '../config/Config';
 
 type User = {
     picture: string
@@ -48,7 +49,7 @@ export function AuthProvider({ children }: Props) {
             "Access-Control-Allow-Credentials": "true",
         }
 
-        const response = await fetch('http://localhost:8080/user/me', {
+        const response = await fetch(`${config.backendBaseUri}/user/me`, {
             method: "GET",
             credentials: "include",
             headers: headers,
@@ -74,7 +75,7 @@ export function AuthProvider({ children }: Props) {
             "Access-Control-Allow-Credentials": "true",
         }
 
-        await fetch('http://localhost:8080/auth/logout', {
+        await fetch(`${config.backendBaseUri}/auth/logout`, {
             method: "GET",
             credentials: "include",
             headers: headers,
