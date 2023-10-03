@@ -5,7 +5,7 @@ let config = {
     // common
     nodeEnv: process.env.NODE_ENV || 'development',
     port: process.env.PORT || 8080,
-    baseUrl: `http://localhost:${config.port}`,
+    callbackBaseUrl: process.env.CALLBACK_BASE_URL || 'http://localhost:8080',
     logLevel: process.env.LOG_LEVEL || 'debug',
 
     // cross-origin resource sharing

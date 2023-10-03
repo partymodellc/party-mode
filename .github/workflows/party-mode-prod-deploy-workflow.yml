@@ -128,11 +128,17 @@ jobs:
             NODE_ENV=production /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
             /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js run build
             
-            # re-set environment variables
+            # re-set frontend environment variables
+            cat > /app/party-mode/frontend/.env << 'EOF'
+            VITE_BACKEND_BASE_URI=https://partymode.com:8083
+            EOF
+
+            # re-set backend environment variables
             mkdir /etc/party-mode
             cat > /etc/party-mode/party-mode-backend.conf << 'EOF'
             NODE_ENV=production
             PORT=8080
+            CALLBACK_BASE_URL=https://partymode:8083
             LOG_LEVEL=info
             CORS_ORIGIN=https://partymode.com:8081
             SESSION_SECRET=${{ secrets.BACKEND_SESSION_SECRET }}
