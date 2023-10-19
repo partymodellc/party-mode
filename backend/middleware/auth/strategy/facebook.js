@@ -5,7 +5,7 @@ const FacebookStrategy = require('passport-facebook').Strategy
 passport.use(new FacebookStrategy({
         clientID: config.auth.facebook.clientId,
         clientSecret: config.auth.facebook.clientSecret,
-        callbackURL: `${config.baseUrl}/auth/facebook/callback`,
+        callbackURL: `${config.callbackBaseUrl}/auth/facebook/callback`,
         profileFields: ['id', 'displayName', 'photos', 'email']
     },
     function (accessToken, refreshToken, profile, cb) {

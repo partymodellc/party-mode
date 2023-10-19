@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import LazyImage from "../General/LazyImage";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { config } from '../../config/Config';
 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
@@ -13,9 +14,10 @@ type Props = {};
 
 import { ToastContainer, toast } from "react-toastify";
 
-export default function Login({}: Props) {
+export default function Login({ }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const authContext = useAuth()
 
   const [user, setUser] = useState({
     email: "",
@@ -32,48 +34,45 @@ export default function Login({}: Props) {
       [name]: value,
     });
   };
-  
-  console.log("Input Field", user);
 
   const LoginUser = async (e: any) => {
-    console.log("Logining in...");
     e.preventDefault();
     setLoading(true);
 
-    const reponse = await fetch("http://localhost:8000/api/users/login", {
+    const reponse = await fetch(`${config.backendBaseUri}/auth/login`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
       credentials: "include",
-      // headers: {
-      //   Accept: "application/json",
-      //   "Content-Type": "application/json",
-      //   "Access-Control-Allow-Credentials": true,
-      // },
-      body: JSON.stringify(user),
-    });
-
-    console.log(reponse);
-
-    if (reponse.status == 200) {
-      setLoading(false);
-      toast.success("You have successfully logged in!!");
-      navigate("/");
-    } else {
-      setLoading(false);
-
-      toast.error("Invalid credentials!!");
-    }
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email: user.email, password: user.password }),
+    }).then(async (response) => {
+      if (response.status == 200) {
+        setLoading(false);
+        toast.success("You have successfully logged in!");
+        await authContext.login()
+        navigate("/");
+      } else {
+        setLoading(false);
+        toast.error("Invalid credentials!");
+      }
+    }).catch((error) => {
+      setLoading(false)
+      toast.error("Unexpected error logging in. Please try again later.")
+    })
   };
 
   const loginAsGoogle = () => {
-    window.open("http://localhost:8000/auth/google", "_self");
+    window.open(`${config.backendBaseUri}/auth/google`, "_self");
   };
 
   return (
     <>
       <section className="w-[calc(100vw - 100%)] h-[100vh] flex xsm:flex-col sm:flex-col">
-      <ToastContainer />
+        <ToastContainer />
 
         <div className="authBackground flex-1 flex justify-center items-center py-[60px]">
           <div className="authFliterEffect rounded-[50px] w-[39.76945244956772vw] xsm:min-w-[80vw] sm:min-w-[60vw] h-[331px] flex justify-center items-center ml-[-45px] xsm:ml-0 sm:ml-0 pl-[4.14985590778098vw]">

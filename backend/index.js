@@ -4,7 +4,7 @@ const express = require('express')
 const morgan = require('morgan')
 const middleware = require('./middleware')
 const routes = require('./routes')
-const mongoose = require('mongoose')
+const mongoose = require('mongoose').default
 
 // create server
 const app = express()
@@ -24,28 +24,21 @@ middleware.configure(app)
 // configure routes
 routes.configure(app)
 
-// other
-app.get('/', (req, res) => {
-    res.send("Welcome to Party Modd Server...")
-})
-app.use('/storage', express.static('Storage'))
-app.get('/storage/*', function (req, res) {
-    res.sendFile(__dirname + '/public/error.html')
-})
-app.get('*', function (req, res) {
-    res.sendFile(__dirname + '/public/error.html')
-})
-
+// start server
+// connect to MongoDB
+mongoose.set('strictQuery', false)
 mongoose.connect(config.mongo.connectionString, {
     dbName: config.mongo.databaseName,
-    autoIndex: false
-}).then(() => {
+    autoIndex: false,
+}, function (err) {
+    if (err && err instanceof Error) {
+        throw new Error(`Error connecting to MongoDB: ${err.message}`)
+    }
+
     logger.debug("Connected to MongoDB")
-}).catch((error) => {
-    logger.error(`Error connecting to MongoDB: ${error}`)
+
+    app.listen(config.port, '0.0.0.0', () => {
+        logger.info(`Express server listening on port ${config.port} in mode ${config.nodeEnv}`)
+    })
 })
 
-// start server
-app.listen(config.port, () => {
-    logger.info(`Server running on http://localhost:${config.port}`)
-})

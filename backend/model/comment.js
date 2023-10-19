@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose');
+const {Schema, model} = require('mongoose')
 
 const comment = model('comment', new Schema({
         text: {

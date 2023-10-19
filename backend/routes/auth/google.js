@@ -1,13 +1,14 @@
 const router = require('express').Router()
 const passport = require('passport')
+const config = require('../../config')
 
 router.get('/google',
-    passport.authenticate('google', {scope: ["email", "profile"]})
+    passport.authenticate('google', { scope: ["email", "profile"] })
 )
 
 router.get('/google/callback',
     passport.authenticate('google', {
-        successRedirect: 'http://localhost:5173/dashboard',
+        successRedirect: `${config.cors.origin}/dashboard`,
         failureRedirect: '/auth/google/failure'
     })
 )

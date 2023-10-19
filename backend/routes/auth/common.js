@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const authZ = require('../../middleware/auth/authorization')
+const authZ = require('../auth-helper')
 
 router.get('/login/success',
     authZ.requireAuthentication,
@@ -16,13 +16,13 @@ router.get('/logout',
     (req, res) => {
         req.logout()
         req.session.destroy()
-        res.send("User has been logged out")
+        return res.status(200)
     }
 )
 
 router.get('/failure',
     (req, res) => {
-        res.send('Failed to authenticate')
+        return res.status(400).json({ error: 'Failed to authenticate' })
     }
 )
 

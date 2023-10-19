@@ -6,11 +6,11 @@ const User = require('../../../model/user')
 passport.use('google', new GoogleStrategy({
         clientID: config.auth.google.clientId,
         clientSecret: config.auth.google.clientSecret,
-        callbackURL: `${config.baseUrl}/auth/google/callback`,
+        callbackURL: `${config.callbackBaseUrl}/auth/google/callback`,
         passReqToCallback: true,
     },
     function (req, accessToken, refreshToken, profile, done) {
-        const {emails, displayName, provider} = profile
+        const {emails, displayName, provider} = profile || {}
 
         if (!emails) {
             done(new Error('Cannot authenticate via Google without an email'), null)
