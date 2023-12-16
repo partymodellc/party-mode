@@ -1,11 +1,8 @@
-import {lazy, Suspense} from "react"
-import {Navigate, Route, Routes, useRoutes} from "react-router-dom"
+import { lazy, Suspense } from "react"
+import { Navigate, Route, Routes, useRoutes } from "react-router-dom"
 import EventDescriptions from "./pages/EventDescriptions"
 import LoadingAnimation from "./component/General/LoadingAnimation"
-import {ToastContainer} from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-
-import {useAuth} from "./context/AuthProvider"
 
 const Events = lazy(() => import("./pages/Events"))
 const Event = lazy(() => import("./component/EventsDashboard/Event"))
@@ -15,7 +12,6 @@ const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"))
 const SubscriptionAndPricing = lazy(() => import("./pages/SubscriptionAndPricing"))
 const ContactUs = lazy(() => import("./pages/ContactUs"))
 const HelpSub = lazy(() => import("./pages/HelpSub"))
-const Dashboard = lazy(() => import("./pages/Dashboard"))
 const Likes = lazy(() => import("./pages/Likes"))
 const Ticket = lazy(() => import("./pages/Ticket"))
 const TicketVerifiedEmail = lazy(() => import("./pages/TicketVerifiedEmail"))
@@ -39,169 +35,135 @@ const Community = lazy(() => import("./pages/Community"))
 const Community2 = lazy(() => import("./pages/Community2"))
 
 function App() {
-    const {user} = useAuth()
 
     let routes = useRoutes([
         {
             path: "/",
-            element: user ?
-                (
-                    <Navigate to="/dashboard"/>
-                ) :
-                (
-                    <Suspense fallback={<LoadingAnimation/>}><Events/></Suspense>
-                )
+            element: <Events />
         },
         {
             path: "/event-description/:eventID",
-            element: <Suspense fallback={<LoadingAnimation/>}><EventDescriptions/></Suspense>
+            element: <EventDescriptions />
         },
         {
             path: "/login",
-            element: user ?
-                (
-                    <Navigate to="/dashboard"/>
-                ) :
-                (
-                    <Suspense fallback={<LoadingAnimation/>}><Login/></Suspense>
-                )
+            element: <Login />
         },
         {
             path: "/signup",
-            element: user ?
-                (
-                    <Navigate to="/dashboard"/>
-                ) :
-                (
-                    <Suspense fallback={<LoadingAnimation/>}><Signup/></Suspense>
-                )
+            element: <Signup />
         },
         {
             path: "/payment-success",
-            element: user ?
-                (
-                    <Navigate to="/dashboard"/>
-                ) :
-                (
-                    <Suspense fallback={<LoadingAnimation/>}><PaymentSuccess/></Suspense>
-                )
+            element: <PaymentSuccess />
         },
         {
             path: "/interests",
-            element: <Suspense fallback={<LoadingAnimation/>}><Interests/></Suspense>
+            element: <Interests />
         },
         {
             path: "/subscription-and-pricing",
-            element: <Suspense fallback={<LoadingAnimation/>}><SubscriptionAndPricing/></Suspense>
+            element: <SubscriptionAndPricing />
         },
         {
             path: "/contact-us",
-            element: <Suspense fallback={<LoadingAnimation/>}><ContactUs/></Suspense>
+            element: <ContactUs />
         },
         {
             path: "/community",
-            element: <Suspense fallback={<LoadingAnimation/>}><Community/></Suspense>
+            element: <Community />
         },
         {
             path: "/community-join",
-            element: <Suspense fallback={<LoadingAnimation/>}><Community2/></Suspense>
+            element: <Community2 />
         },
         {
             path: "/help-sub",
-            element: <Suspense fallback={<LoadingAnimation/>}><HelpSub/></Suspense>
-        },
-        {
-            path: "/dashboard",
-            element: user ?
-                (
-                    <Suspense fallback={<LoadingAnimation/>}><Dashboard/></Suspense>
-                ) :
-                (
-                    <Navigate to="/"/>
-                )
+            element: <HelpSub />
         },
         {
             path: "/likes",
-            element: <Suspense fallback={<LoadingAnimation/>}><Likes/></Suspense>
+            element: <Likes />
         },
         {
             path: "/ticket",
-            element: <Suspense fallback={<LoadingAnimation/>}><Ticket/></Suspense>
+            element: <Ticket />
         },
         {
             path: "/ticket-verified",
-            element: <Suspense fallback={<LoadingAnimation/>}><TicketVerifiedEmail/></Suspense>
+            element: <TicketVerifiedEmail />
         },
         {
             path: "/creator-dashboard",
-            element: <Suspense fallback={<LoadingAnimation/>}><CreatorDashboard/></Suspense>
+            element: <CreatorDashboard />
         },
         {
             path: "/event-dashboard",
-            element: <Suspense fallback={<LoadingAnimation/>}><EventsDashboard/></Suspense>
+            element: <EventsDashboard />
         },
         // {
         //     path: "/event-dashboard",
-        //     element: <Suspense fallback={<LoadingAnimation/>}><Event/></Suspense>
+        //     element: <Suspense fallback={<LoadingAnimation/>}><Event/>
         // },
         {
             path: "/event-dashboard/order",
-            element: <Suspense fallback={<LoadingAnimation/>}><Orders/></Suspense>
+            element: <Orders />
         },
         {
             path: "/report-analysis",
-            element: <Suspense fallback={<LoadingAnimation/>}><ReportAnalysis/></Suspense>
+            element: <ReportAnalysis />
         },
         {
             path: "/invoice-and-billing",
-            element: <Suspense fallback={<LoadingAnimation/>}><InvoiceAndBilling/></Suspense>
+            element: <InvoiceAndBilling />
         },
         {
             path: "/setting",
-            element: <Suspense fallback={<LoadingAnimation/>}><Setting/></Suspense>
+            element: <Setting />
         },
         {
             path: "/setting",
-            element: <Suspense fallback={<LoadingAnimation/>}><ProfileEdit/></Suspense>
+            element: <ProfileEdit />
         },
         {
             path: "/setting/invite-team",
-            element: <Suspense fallback={<LoadingAnimation/>}><InviteTeam/></Suspense>
+            element: <InviteTeam />
         },
         {
             path: "/setting/app-installation",
-            element: <Suspense fallback={<LoadingAnimation/>}><AppInstallation/></Suspense>
+            element: <AppInstallation />
         },
         {
             path: "/create-event",
-            element: <Suspense fallback={<LoadingAnimation/>}><CreateEvent/></Suspense>
+            element: <CreateEvent />
         },
         {
             path: "/create-event/basic-info/:eventID",
-            element: <Suspense fallback={<LoadingAnimation/>}><BasicInfo/></Suspense>
+            element: <BasicInfo />
         },
         {
             path: "/create-event/detail/:eventID",
-            element: <Suspense fallback={<LoadingAnimation/>}><Detail/></Suspense>
+            element: <Detail />
         },
         {
             path: "/create-event/online-page-event/:eventID",
-            element: <Suspense fallback={<LoadingAnimation/>}><OnlinePageEvent/></Suspense>
+            element: <OnlinePageEvent />
         },
         {
             path: "/create-event/create-ticket/:eventID",
-            element: <Suspense fallback={<LoadingAnimation/>}><CreateTicket/></Suspense>
+            element: <CreateTicket />
         },
         {
             path: "/create-event/publish/:eventID",
-            element: <Suspense fallback={<LoadingAnimation/>}><Publish/></Suspense>
+            element: <Publish />
         }
     ])
 
     return (
         <main>
-            <ToastContainer/>
-            {routes}
+            <Suspense fallback={<LoadingAnimation />}>
+                {routes}
+            </Suspense>
         </main>
     )
 }
