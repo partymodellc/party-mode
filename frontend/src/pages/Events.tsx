@@ -3,13 +3,16 @@ import EventsCards from '../component/Events/EventsCards'
 import Footer from '../component/General/Footer'
 import Button from '../component/General/Button'
 import SearchBar from '../component/General/SearchBar'
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import LazyImage from '../component/General/LazyImage'
-import {useState, useEffect} from 'react'
-import {motion} from "framer-motion"
+import { useState, useEffect } from 'react'
+import { motion } from "framer-motion"
 import './Style.css'
 
-import {ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import Header from '../component/General/Header'
+
+import { useAuth } from "../context/AuthProvider"
 
 type Props = {}
 
@@ -382,87 +385,21 @@ interface User {
 
 declare function fetch(input: RequestInfo, init?: RequestInit): Promise<Response>;
 
+type HeadersInit = Headers | string[][] | Record<string, string>;
+
 interface RequestInit {
     headers?: HeadersInit;
     // other options
 }
 
-type HeadersInit = Headers | string[][] | Record<string, string>;
-
-export default function Events({}: Props) {
+export default function Events({ }: Props) {
+    const { user } = useAuth()
     const [showMobileNav, setShowMobileNav] = useState<boolean>(false);
 
     return (
         <>
-            <ToastContainer/>
-
             <div className='w-[calc(100vw - 100%)] '>
-                <nav className='fixed z-[1000] bg-[white] flex justify-between items-center w-[100%] xsm:flex-col'
-                     style={{boxShadow: '0 0 5px 1px #919191', padding: '0 35px'}}>
-                    <div
-                        className='flex items-center gap-[3.28vw] xsm:justify-between sm:justify-between xsm:w-full sm:w-full'>
-                        <Link to="/">
-                            <img src='./Logo.png' className='ml-[8px] min-w-[80px]' alt='' style={{width: '20px'}}/>
-                        </Link>
-                        <SearchBar whileHover={{scale: 1.03}} style={{flex: "1"}}/>
-                        <div onClick={() => setShowMobileNav(!showMobileNav)}
-                             className='xsm:flex sm:flex cursor-pointer hidden flex-col items-center gap-[5px] mr-[10px]'>
-                            <div className='min-w-[29px] min-h-[5px] bg-[#473a3a] rounded-full'></div>
-                            <div className='min-w-[29px] min-h-[5px] bg-[#473a3a] rounded-full'></div>
-                            <div className='min-w-[29px] min-h-[5px] bg-[#473a3a] rounded-full'></div>
-                        </div>
-                    </div>
-
-                    <div className='forMobile'>
-                        <ul className='xsm:hidden sm:hidden text-[#493c3c] text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] flex gap-[3.8vw]'
-                            style={{display: 'flex', alignItems: "center"}}>
-                            <Link to={"/help-sub"}>
-                                <motion.li whileHover={{color: "#FB4A04"}}>Live Stream</motion.li>
-                            </Link>
-                            <Link to={"/subscription-and-pricing"}>
-                                <motion.li whileHover={{color: "#FB4A04"}}>Pricing</motion.li>
-                            </Link>
-                            <Link to={"/contact-us"}>
-                                <motion.li whileHover={{color: "#FB4A04"}}>Help</motion.li>
-                            </Link>
-                            <Link to="/login">
-                                <motion.li whileHover={{color: "#FB4A04"}}>Log In</motion.li>
-                            </Link>
-                            <Link to="/signup">
-                                <button
-                                    className="SignInBtn"
-                                >
-                                    {/* <motion.li whileHover={{ color: "#473a3a" }} className='text-[#FB4A04]'></motion.li> */}
-                                    Sign Up
-                                </button>
-                            </Link>
-                        </ul>
-                    </div>
-                </nav>
-                {showMobileNav &&
-                    <ul style={showMobileNav ? {maxHeight: "1000px"} : {maxHeight: "0px", overflow: "hidden"}}
-                        className='transition-all xsm:flex sm:flex flex-col hidden text-[#493c3c] py-[10px] items-center text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] gap-[5.244vw] relative top-[88px]'>
-                        <Link to={"/help-sub"}>
-                            <motion.li whileHover={{color: "#FB4A04"}}>Live Stream</motion.li>
-                        </Link>
-                        <Link to={"/subscription-and-pricing"}>
-                            <motion.li whileHover={{color: "#FB4A04"}}>Pricing</motion.li>
-                        </Link>
-                        <Link to={"/contact-us"}>
-                            <motion.li whileHover={{color: "#FB4A04"}}>Help</motion.li>
-                        </Link>
-                        <Link to="/login">
-                            <motion.li whileHover={{color: "#FB4A04"}}>Log In</motion.li>
-                        </Link>
-                        <Link to="/signup">
-                            {/* <motion.li whileHover={{ color: "#473a3a" }} className='text-[#FB4A04]'>Sign Up</motion.li> */}
-                            <button
-                            >
-                                Sign Up
-                            </button>
-                        </Link>
-                    </ul>
-                }
+                <Header />
 
                 <div className='relative top-[85px]'>
                     <section className='eventsMainBackground h-[778px] w-[100%] flex relative '>
@@ -472,13 +409,13 @@ export default function Events({}: Props) {
                                 className='eventTextFont text-[clamp(32px,3.6887608069164264vw,64px)]'>IS YOUR</span> TIME
                             </h1>
                             <Link to='/community'>
-                                <Button initial={{scale: 1, backgroundColor: '#FB4A04', color: "#fff"}} whileHover={{
+                                <Button initial={{ scale: 1, backgroundColor: '#FB4A04', color: "#fff" }} whileHover={{
                                     scale: 1.02,
                                     backgroundColor: "#ffffff",
                                     border: "3px solid #FB4A04",
                                     color: "#FB4A04"
                                 }} width={"17.75vw"} height={"61px"} text={"Find your next Event"}
-                                        style={{minWidth: "240px"}}/>
+                                    style={{ minWidth: "240px" }} />
                             </Link>
                         </div>
                     </section>
@@ -486,65 +423,68 @@ export default function Events({}: Props) {
                     <div
                         className='bg-white relative top-[-28px] p-[14px] eventDivBoxShadow w-[85.76368876080691vw] m-auto'>
                         <div className='pt-[5px] pb-[18px] pl-[10px] border-l-[2px] border-[#FB4A04]'>
-                            <h2 className='mb-[8px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] text-[#473a3a]'>Do
-                                events help you find connection?</h2>
-                            <p className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] w-[100%] leading-[26px] text-[#473a3a]'>Help
-                                us understand how attending events contributes to building social connection by taking a
-                                short survey before and after your next event.</p>
+                            <h2 className='mb-[8px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] text-[#473a3a]'>
+                                Do events help you find connection?
+                            </h2>
+                            <p className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] w-[100%] leading-[26px] text-[#473a3a]'>
+                                Help us understand how attending events contributes to building social connection by taking a
+                                short survey before and after your next event.
+                            </p>
                         </div>
                     </div>
 
-                    <section id='checkin' style={{marginTop: "40px"}}>
+                    <section id='checkin' style={{ marginTop: "40px" }}>
                         <div className='flex flex-col justify-center items-center'>
-                            <h2 className="font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-[#473a3a]">Check
-                                out trending categories</h2>
+                            <h2 className="font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-[#473a3a]">
+                                Check out trending categories
+                            </h2>
                             <hr className='mt-[23px] w-[232px] !h-[2px] border-[#FB4A04] !p-0'></hr>
                         </div>
                     </section>
 
                     <section className='mt-[160px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventsCards mainText='Christmas🎅' data={data}/>
+                        <EventsCards mainText='Christmas🎅' data={data} />
                     </section>
 
                     <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventsCards mainText='Festivals' data={data1[0]}/>
+                        <EventsCards mainText='Festivals' data={data1[0]} />
                     </section>
 
                     <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventsCards mainText='Electronic' data={data1[1]}/>
+                        <EventsCards mainText='Electronic' data={data1[1]} />
                     </section>
 
                     <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventsCards mainText='Pop Culture' data={data1[2]}/>
+                        <EventsCards mainText='Pop Culture' data={data1[2]} />
                     </section>
 
                     <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventsCards mainText='Music Venues' data={data1[3]}/>
+                        <EventsCards mainText='Music Venues' data={data1[3]} />
                     </section>
 
                     <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventsCards mainText='Music Venues' data={data1[4]}/>
+                        <EventsCards mainText='Music Venues' data={data1[4]} />
                     </section>
 
                     <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventsCards mainText='Miami' data={data1[5]}/>
+                        <EventsCards mainText='Miami' data={data1[5]} />
                     </section>
 
                     <section className='mb-[216px]'>
                         <div className='mb-[45px] mt-[60px]     w-[86.1671469740634vw] m-auto'>
-                            <h2 className='font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-[#473a3a]'>Other
-                                Categories</h2>
+                            <h2 className='font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-[#473a3a]'>
+                                Other Categories
+                            </h2>
                         </div>
                         <div className='overflow-hidden'>
-                            <Crousal maxWidth={'728px'} width={"41.95965417867435vw"} settings={settings}
-                                     crousalData={crousalData} classes="min-w-[280px]"/>
+                            <Crousal maxWidth={'728px'} width={"41.95965417867435vw"} settings={settings} crousalData={crousalData} classes="min-w-[280px]" />
                         </div>
                         <div className='w-[86.1671469740634vw] m-auto'>
                             <hr className='mt-[23px] w-[119px] !h-[2px] border-[#FB4A04] !p-0'></hr>
                         </div>
                     </section>
 
-                    <Footer/>
+                    <Footer />
                 </div>
             </div>
         </>
