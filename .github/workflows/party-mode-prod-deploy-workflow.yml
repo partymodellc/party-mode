@@ -1,0 +1,168 @@
+name: party-mode-prod-deploy
+'on':
+  push:
+    branches:
+      - develop
+  workflow_dispatch: { }
+concurrency:
+  group: 'party-mode-prod-deploy-${{ github.ref }}'
+  cancel-in-progress: true
+jobs:
+  prod-deploy:
+    env:
+      GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Firewall
+        uses: garygrossgarten/github-action-ssh@0.7.0
+        with:
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+          command: |
+            echo 'y' | ufw enable
+            ufw allow 'OpenSSH'
+            ufw allow 'Nginx HTTPS'
+            ufw allow 8081
+            ufw allow 8083
+            ufw default deny incoming
+            ufw default allow outgoing
+            ufw status verbose
+      - name: Install Nginx App Server
+        uses: garygrossgarten/github-action-ssh@0.7.0
+        with:
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+          command: |
+            apt install -y nginx
+            rm /etc/nginx/nginx.conf
+            rm /etc/nginx/sites-available/default
+            rm /etc/nginx/sites-enabled/default
+            
+            # setup ssl certificate and key
+            mkdir /etc/nginx/ssl
+                  
+            cat > /etc/nginx/ssl/party-mode.pem << EOF
+            ${{ secrets.DEPLOY_SERVER_SSL_CERT }}
+            EOF
+            
+            openssl rsa -passin pass:'${{ secrets.DEPLOY_SERVER_SSL_CERT_PASS }}' -in /etc/nginx/ssl/party-mode.pem -out /etc/nginx/ssl/nginx.key
+            
+            echo '${{ secrets.DEPLOY_SERVER_SSL_CERT_PASS }}' > /etc/nginx/ssl/ssl.pass
+      - name: Set Nginx Application Configuration
+        uses: TwanLuttik/gh-action-scp@1.0.1
+        with:
+          local: deployment/nginx/nginx.conf
+          remote: /etc/nginx/nginx.conf
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+      - name: Set Nginx Server Configuration
+        uses: TwanLuttik/gh-action-scp@1.0.1
+        with:
+          local: deployment/nginx/party-mode
+          remote: /etc/nginx/sites-available/party-mode
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+      - name: Set Nginx Server Configuration (Frontend)
+        uses: TwanLuttik/gh-action-scp@1.0.1
+        with:
+          local: deployment/nginx/party-mode-frontend
+          remote: /etc/nginx/sites-available/party-mode-frontend
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+      - name: Set Nginx Server Configuration (Backend)
+        uses: TwanLuttik/gh-action-scp@1.0.1
+        with:
+          local: deployment/nginx/party-mode-backend
+          remote: /etc/nginx/sites-available/party-mode-backend
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+      - name: Start Nginx App Server
+        uses: garygrossgarten/github-action-ssh@0.7.0
+        with:
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+          command: |
+            ln -s /etc/nginx/sites-available/party-mode /etc/nginx/sites-enabled/party-mode
+            ln -s /etc/nginx/sites-available/party-mode-frontend /etc/nginx/sites-enabled/party-mode-frontend
+            ln -s /etc/nginx/sites-available/party-mode-backend /etc/nginx/sites-enabled/party-mode-backend
+            service nginx restart
+      - name: Install Application
+        uses: garygrossgarten/github-action-ssh@0.7.0
+        with:
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+          command: |
+            # verify app directory
+            mkdir /app
+            
+            # re-clone repo
+            cd /app
+            rm -rf party-mode
+            git clone --branch develop https://github.com/partymodellc/party-mode.git
+            
+            # re-setup node cli
+            cd /app/party-mode/bin/nodejs
+            
+            xz -d -v node-v18.17.1-linux-x64.tar.xz
+            tar -xf node-v18.17.1-linux-x64.tar
+            
+            rm /usr/bin/node
+            mv node-v18.17.1-linux-x64/bin/node /usr/bin/
+            
+            # npm install
+            cd /app/party-mode/backend
+            NODE_ENV=production /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
+            
+            cd /app/party-mode/frontend
+            NODE_ENV=production /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
+            /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js run build
+            
+            # re-set frontend environment variables
+            cat > /app/party-mode/frontend/.env << 'EOF'
+            VITE_BACKEND_BASE_URI=https://partymode.com:8083
+            EOF
+
+            # re-set backend environment variables
+            mkdir /etc/party-mode
+            cat > /etc/party-mode/party-mode-backend.conf << 'EOF'
+            NODE_ENV=production
+            PORT=8080
+            CALLBACK_BASE_URL=https://partymode:8083
+            LOG_LEVEL=info
+            CORS_ORIGIN=https://partymode.com:8081
+            SESSION_SECRET=${{ secrets.BACKEND_SESSION_SECRET }}
+            SESSION_MAX_AGE=604800000
+            MONGODB_CONNECTIONSTRING=${{ secrets.BACKEND_MONGODB_CONNECTIONSTRING }}
+            AUTH_GOOGLE_CLIENT_ID=${{ secrets.BACKEND_AUTH_GOOGLE_CLIENT_ID }}
+            AUTH_GOOGLE_CLIENT_SECRET=${{ secrets.BACKEND_AUTH_GOOGLE_CLIENT_SECRET }}
+            AUTH_FACEBOOK_CLIENT_ID=${{ secrets.BACKEND_AUTH_FACEBOOK_CLIENT_ID }}
+            AUTH_FACEBOOK_CLIENT_SECRET=${{ secrets.BACKEND_AUTH_FACEBOOK_CLIENT_SECRET }}
+            EOF
+      - name: Set Backend System Service
+        uses: TwanLuttik/gh-action-scp@1.0.1
+        with:
+          local: deployment/systemd/party-mode-backend.service
+          remote: /etc/systemd/system/party-mode-backend.service
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+      - name: Start Application
+        uses: garygrossgarten/github-action-ssh@0.7.0
+        with:
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+          command: |
+            systemctl daemon-reload
+            service party-mode-backend restart
