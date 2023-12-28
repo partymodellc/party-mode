@@ -186,7 +186,7 @@ export default function Event({}: Props) {
     var [singleEvent, setSingleEvent] = useState<SingleEvent>();
     const [startDateAndTime, setStartDateAndTime] = useState("");
     const [endDateAndTime, setEndDateAndTime] = useState("");
-    var [allTickets, setAllTickets] = useState<Tickets[]>();
+    var [allTickets, setAllTickets] = useState<Ticket[]>();
     const [readmore, setReadmore] = useState<boolean>(false);
     const {user, logout} = useAuth();
 
