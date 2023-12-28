@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {all} from "axios";
 import React, {
     ReactNode,
     FC,
@@ -8,12 +8,21 @@ import React, {
     useEffect,
 } from "react";
 import {useNavigate} from "react-router-dom";
+import {config} from "../config/Config";
+import {Event} from "../component/Events/EventCards"
+
+// type eventType = {
+//     id: string,
+//     image: string,
+//     title: string,
+//     description: string
+// }
 
 type eventContextType = {
     eventID: string;
     setEventID?: React.Dispatch<React.SetStateAction<string>>
     deleteEvent: (eventID: string) => any;
-    allEvents: string[];
+    allEvents: Event[];
     setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
     refresh: boolean;
 };
@@ -42,13 +51,13 @@ export function EventProvider({children}: Props) {
     const navigate = useNavigate();
 
     const [eventID, setEventID] = useState<string>("");
-    const [allEvents, setAllEvents] = useState<string[]>([]);
+    const [allEvents, setAllEvents] = useState<Event[]>([]);
     const [refresh, setRefresh] = useState<boolean>(false);
 
     useEffect(() => {
 
         const getEventData = async () => {
-            console.log("Keep Syncing Eventsss");
+            // console.log("Keep Syncing Eventsss");
         };
 
         getEventData();
@@ -56,20 +65,16 @@ export function EventProvider({children}: Props) {
 
 
     const deleteEvent = async (eventID: string) => {
-        const resp = await axios.delete(`http://localhost:8000/events/delete-event/${eventID}`);
-        console.log("Delete Event", resp);
-
+        const resp = await axios.delete(`${config.backendBaseUri}/events/${eventID}`);
     }
 
     useEffect(() => {
         const getAllEvent = async () => {
-            const resp = await axios.get("http://localhost:8000/events/all-events");
+            const resp = await axios.get(`${config.backendBaseUri}/events`)
             setAllEvents(resp.data)
         }
         getAllEvent();
     }, [refresh])
-
-    console.log(eventID);
 
     const value: eventContextType = {
         eventID: eventID,
@@ -81,7 +86,9 @@ export function EventProvider({children}: Props) {
 
     return (
         <>
-            <EventContext.Provider value={value}>{children}</EventContext.Provider>
+            <EventContext.Provider value={value}>
+                {children}
+            </EventContext.Provider>
         </>
     );
 }

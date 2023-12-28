@@ -5,9 +5,11 @@ router.get('/login/success',
     authZ.requireAuthentication,
     (req, res) => {
         res.status(200).json({
-            success: true,
-            message: "successful",
-            user: req.user,
+            username: req.user.username,
+            email: req.user.email,
+            membership: req.user.membership,
+            eventIds: req.user.eventIds,
+            paymentIds: req.user.paymentIds
         })
     }
 )
@@ -22,7 +24,7 @@ router.get('/logout',
 
 router.get('/failure',
     (req, res) => {
-        return res.status(400).json({ error: 'Failed to authenticate' })
+        return res.status(400).json({error: 'Failed to authenticate'})
     }
 )
 

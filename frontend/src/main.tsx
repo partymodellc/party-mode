@@ -8,14 +8,14 @@ import {AuthProvider} from "./context/AuthProvider";
 import {EventProvider} from "./context/EventProvider";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-    <StrictMode>
-        <BrowserRouter>
-            <AuthProvider>
-                <EventProvider>
-                    <ScrollToTop/>
-                    <App/>
-                </EventProvider>
-            </AuthProvider>
-        </BrowserRouter>
-    </StrictMode>
+    // <StrictMode>
+    <BrowserRouter>
+        <AuthProvider>
+            <EventProvider>
+                <ScrollToTop/>
+                <App/>
+            </EventProvider>
+        </AuthProvider>
+    </BrowserRouter>
+    // </StrictMode>
 );

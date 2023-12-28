@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Button from '../component/General/Button';
 import Footer from '../component/General/Footer';
 import LazyImage from '../component/General/LazyImage'
-import SearchBar from '../component/General/SearchBar'
+import Search from '../component/General/Search'
 import { motion } from "framer-motion"
 import { Link } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ export default function Community2({ }: Props) {
                     <Link to="/">
                         <img src='./Logo.png' className='ml-[8px] min-w-[80px] ' alt='' />
                     </Link>
-                    <SearchBar whileHover={{ scale: 1.03 }} style={{ flex: "1" }} />
+                    <Search whileHover={{ scale: 1.03 }} style={{ flex: "1" }} />
                     <div onClick={() => setShowMobileNav(!showMobileNav)} className='xsm:flex sm:flex cursor-pointer hidden flex-col items-center gap-[5px] mr-[10px]'>
                         <div className='min-w-[29px] min-h-[5px] bg-[#473a3a] rounded-full'></div>
                         <div className='min-w-[29px] min-h-[5px] bg-[#473a3a] rounded-full'></div>
@@ -54,7 +54,7 @@ export default function Community2({ }: Props) {
             <main className='w-[93.8328530259366vw] m-auto mt-[75px]'>
                 <div className='w-full h-[105px] bg-[#FB4A040F] flex items-center rounded-[20px]'>
                     <motion.img whileHover={{ scale: 1.03 }} src='./Ellipse 66.png' alt='' className="shadow-md rounded-full w-[4.14985590778098vw] min-w-[48px] ml-[2.0172910662824206vw] mr-[2.5360230547550433vw]" />
-                    <SearchBar whileHover={{ scale: 1.03 }} text='What’s on your mind?' style={{ minWidth: "180px", background: "transparent", textIndent: "1.4985590778097984vw", height: "65px", border: "1px solid #FB4A04", borderRadius: "52px", width: "31.585014409221902vw" }} />
+                    <Search whileHover={{ scale: 1.03 }} text='What’s on your mind?' style={{ minWidth: "180px", background: "transparent", textIndent: "1.4985590778097984vw", height: "65px", border: "1px solid #FB4A04", borderRadius: "52px", width: "31.585014409221902vw" }} />
                     <div className='w-[2.76657060518732vw] min-w-[28px] ml-[1.037463976945245vw]'>
                         <motion.img initial={{ background: "transparent" }} whileHover={{ scale: 1.03, background: "#fff" }} className="rounded-full" src='./ei_camera.svg' />
                     </div>
@@ -84,7 +84,7 @@ export default function Community2({ }: Props) {
                         <img src='./c22.png' />
                         <div className='flex gap-[2.5936599423631126vw] mt-[36px] mb-[39px] xsm:flex-col'>
                             <div className='w-[31.585014409221902vw] xsm:w-[100%]'>
-                                <SearchBar whileHover={{ scale: 1.03 }} text='Comment' style={{ background: "transparent", textIndent: "19px", height: "65px", border: "1px solid #FB4A04", borderRadius: "52px", width: "100%" }} />
+                                <Search whileHover={{ scale: 1.03 }} text='Comment' style={{ background: "transparent", textIndent: "19px", height: "65px", border: "1px solid #FB4A04", borderRadius: "52px", width: "100%" }} />
                             </div>
                             <div className='flex gap-[0.5763688760806917vw]'>
                                 <motion.img initial={{ background: "transparent" }} whileHover={{ scale: 1.03, }} className='rounded-full w-[3.4582132564841497vw] min-w-[30px]' src='./c27.svg' />

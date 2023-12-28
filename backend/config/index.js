@@ -35,7 +35,8 @@ let config = {
     // mongo
     mongo: {
         connectionString: process.env.MONGODB_CONNECTIONSTRING || 'mongodb://localhost:27017',
-        databaseName: process.env.MONGODB_DATABASENAME || 'party-mode'
+        databaseName: process.env.MONGODB_DATABASENAME || 'party-mode',
+        photosBucketName: process.env.MONGODB_PHOTOS_BUCKET_NAME || 'photos'
     }
 }
 
