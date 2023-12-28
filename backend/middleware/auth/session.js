@@ -30,12 +30,18 @@ module.exports.configure = (app) => {
 
     // setup session user serialization
     passport.serializeUser(function (user, done) {
+        // console.log("====")
+        // console.log(userResponse.id)
+        // console.log("====")
         done(null, user.id)
     })
 
     // setup session user deserialization
     passport.deserializeUser(function (id, done) {
         User.getUserById(id, function (err, user) {
+            // console.log("====")
+            // console.log(id)
+            // console.log("====")
             done(err, user)
         })
     })

@@ -1,6 +1,7 @@
-import { ReactNode, FC, createContext, useContext, useState, useEffect } from 'react'
-import { useNavigate } from "react-router-dom";
-import { config } from '../config/Config';
+import {ReactNode, FC, createContext, useContext, useState, useEffect} from 'react'
+import {useNavigate} from "react-router-dom";
+import {config} from '../config/Config';
+import axios from "axios";
 
 type User = {
     picture: string
@@ -37,9 +38,8 @@ export function useAuth() {
     return useContext(AuthenticationContext);
 }
 
-export function AuthProvider({ children }: Props) {
+export function AuthProvider({children}: Props) {
     const navigate = useNavigate();
-
     const [user, setUser] = useState<User | null>(null);
 
     const getUserData = async () => {
@@ -49,14 +49,12 @@ export function AuthProvider({ children }: Props) {
             "Access-Control-Allow-Credentials": "true",
         }
 
-        const response = await fetch(`${config.backendBaseUri}/user/me`, {
-            method: "GET",
-            credentials: "include",
+        const response = await axios.get(`${config.backendBaseUri}/users/me`, {
             headers: headers,
-        });
+            withCredentials: true
+        })
 
-        const data = await response.json();
-        setUser(data);
+        setUser(response.data);
     }
 
 
@@ -75,13 +73,14 @@ export function AuthProvider({ children }: Props) {
             "Access-Control-Allow-Credentials": "true",
         }
 
-        await fetch(`${config.backendBaseUri}/auth/logout`, {
+        fetch(`${config.backendBaseUri}/auth/logout`, {
             method: "GET",
             credentials: "include",
             headers: headers,
-        });
+        })
+
         setUser(null)
-        navigate("/");
+        navigate("/")
     };
 
     const value: authContextType = {

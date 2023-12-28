@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import Button from '../component/General/Button';
 import Footer from '../component/General/Footer';
 import LazyImage from '../component/General/LazyImage';
-import SearchBar from '../component/General/SearchBar';
+import Search from '../component/General/Search';
 import {motion} from "framer-motion"
 import {Link} from 'react-router-dom';
 
@@ -25,7 +25,7 @@ export default function Community({}: Props) {
                                         ease: [0, 0.71, 0.2, 1.01]
                                     }} alt="" src={"./Logo.png"} className='ml-[8px] min-w-[80px] '/>
                     </Link>
-                    <SearchBar whileHover={{scale: 1.03}} style={{flex: "1"}}/>
+                    <Search whileHover={{scale: 1.03}} style={{flex: "1"}}/>
                     <div onClick={() => setShowMobileNav(!showMobileNav)}
                          className='xsm:flex sm:flex cursor-pointer hidden flex-col items-center gap-[5px] mr-[10px]'>
                         <div className='min-w-[29px] min-h-[5px] bg-[#473a3a] rounded-full'></div>
