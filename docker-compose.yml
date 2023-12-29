@@ -31,3 +31,12 @@ services:
       - "8080:8080"
     depends_on:
       - mongodb
+  party-mode-frontend:
+    build:
+      context: frontend
+    environment:
+      VITE_BACKEND_BASE_URI: http://party-mode-backend:8080
+    ports:
+      - "80:80"
+    depends_on:
+      - party-mode-backend
