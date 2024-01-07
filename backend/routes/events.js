@@ -90,7 +90,7 @@ module.exports.getEventsRouter = () => {
                 description: description,
                 image: req.file.filename,
                 images: images,
-                location: location,
+                location: {name: location},
                 startDate: startDate,
                 endDate: endDate,
                 view: view,

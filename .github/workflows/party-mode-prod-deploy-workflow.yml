@@ -130,7 +130,7 @@ jobs:
             
             # re-set frontend environment variables
             cat > /app/party-mode/frontend/.env << 'EOF'
-            VITE_BACKEND_BASE_URI=http://localhost:8082
+            VITE_BACKEND_BASE_URI=https://208.109.213.129:8083
             EOF
 
             # re-set backend environment variables
