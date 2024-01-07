@@ -120,14 +120,6 @@ jobs:
             rm /usr/bin/node
             mv node-v18.17.1-linux-x64/bin/node /usr/bin/
             
-            # npm install
-            cd /app/party-mode/backend
-            NODE_ENV=production /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
-            
-            cd /app/party-mode/frontend
-            NODE_ENV=production /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
-            /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js run build
-            
             # re-set frontend environment variables
             cat > /app/party-mode/frontend/.env << 'EOF'
             VITE_BACKEND_BASE_URI=https://208.109.213.129:8083
@@ -149,6 +141,14 @@ jobs:
             AUTH_FACEBOOK_CLIENT_ID=${{ secrets.BACKEND_AUTH_FACEBOOK_CLIENT_ID }}
             AUTH_FACEBOOK_CLIENT_SECRET=${{ secrets.BACKEND_AUTH_FACEBOOK_CLIENT_SECRET }}
             EOF
+            
+            # npm install
+            cd /app/party-mode/backend
+            NODE_ENV=production /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
+
+            cd /app/party-mode/frontend
+            NODE_ENV=production /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js install
+            /app/party-mode/bin/nodejs/node-v18.17.1-linux-x64/lib/node_modules/npm/bin/npm-cli.js run build
       - name: Set Backend System Service
         uses: TwanLuttik/gh-action-scp@1.0.1
         with:
