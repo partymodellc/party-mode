@@ -3,11 +3,11 @@ import EventCards from '../component/Events/EventCards'
 import Footer from '../component/General/Footer'
 import Button from '../component/General/Button'
 import {Link} from "react-router-dom"
-import {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import './Style.css'
 import Header from '../component/General/Header'
-import {useEvent} from "../context/EventProvider";
-import {all} from "axios";
+import {useEvent} from "../context/EventProvider"
+import {all} from "axios"
 
 type Props = {}
 
@@ -238,9 +238,7 @@ export const data1 = [
         },
     ],
 ]
-
-
-var settings = {
+let settings = {
     dots: true,
     infinite: false,
     speed: 500,
@@ -278,7 +276,7 @@ var settings = {
             }
         }
     ]
-};
+}
 
 let carouselData = [
     {
@@ -295,7 +293,7 @@ let carouselData = [
     },
 ]
 
-var settings = {
+settings = {
     dots: true,
     infinite: false,
     speed: 500,
@@ -333,7 +331,7 @@ var settings = {
             }
         }
     ]
-};
+}
 
 const Style = {
     button: {}
@@ -343,12 +341,12 @@ interface User {
 
 }
 
-declare function fetch(input: RequestInfo, init?: RequestInit): Promise<Response>;
+declare function fetch(input: RequestInfo, init?: RequestInit): Promise<Response>
 
-type HeadersInit = Headers | string[][] | Record<string, string>;
+type HeadersInit = Headers | string[][] | Record<string, string>
 
 interface RequestInit {
-    headers?: HeadersInit;
+    headers?: HeadersInit
     // other options
 }
 
@@ -358,10 +356,9 @@ export default function Home({}: Props) {
 
     return (
         <>
+            <Header/>
             <div className='w-[calc(100vw - 100%)] '>
-                <Header/>
-
-                <div className='relative top-[85px]'>
+                <div className='relative'>
                     <section className='eventsMainBackground h-[778px] w-[100%] flex relative '>
                         <div
                             className='flex flex-col justify-center absolute top-[39%] left-[65.24495677233429vw] xsm:left-[10vw] sm:left-[50vw]'>
@@ -444,10 +441,9 @@ export default function Home({}: Props) {
                             <hr className='mt-[23px] w-[119px] !h-[2px] border-[#FB4A04] !p-0'></hr>
                         </div>
                     </section>
-
-                    <Footer/>
                 </div>
             </div>
+            <Footer/>
         </>
     )
 }
