@@ -2,6 +2,7 @@ const {Schema, model} = require('mongoose')
 const logger = require('../logger')
 
 const user = model('user', new Schema({
+        // info
         username: {
             type: String,
             require: true
@@ -10,6 +11,7 @@ const user = model('user', new Schema({
             type: String,
             require: true
         },
+        // data
         password: {
             type: String,
             require: true
@@ -23,10 +25,11 @@ const user = model('user', new Schema({
             enum: ['starter', 'member', 'creator'],
             default: 'starter'
         },
-        picture: {
+        image: {
             type: String,
             require: true
         },
+        // links
         eventIds: {
             type: Array
         },
