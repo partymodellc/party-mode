@@ -8,7 +8,7 @@ import {useAuth} from "../../context/AuthProvider";
 import {useEffect, useState} from "react";
 
 type Props = {
-    _id: string;
+    _id: string
     name: string
     price: number
     limit: number
