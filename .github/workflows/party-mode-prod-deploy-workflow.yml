@@ -104,7 +104,6 @@ jobs:
           password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
           command: |
             # verify app directory
-            rm -rf /app
             mkdir /app
             
             # re-clone repo

@@ -14,21 +14,15 @@ import "react-toastify/dist/ReactToastify.css";
 type Props = {};
 
 type Ticket = {
-    _id: string;
-    ticketImg: string;
-    ticketName: string;
-    text: string;
-    price: string;
-    priceDescription: string | null;
-    icon: string;
-    modalHandler: any;
-    phase: string;
-    user: [
-        user: {
-            _id: string;
-        }
-    ];
-    eventName: string;
+    _id: string
+    name: string
+    price: number
+    limit: number
+    startDate: string
+    endDate: string
+    sales: number
+    eventId: string
+    modalHandler: any
 };
 
 export default function CreateTicket({}: Props) {
@@ -485,8 +479,8 @@ export default function CreateTicket({}: Props) {
                             return (
                                 <TicketCard
                                     {...ticket}
-                                    phase={"creation"}
-                                    icon={icon}
+                                    // phase={"creation"}
+                                    // icon={icon}
                                     modalHandler={() => setShowModal2(true)}
                                 />
                             );
