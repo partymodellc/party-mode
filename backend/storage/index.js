@@ -23,7 +23,8 @@ const configure = function (db) {
                 }
             } else {
                 //Otherwise save to default bucket
-                return `${Date.now()}_${file.originalname}`
+                // return `${Date.now()}_${file.originalname}`
+                return ""
             }
         },
     })

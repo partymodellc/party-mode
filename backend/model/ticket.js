@@ -1,34 +1,36 @@
 const {Schema, model} = require('mongoose')
 
 const ticket = model('ticket', new Schema({
+        // info
         name: {
             type: String,
             require: true
         },
-        type: {
-            type: String,
-            require: true
-        },
+        // data
         price: {
             type: Number,
+            require: true
         },
-        sales: {
+        limit: {
             type: Number,
         },
-        image: {
-            type: String,
+        startDate: {
+            type: Date,
             require: true,
         },
+        endDate: {
+            type: Date,
+            require: true
+        },
+        // meta
+        sales: {
+            type: Number,
+            default: 0
+        },
+        // links
         eventId: {
             type: String,
             require: true
-        },
-        section: {
-            type: String,
-            require: true,
-        },
-        promoCodes: {
-            type: Array
         }
     },
     {

@@ -9,86 +9,80 @@ import {useEffect, useState} from "react";
 
 type Props = {
     _id: string;
-    ticketImg: string;
-    ticketName: string;
-    text: string;
-    price: string;
-    priceDescription: string | null;
-    icon: string;
-    modalHandler: any;
-    phase: string;
-    user: [
-        user: {
-            _id: string;
-        }
-    ];
-    eventName: string;
+    name: string
+    price: number
+    limit: number
+    startDate: string
+    endDate: string
+    sales: number
+    eventId: string
+    modalHandler: any
 };
 
 export default function TicketCard({
                                        _id,
-                                       ticketImg,
-                                       ticketName,
-                                       eventName,
+                                       name,
                                        price,
-                                       priceDescription,
-                                       modalHandler,
-                                       icon,
-                                       phase,
+                                       limit,
+                                       startDate,
+                                       endDate,
+                                       sales,
+                                       eventId,
+                                       modalHandler
                                    }: Props) {
     const {setRefresh, refresh} = useEvent();
     const {user} = useAuth();
     const [purchaseLoading, setPurchaseLoading] = useState(false)
 
-    const deleteTicket = async () => {
-        try {
-            const resp = await axios.delete(
-                `http://localhost:8000/tickets/delete-ticket/${_id}`
-            );
-            refresh == true ? setRefresh(false) : setRefresh(true);
-            toast.success(resp.data.message, {
-                position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    // const deleteTicket = async () => {
+    //     try {
+    //         const resp = await axios.delete(
+    //             `http://localhost:8000/tickets/delete-ticket/${_id}`
+    //         );
+    //         refresh == true ? setRefresh(false) : setRefresh(true);
+    //         toast.success(resp.data.message, {
+    //             position: "bottom-center",
+    //             autoClose: 5000,
+    //             hideProgressBar: false,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //             theme: "light",
+    //         });
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // }
 
-    const handleCheckout = async () => {
-
-        try {
-            setPurchaseLoading(true)
-            const resp = await axios.post(
-                `http://localhost:8000/stripe/create-checkout-session`,
-                {
-                    eventName: eventName,
-                    user: user,
-                    ItemID: _id,
-                    ticketImg,
-                    ticketName,
-                    price,
-                    quantity: 1,
-                }
-            );
-            setPurchaseLoading(false)
-
-            // console.log(resp)
-
-            if (resp.data.url) {
-                window.location.href = resp.data.url;
-            }
-        } catch (err) {
-            setPurchaseLoading(false)
-            console.log(err);
-        }
-    };
+    // const handleCheckout = async () => {
+    //
+    //     try {
+    //         setPurchaseLoading(true)
+    //         const resp = await axios.post(
+    //             `http://localhost:8000/stripe/create-checkout-session`,
+    //             {
+    //                 eventName: eventName,
+    //                 user: user,
+    //                 ItemID: _id,
+    //                 ticketImg,
+    //                 ticketName,
+    //                 price,
+    //                 quantity: 1,
+    //             }
+    //         );
+    //         setPurchaseLoading(false)
+    //
+    //         // console.log(resp)
+    //
+    //         if (resp.data.url) {
+    //             window.location.href = resp.data.url;
+    //         }
+    //     } catch (err) {
+    //         setPurchaseLoading(false)
+    //         console.log(err);
+    //     }
+    // }
 
     return (
         <motion.div
@@ -98,32 +92,32 @@ export default function TicketCard({
             key={_id}
             className="shadow-md md:justify-center flex xsm:flex-col w-[42.305vw] xl:w-[41vw] lg:w-[41vw] md:w-[41vw] sm:w-[80vw] xsm:w-[90vw] md:min-w-[70%]"
         >
-            <LazyImage
-                alt=""
-                src={`http://localhost:8000/Storage/${ticketImg}`}
-                classes="w-[13.314vw] xsm:min-w-[100%] min-w-[231px]"
-            />
+            {/*<LazyImage*/}
+            {/*    alt=""*/}
+            {/*    src={`http://localhost:8000/Storage/${ticketImg}`}*/}
+            {/*    classes="w-[13.314vw] xsm:min-w-[100%] min-w-[231px]"*/}
+            {/*/>*/}
             <div className="flex flex-1">
                 <div className="pl-[1.15vw] flex-1 flex flex-col h-[100%] bg-[#fed4c3] sm:flex-0">
                     <h3 className="mt-[13px] font-[400] leading-[33px] text-[clamp(14px,1.1527377521613833vw,20px)] text-[#231414]">
-                        {ticketName}
+                        {name}
                     </h3>
                     <h2 className="mt-[12px] font-[700] leading-[53px] xsm:flex xsm:flex-col text-[32px] text-[#231414]">
                         {price} $
-                        {priceDescription !== null && (
+                        {name !== null && (
                             <span
                                 className="ml-[0.922vw] font-[400] leading-[33px] text-[clamp(14px,1.1527377521613833vw,20px)] text-[#231414]">
-                {priceDescription}
+                {name}
               </span>
                         )}
                     </h2>
                 </div>
-                {phase === "creation" ? (
+                {"creation" === "creation" ? (
                     <div
-                        onClick={deleteTicket}
+                        // onClick={deleteTicket}
                         className="cursor-pointer flex justify-center items-center w-[4.43vw] bg-[#FB4A04] xsm:min-w-[77px] sm:min-w-[55px] md:min-w-[60px]"
                     >
-                        <LazyImage alt="" src={icon}/>
+                        <LazyImage alt="" src={"icon"}/>
                     </div>
                 ) : (
                     //Bellow button is old that opens a menu to select specific ticket and then checkout
@@ -131,7 +125,7 @@ export default function TicketCard({
                     //   <LazyImage  alt="" src={icon}/>
                     // </div>
                     <div
-                        onClick={() => handleCheckout()}
+                        // onClick={() => handleCheckout()}
                         className="cursor-pointer flex justify-center items-center w-[4.43vw] bg-[#FB4A04] xsm:min-w-[77px] sm:min-w-[55px] md:min-w-[60px]"
                     >
 
@@ -160,7 +154,7 @@ export default function TicketCard({
                                 )
                                 :
                                 (
-                                    <LazyImage alt="" src={icon}/>
+                                    <LazyImage alt="" src={"icon"}/>
                                 )
                         }
 

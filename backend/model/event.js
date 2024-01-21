@@ -4,60 +4,62 @@ const event = model('event', new Schema({
         // info
         title: {
             type: String,
-            require: true,
+            require: true
         },
         summary: {
-            type: String
+            type: String,
+            require: true
         },
+        // data
         description: {
-            type: String
+            type: String,
+            require: true
         },
         image: {
             type: String,
             require: true
         },
-        images: {
-            type: Array
-        },
-        // data
         location: {
-            name: String,
+            name: {
+                type: String,
+                require: true
+            },
             latitude: Number,
             longitude: Number
         },
-        startDate: Date,
-        endDate: Date,
-        status: {
-            type: String,
-            require: true,
+        startDate: {
+            type: Date,
+            require: true
         },
-        view: {
-            type: String,
-            default: "public"
+        endDate: {
+            type: Date,
+            require: true
         },
+        // links
         userId: {
             type: String,
             require: true
         },
-        type: {
-            type: Array
-        },
         ticketIds: {
             type: Array,
-            default: [],
-            require: true
+            default: []
         },
         // meta
+        type: {
+            type: String,
+            // TODO: outline types
+            enum: ['type1', 'type2'],
+            require: true
+        },
         category: {
-            type: Array
+            type: String,
+            // TODO: outline categories
+            enum: ['cat1', 'cat2'],
+            require: true
         },
         tags: {
             type: Array
-        },
-        likes: {
-            type: Number,
-            default: 0
-        },
+        }
     },
     {
         timestamps: true,

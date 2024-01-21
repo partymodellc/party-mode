@@ -37,120 +37,122 @@ function App() {
 
     let routes = useRoutes([
         {
-            path: "/",
+            path: "",
             element: <Home/>
         },
         {
-            path: "/events/:eventID",
+            path: "events/:eventID",
             element: <Event/>
         },
         {
-            path: "/login",
+            path: "login",
             element: <Login/>
         },
         {
-            path: "/signup",
+            path: "signup",
             element: <Signup/>
         },
         {
-            path: "/payment-success",
+            path: "payment-success",
             element: <PaymentSuccess/>
         },
         {
-            path: "/interests",
+            path: "interests",
             element: <Interests/>
         },
         {
-            path: "/subscription-and-pricing",
+            path: "subscription-and-pricing",
             element: <SubscriptionAndPricing/>
         },
         {
-            path: "/contact-us",
+            path: "contact-us",
             element: <ContactUs/>
         },
         {
-            path: "/community",
+            path: "community",
             element: <Community/>
         },
         {
-            path: "/community-join",
+            path: "community-join",
             element: <Community2/>
         },
         {
-            path: "/help-sub",
+            path: "help-sub",
             element: <HelpSub/>
         },
         {
-            path: "/likes",
+            path: "likes",
             element: <Likes/>
         },
         {
-            path: "/tickets",
+            path: "tickets",
             element: <Tickets/>
         },
         {
-            path: "/ticket-verified",
+            path: "ticket-verified",
             element: <TicketVerifiedEmail/>
         },
         {
-            path: "/dashboard",
+            path: "dashboard",
             element: <DashboardHome/>
         },
         {
-            path: "/dashboard/events",
+            path: "dashboard/events",
             element: <DashboardEvents/>
         },
         {
-            path: "/dashboard/events/orders",
+            path: "dashboard/events/orders",
             element: <Orders/>
         },
         {
-            path: "/dashboard/analytics",
+            path: "dashboard/analytics",
             element: <DashboardAnalytics/>
         },
         {
-            path: "/dashboard/settings",
+            path: "dashboard/settings",
             element: <DashboardSettings/>
         },
         {
-            path: "/dashboard/invoice-and-billing",
+            path: "dashboard/invoice-and-billing",
             element: <DashboardInvoiceAndBilling/>
         },
         {
-            path: "/setting",
+            path: "setting",
             element: <ProfileEdit/>
         },
         {
-            path: "/setting/invite-team",
+            path: "setting/invite-team",
             element: <InviteTeam/>
         },
         {
-            path: "/setting/app-installation",
+            path: "setting/app-installation",
             element: <AppInstallation/>
         },
         {
-            path: "/create-event",
-            element: <CreateEvent/>
-        },
-        {
-            path: "/create-event/basic-info/:eventID",
-            element: <BasicInfo/>
-        },
-        {
-            path: "/create-event/detail/:eventID",
-            element: <Detail/>
-        },
-        {
-            path: "/create-event/online-page-event/:eventID",
-            element: <OnlinePageEvent/>
-        },
-        {
-            path: "/create-event/create-ticket/:eventID",
-            element: <CreateTicket/>
-        },
-        {
-            path: "/create-event/publish/:eventID",
-            element: <Publish/>
+            path: "create-event",
+            element: <CreateEvent/>,
+            children: [
+                {
+                    path: "basic-info",
+                    element: <BasicInfo/>
+                },
+                {
+                    path: "create-event/detail",
+                    element: <Detail/>
+                },
+                {
+                    path: "create-event/online-page-event",
+                    element: <OnlinePageEvent/>
+                },
+                {
+                    path: "create-event/create-ticket",
+                    element: <CreateTicket/>
+                },
+                {
+                    path: "create-event/publish",
+                    element: <Publish/>
+                }
+            ]
         }
     ])
 
