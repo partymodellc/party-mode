@@ -231,12 +231,14 @@ export default function HeaderEvents() {
                             {/*    </motion.p>*/}
                             {/*</li>*/}
                             <li className="flex items-center gap-[8px]">
-                                <motion.p
-                                    whileHover={{color: "#FB4A04"}}
-                                    className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
-                                >
-                                    Logout
-                                </motion.p>
+                                <button onClick={logout}>
+                                    <motion.p
+                                        whileHover={{color: "#FB4A04"}}
+                                        className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
+                                    >
+                                        Logout
+                                    </motion.p>
+                                </button>
                             </li>
                         </ul>
                     </div>
@@ -305,19 +307,18 @@ export default function HeaderEvents() {
                     <ul style={showMobileNav ? {maxHeight: "1000px"} : {maxHeight: "0px", overflow: "hidden"}}
                         className='transition-all xsm:flex sm:flex md:flex flex-col hidden text-[#493c3c] py-[10px] items-center text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] gap-[5.244vw] relative'>
                         <Link to={"/help-sub"}>
-                            <motion.li whileHover={{color: "#FB4A04"}}>Live Stream</motion.li>
+                            <button>Live Stream</button>
                         </Link>
                         <Link to={"/subscription-and-pricing"}>
-                            <motion.li whileHover={{color: "#FB4A04"}}>Pricing</motion.li>
+                            <button>Pricing</button>
                         </Link>
                         <Link to={"/contact-us"}>
-                            <motion.li whileHover={{color: "#FB4A04"}}>Help</motion.li>
+                            <button>Help</button>
                         </Link>
                         <Link to="/login">
-                            <motion.li whileHover={{color: "#FB4A04"}}>Log In</motion.li>
+                            <button>Log In</button>
                         </Link>
                         <Link to="/signup">
-                            {/* <motion.li whileHover={{ color: "#473a3a" }} className='text-[#FB4A04]'>Sign Up</motion.li> */}
                             <button>Sign Up</button>
                         </Link>
                     </ul>
