@@ -104,11 +104,11 @@ jobs:
           password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
           command: |
             # verify app directory
+            rm -rf /app
             mkdir /app
             
             # re-clone repo
             cd /app
-            rm -rf party-mode
             git clone --branch develop https://github.com/partymodellc/party-mode.git
             
             # re-setup node cli
