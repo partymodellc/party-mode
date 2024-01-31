@@ -1,88 +1,190 @@
-import axios, {all} from "axios";
-import React, {
-    ReactNode,
-    FC,
-    createContext,
-    useContext,
-    useState,
-    useEffect,
-} from "react";
+import axios, {AxiosResponse} from "axios"
+import React, {ReactNode, createContext, useContext, useState,} from "react"
+import {config} from "../config/Config"
+import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
-import {config} from "../config/Config";
-import {Event} from "../component/Events/EventCards"
 
-// type eventType = {
-//     id: string,
-//     image: string,
-//     title: string,
-//     description: string
-// }
+export type IncomingEvent = {
+    id: string
+    title?: string
+    summary?: string
+    description?: string
+    image?: string
+    gallery?: string[]
+    location?: {
+        address?: string
+        latitude?: number
+        longitude?: number
+    }
+    startDate?: string
+    endDate?: string
+    view: string
+    status: string
+    ticketIds?: string[]
+    type?: string
+    category?: string
+    tags?: string[]
+}
+
+export type OutgoingEvent = {
+    title?: string
+    summary?: string
+    description?: string
+    image?: File
+    gallery?: File[]
+    location?: {
+        address?: string
+        latitude?: number
+        longitude?: number
+    }
+    startDate?: string
+    endDate?: string
+    view?: string
+    status?: string
+    publishDate?: string
+    ticketIds?: string[]
+    type?: string
+    category?: string
+    tags?: string[]
+}
+
+export type IncomingTicket = {
+    id: string
+    name: string
+    image?: string
+    price?: number
+    limit?: number
+    sales?: number
+    eventId: string
+}
+
+export type OutgoingTicket = {
+    name?: string
+    image?: File
+    price?: number
+    limit?: number
+    eventId?: string
+}
 
 type eventContextType = {
-    eventID: string;
-    setEventID?: React.Dispatch<React.SetStateAction<string>>
-    deleteEvent: (eventID: string) => any;
-    allEvents: Event[];
-    setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
-    refresh: boolean;
-};
-const eventContextDefaultValues: eventContextType = {
-    eventID: "",
-    deleteEvent: (eventID: string) => {
-    },
-    allEvents: [],
-    setRefresh: () => {
-    },
-    refresh: false
+    allEvents?: IncomingEvent[]
+    allTickets?: IncomingTicket[]
+    getEvent: (eventId: string) => Promise<AxiosResponse<any, any>>
+    getAllEvents: () => void
+    createEvent: () => Promise<AxiosResponse<any, any>>
+    updateEventAndNav: (eventId: string, page: string, event?: OutgoingEvent) => void
+    deleteEvent: (eventId: string) => void
+    getAllTickets: (eventId: string) => void
+    createTicket: (ticket: OutgoingTicket) => void
+    deleteTicket: (ticketId: string) => void
+}
 
-};
+const eventContextDefaultValues: eventContextType = {
+    getEvent: () => {
+        return new Promise<any>(() => {
+        })
+    },
+    getAllEvents: () => {
+    },
+    createEvent: () => {
+        return new Promise<any>(() => {
+        })
+    },
+    updateEventAndNav: () => {
+        return new Promise<any>(() => {
+        })
+    },
+    deleteEvent: () => {
+    },
+    getAllTickets: () => {
+    },
+    createTicket: () => {
+    },
+    deleteTicket: () => {
+    }
+}
 
 type Props = {
-    children: ReactNode;
-};
+    children: ReactNode
+}
 
-const EventContext = createContext<eventContextType>(eventContextDefaultValues);
+const EventContext = createContext<eventContextType>(eventContextDefaultValues)
 
 export function useEvent() {
-    return useContext(EventContext);
+    return useContext(EventContext)
 }
 
 export function EventProvider({children}: Props) {
-    const navigate = useNavigate();
+    const [allEvents, setAllEvents] = useState<IncomingEvent[]>()
+    const [allTickets, setAllTickets] = useState<IncomingTicket[]>()
+    const navigate = useNavigate()
 
-    const [eventID, setEventID] = useState<string>("");
-    const [allEvents, setAllEvents] = useState<Event[]>([]);
-    const [refresh, setRefresh] = useState<boolean>(false);
-
-    useEffect(() => {
-
-        const getEventData = async () => {
-            // console.log("Keep Syncing Eventsss");
-        };
-
-        getEventData();
-    }, [eventID]);
-
-
-    const deleteEvent = async (eventID: string) => {
-        const resp = await axios.delete(`${config.backendBaseUri}/events/${eventID}`);
+    const getEvent = (eventId: string) => {
+        return axios.get(`${config.backendBaseUri}/events/${eventId}`)
     }
 
-    useEffect(() => {
-        const getAllEvent = async () => {
-            const resp = await axios.get(`${config.backendBaseUri}/events`)
-            setAllEvents(resp.data)
-        }
-        getAllEvent();
-    }, [refresh])
+    const getAllEvents = () => {
+        axios.get(`${config.backendBaseUri}/events`)
+            .then(response => {
+                setAllEvents(response.data)
+            })
+    }
+
+    const createEvent = () => {
+        return axios.post(`${config.backendBaseUri}/events`, undefined, {withCredentials: true})
+    }
+
+    const updateEventAndNav = (eventId: string, page: string, event?: OutgoingEvent) => {
+        axios.put(`${config.backendBaseUri}/events/${eventId}`, event, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }, withCredentials: true
+        })
+            .then(() => {
+                navigate(`/events/${eventId}/${page}`)
+            })
+    }
+
+    const deleteEvent = (eventId: string) => {
+        axios.delete(`${config.backendBaseUri}/events/${eventId}`, {withCredentials: true})
+            .then(response => {
+                toast.success("Event deleted")
+            })
+    }
+
+    const getAllTickets = (eventId: string) => {
+        axios.get(`${config.backendBaseUri}/tickets/event/${eventId}`)
+            .then(response => {
+                setAllTickets(response.data)
+            })
+    }
+
+    const createTicket = (ticket: OutgoingTicket) => {
+        axios.post(`${config.backendBaseUri}/tickets`, ticket, {withCredentials: true})
+            .then(() => {
+                toast.success("Ticket created")
+            })
+    }
+
+    const deleteTicket = (ticketId: string) => {
+        axios.delete(`${config.backendBaseUri}/tickets/${ticketId}`, {withCredentials: true})
+            .then(response => {
+                toast.success("Ticket deleted")
+            })
+    }
 
     const value: eventContextType = {
-        eventID: eventID,
-        deleteEvent: deleteEvent,
         allEvents: allEvents,
-        setRefresh: setRefresh,
-        refresh: refresh!
-    };
+        allTickets: allTickets,
+        getEvent: getEvent,
+        getAllEvents: getAllEvents,
+        createEvent: createEvent,
+        updateEventAndNav: updateEventAndNav,
+        deleteEvent: deleteEvent,
+        getAllTickets: getAllTickets,
+        createTicket: createTicket,
+        deleteTicket: deleteTicket
+    }
 
     return (
         <>
@@ -90,5 +192,5 @@ export function EventProvider({children}: Props) {
                 {children}
             </EventContext.Provider>
         </>
-    );
+    )
 }

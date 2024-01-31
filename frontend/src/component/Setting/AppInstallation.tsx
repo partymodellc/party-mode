@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../General/Button'
+import Button from '../general/Button'
 import InvoiceTableRow from '../InvoiceAndBilling/InvoiceTableRow'
 
 type Props = {}

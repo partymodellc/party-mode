@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Button from '../General/Button'
+import Button from '../general/Button'
 
 type Props = {}
 

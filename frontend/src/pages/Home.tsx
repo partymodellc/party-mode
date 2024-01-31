@@ -1,243 +1,15 @@
 import Carousel from '../component/EventDescriptions/Carousel'
 import EventCards from '../component/Events/EventCards'
-import Footer from '../component/General/Footer'
-import Button from '../component/General/Button'
+import Footer from '../component/general/Footer'
+import Button from '../component/general/Button'
 import {Link} from "react-router-dom"
-import React, {useState, useEffect} from 'react'
 import './Style.css'
-import Header from '../component/General/Header'
+import Header from '../component/general/Header'
 import {useEvent} from "../context/EventProvider"
-import {all} from "axios"
+import {useEffect} from "react";
 
 type Props = {}
 
-export const data = [
-    {
-        id: "1",
-        image: "./image1.png",
-        title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-        description: "Thurs Oct 13 at 7:00pm EDT"
-    },
-    {
-        id: "1",
-        image: "./image2.png",
-        title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-        description: "Thurs Oct 13 at 7:00pm EDT"
-    },
-    {
-        id: "1",
-        image: "./image3.png",
-        title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-        description: "Thurs Oct 13 at 7:00pm EDT"
-    },
-    {
-        id: "1",
-        image: "./image4.png",
-        title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-        description: "Thurs Oct 13 at 7:00pm EDT"
-    },
-    {
-        id: "1",
-        image: "./image2.png",
-        title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-        description: "Thurs Oct 13 at 7:00pm EDT"
-    },
-]
-
-export const data1 = [
-    [
-        {
-            id: "1",
-            image: "./festival1.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./festival2.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./festival3.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./festival2.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./festival4.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-    ],
-    [
-        {
-            id: "1",
-            image: "./electronic1.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./electronic2.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./electronic3.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./electronic2.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./electronic4.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-    ],
-    [
-        {
-            id: "1",
-            image: "./pop1.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./pop2.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./pop3.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./pop4.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./pop3.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-    ],
-    [
-        {
-            id: "1",
-            image: "./music1.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./music2.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./music3.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./music4.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./music3.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-    ],
-    [
-        {
-            id: "1",
-            image: "./comedy1.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./comedy2.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./comedy3.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./comedy4.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./comedy3.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-    ],
-    [
-        {
-            id: "1",
-            image: "./miami1.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./miami2.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./miami3.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./miami4.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-        {
-            id: "1",
-            image: "./miami3.png",
-            title: "Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.",
-            description: "Thurs Oct 13 at 7:00pm EDT"
-        },
-    ],
-]
 let settings = {
     dots: true,
     infinite: false,
@@ -333,26 +105,12 @@ settings = {
     ]
 }
 
-const Style = {
-    button: {}
-}
-
-interface User {
-
-}
-
-declare function fetch(input: RequestInfo, init?: RequestInit): Promise<Response>
-
-type HeadersInit = Headers | string[][] | Record<string, string>
-
-interface RequestInit {
-    headers?: HeadersInit
-    // other options
-}
-
 export default function Home({}: Props) {
-    const [showMobileNav, setShowMobileNav] = useState<boolean>(false)
-    const {allEvents} = useEvent()
+    const {allEvents, getAllEvents} = useEvent()
+
+    useEffect(() => {
+        getAllEvents()
+    }, [])
 
     return (
         <>

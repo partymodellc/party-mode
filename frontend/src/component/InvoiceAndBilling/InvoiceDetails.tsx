@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import TableRowOrder from '../EventsDashboard/TableRowOrder'
-import Button from '../General/Button'
-import LazyImage from '../General/LazyImage'
-import Modal from '../General/Modal'
+import Button from '../general/Button'
+import LazyImage from '../general/LazyImage'
+import Modal from '../general/Modal'
 import InvoiceTableRow from './InvoiceTableRow'
 import {motion} from "framer-motion"
 

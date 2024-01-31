@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import Footer from '../../component/General/Footer'
-import Button from '../../component/General/Button'
-import LazyImage from '../../component/General/LazyImage'
-import Search from '../../component/General/Search'
+import Footer from '../../component/general/Footer'
+import Button from '../../component/general/Button'
+import LazyImage from '../../component/general/LazyImage'
+import Search from '../../component/general/Search'
 import { motion } from "framer-motion"
 import { Link } from 'react-router-dom'
 

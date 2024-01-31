@@ -1,21 +1,15 @@
 import React, {useEffect, useState} from "react"
-import LazyImage from "../General/LazyImage"
-import {filterProps, motion} from "framer-motion"
+import LazyImage from "../general/LazyImage"
+import {motion} from "framer-motion"
 import {useNavigate} from "react-router-dom"
-import Slider from "react-slick"
-import axios from "axios"
-import {config} from "../../config/Config";
+import {config} from "../../config/Config"
+import {IncomingEvent} from "../../context/EventProvider"
 
 type Props = {
     mainText: string
-    data?: Event[]
+    data?: IncomingEvent[]
 }
-export type Event = {
-    id: string
-    image: string
-    title: string
-    description: string
-}
+
 var settings = {
     dots: true,
     infinite: true,
@@ -167,11 +161,11 @@ export default function EventCards({mainText, data = []}: Props) {
                                     {d.title}
                                 </h3>
                                 <p className="font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[33px] text-[#473a3a]">
-                                    {
-                                        d.description.length > 20 ?
-                                            d.description.substring(0, 20 - 1) + "..."
-                                            : d.description
-                                    }
+                                    {/*{*/}
+                                    {/*    d.description!.length > 20 ?*/}
+                                    {/*        d.description!.substring(0, 20 - 1) + "..."*/}
+                                    {/*        : d.description*/}
+                                    {/*}*/}
                                 </p>
                             </div>
                         </motion.div>

@@ -1,12 +1,14 @@
 import {lazy, Suspense} from "react"
-import {Navigate, Route, Routes, useRoutes} from "react-router-dom"
-import Event from "./pages/Event"
-import LoadingAnimation from "./component/General/LoadingAnimation"
+import {Route, Routes} from "react-router-dom"
+import Event from "./pages/events/Event"
+import LoadingAnimation from "./component/general/LoadingAnimation"
 import "react-toastify/dist/ReactToastify.css"
+import PrivateRoutes from "./utils/PrivateRoutes";
+import AuthRoutes from "./utils/AuthRoutes";
 
 const Home = lazy(() => import("./pages/Home"))
-const Login = lazy(() => import("./component/Authentication/Login"))
-const Signup = lazy(() => import("./component/Authentication/Signup"))
+const Login = lazy(() => import("./pages/authentication/Login"))
+const Signup = lazy(() => import("./pages/authentication/Signup"))
 const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"))
 const SubscriptionAndPricing = lazy(() => import("./pages/SubscriptionAndPricing"))
 const ContactUs = lazy(() => import("./pages/ContactUs"))
@@ -24,145 +26,67 @@ const ProfileEdit = lazy(() => import("./component/Setting/ProfileEdit"))
 const InviteTeam = lazy(() => import("./component/Setting/InviteTeam"))
 const AppInstallation = lazy(() => import("./component/Setting/AppInstallation"))
 const Interests = lazy(() => import("./component/Authentication/Interests"))
-const CreateEvent = lazy(() => import("./pages/CreateEvent"))
-const BasicInfo = lazy(() => import("./component/CreateEvent/BasicInfo"))
-const Detail = lazy(() => import("./component/CreateEvent/Detail"))
-const OnlinePageEvent = lazy(() => import("./component/CreateEvent/OnlinePageEvent"))
-const CreateTicket = lazy(() => import("./component/CreateEvent/CreateTicket"))
-const Publish = lazy(() => import("./component/CreateEvent/Publish"))
+const BasicInfo = lazy(() => import("./pages/events/BasicInfo"))
+const Details = lazy(() => import("./pages/events/Details"))
+const OnlinePageEvent = lazy(() => import("./pages/events/OnlinePageEvent"))
+const EventTickets = lazy(() => import("./pages/events/Tickets"))
+const Publish = lazy(() => import("./pages/events/Publish"))
 const Community = lazy(() => import("./pages/Community"))
 const Community2 = lazy(() => import("./pages/Community2"))
 
-function App() {
-
-    let routes = useRoutes([
-        {
-            path: "",
-            element: <Home/>
-        },
-        {
-            path: "events/:eventID",
-            element: <Event/>
-        },
-        {
-            path: "login",
-            element: <Login/>
-        },
-        {
-            path: "signup",
-            element: <Signup/>
-        },
-        {
-            path: "payment-success",
-            element: <PaymentSuccess/>
-        },
-        {
-            path: "interests",
-            element: <Interests/>
-        },
-        {
-            path: "subscription-and-pricing",
-            element: <SubscriptionAndPricing/>
-        },
-        {
-            path: "contact-us",
-            element: <ContactUs/>
-        },
-        {
-            path: "community",
-            element: <Community/>
-        },
-        {
-            path: "community-join",
-            element: <Community2/>
-        },
-        {
-            path: "help-sub",
-            element: <HelpSub/>
-        },
-        {
-            path: "likes",
-            element: <Likes/>
-        },
-        {
-            path: "tickets",
-            element: <Tickets/>
-        },
-        {
-            path: "ticket-verified",
-            element: <TicketVerifiedEmail/>
-        },
-        {
-            path: "dashboard",
-            element: <DashboardHome/>
-        },
-        {
-            path: "dashboard/events",
-            element: <DashboardEvents/>
-        },
-        {
-            path: "dashboard/events/orders",
-            element: <Orders/>
-        },
-        {
-            path: "dashboard/analytics",
-            element: <DashboardAnalytics/>
-        },
-        {
-            path: "dashboard/settings",
-            element: <DashboardSettings/>
-        },
-        {
-            path: "dashboard/invoice-and-billing",
-            element: <DashboardInvoiceAndBilling/>
-        },
-        {
-            path: "setting",
-            element: <ProfileEdit/>
-        },
-        {
-            path: "setting/invite-team",
-            element: <InviteTeam/>
-        },
-        {
-            path: "setting/app-installation",
-            element: <AppInstallation/>
-        },
-        {
-            path: "create-event",
-            element: <CreateEvent/>,
-            children: [
-                {
-                    path: "basic-info",
-                    element: <BasicInfo/>
-                },
-                {
-                    path: "create-event/detail",
-                    element: <Detail/>
-                },
-                {
-                    path: "create-event/online-page-event",
-                    element: <OnlinePageEvent/>
-                },
-                {
-                    path: "create-event/create-ticket",
-                    element: <CreateTicket/>
-                },
-                {
-                    path: "create-event/publish",
-                    element: <Publish/>
-                }
-            ]
-        }
-    ])
-
+export default function App() {
     return (
         <main>
             <Suspense fallback={<LoadingAnimation/>}>
-                {routes}
+                <Routes>
+                    {/* content routes */}
+                    <Route path="" element={<Home/>}/>
+                    <Route path="events/:eventId" element={<Event/>}/>
+
+                    {/* auth routes */}
+                    <Route element={<AuthRoutes/>}>
+                        <Route path="login" element={<Login/>}/>
+                        <Route path="signup" element={<Signup/>}/>
+                    </Route>
+
+                    {/* protected routes */}
+                    <Route element={<PrivateRoutes/>}>
+                        <Route path="events/:eventId/basic-info" element={<BasicInfo/>}/>
+                        <Route path="events/:eventId/details" element={<Details/>}/>
+                        <Route path="events/:eventId/tickets" element={<EventTickets/>}/>
+                        {/* TODO: support online event page features */}
+                        {/*<Route path="events/:eventID/online-page-event" element={<OnlinePageEvent/>}/>*/}
+                        <Route path="events/:eventId/publish" element={<Publish/>}/>
+
+                        <Route path="dashboard" element={<DashboardHome/>}/>
+                        <Route path="dashboard/events" element={<DashboardEvents/>}/>
+                        <Route path="dashboard/events/orders" element={<Orders/>}/>
+                        <Route path="dashboard/analytics" element={<DashboardAnalytics/>}/>
+                        <Route path="dashboard/settings" element={<DashboardSettings/>}/>
+                        <Route path="dashboard/invoice-and-billing" element={<DashboardInvoiceAndBilling/>}/>
+
+                        <Route path="likes" element={<Likes/>}/>
+                        <Route path="tickets" element={<Tickets/>}/>
+
+                        <Route path="settings" element={<ProfileEdit/>}/>
+                        <Route path="settings/invite-team" element={<InviteTeam/>}/>
+                        <Route path="settings/app-installation" element={<AppInstallation/>}/>
+                    </Route>
+
+                    {/* info routes */}
+                    <Route path="contact-us" element={<ContactUs/>}/>
+                    <Route path="help-sub" element={<HelpSub/>}/>
+
+                    {/* misc routes */}
+                    <Route path="payment-success" element={<PaymentSuccess/>}/>
+                    <Route path="interests" element={<Interests/>}/>
+                    <Route path="subscription-and-pricing" element={<SubscriptionAndPricing/>}/>
+
+                    <Route path="community" element={<Community/>}/>
+                    <Route path="community-join" element={<Community2/>}/>
+                    <Route path="ticket-verified" element={<TicketVerifiedEmail/>}/>
+                </Routes>
             </Suspense>
         </main>
     )
 }
-
-export default App

@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const Users = require('../model/user')
-const authHelper = require('./auth-helper')
+const authVerification = require('../middleware/auth/auth-verification')
 
 module.exports.getUsersRouter = () => {
 
     router.get('/me',
-        authHelper.requireAuthentication,
+        authVerification.requireAuthentication,
         (req, res) => {
             return res.status(200).json({
                 username: req.user.username,
@@ -19,7 +19,7 @@ module.exports.getUsersRouter = () => {
     )
 
     router.put('/me',
-        authHelper.requireAuthentication,
+        authVerification.requireAuthentication,
         (req, res) => {
             const {username, password, picture} = req.body
 
@@ -27,7 +27,7 @@ module.exports.getUsersRouter = () => {
                 if (err) {
                     return res.status(500).json({message: err.message})
                 } else {
-                    return res.status(204)
+                    return res.status(204).send()
                 }
             })
         }

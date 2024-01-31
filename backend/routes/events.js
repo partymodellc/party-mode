@@ -2,14 +2,13 @@ const express = require('express')
 const {checkSchema, validationResult, matchedData} = require('express-validator')
 const router = express.Router()
 const event = require('../model/event')
-const authHelper = require('./auth-helper')
+const authVerification = require('../middleware/auth/auth-verification')
 const storage = require('../storage')
 
 // TODO: abstract out into file for reuse in other routes
 const stringValidators = {
-    exists: {
-        bail: true,
-        errorMessage: "missing required value"
+    optional: {
+        options: {values: null}
     },
     isString: {
         bail: true,
@@ -22,10 +21,19 @@ const stringValidators = {
     trim: true
 }
 
-const dateValidators = {
-    exists: {
+const numberValidators = {
+    optional: {
+        options: {values: null}
+    },
+    isNumeric: {
         bail: true,
-        errorMessage: "missing required value"
+        errorMessage: "value must be a number"
+    }
+}
+
+const dateValidators = {
+    optional: {
+        options: {values: null}
     },
     isISO8601: {
         bail: true,
@@ -35,6 +43,9 @@ const dateValidators = {
 }
 
 const stringArrayValidators = {
+    optional: {
+        options: {values: null}
+    },
     isArray: {
         bail: true,
         errorMessage: "value must be a string array"
@@ -61,9 +72,9 @@ module.exports.getEventsRouter = () => {
                 startDate: evt.startDate,
                 endDate: evt.endDate,
                 view: evt.view,
+                status: evt.status,
                 userId: evt.userId,
                 type: evt.type,
-                tickets: evt.tickets,
                 category: evt.category,
                 tags: evt.tags
             }))
@@ -84,25 +95,26 @@ module.exports.getEventsRouter = () => {
                     title: event.title,
                     summary: event.summary,
                     description: event.description,
-                    image: encodeURIComponent(event.image),
+                    image: event.image ? encodeURIComponent(event.image) : event.image,
                     location: event.location,
                     startDate: event.startDate,
                     endDate: event.endDate,
                     view: event.view,
+                    status: event.status,
                     userId: event.userId,
                     type: event.type,
-                    tickets: event.tickets,
                     category: event.category,
                     tags: event.tags
                 })
             }
 
-            return res.status(404)
+            return res.status(404).send()
         })
     })
 
+    // TODO: add support for gallery
     router.post('/',
-        authHelper.requireAuthentication,
+        authVerification.requireAuthentication,
         // TODO: additional authHelper middleware for authorization based on membership type
         storage.upload().single('image'), // also used to parse multipart/form-data
         // TODO: validate values for enums
@@ -110,20 +122,19 @@ module.exports.getEventsRouter = () => {
             title: stringValidators,
             summary: stringValidators,
             description: stringValidators,
-            location: stringValidators,
+            'location[address]': stringValidators,
+            'location[latitude]': numberValidators,
+            'location[longitude]': numberValidators,
             startDate: dateValidators,
             endDate: dateValidators,
+            view: stringValidators,
+            status: stringValidators,
             type: stringValidators,
             category: stringValidators,
             tags: stringArrayValidators,
             'tags.*': stringValidators
         }, ['body']),
         (req, res, next) => {
-            // custom validation for image field
-            if (req.file == null) {
-                return res.status(400).json({error: 'image file is required'})
-            }
-
             // gather result from validations
             const result = validationResult(req);
             if (!result.isEmpty()) {
@@ -140,19 +151,28 @@ module.exports.getEventsRouter = () => {
                 location,
                 startDate,
                 endDate,
+                view,
+                status,
                 type,
                 category,
                 tags
-            } = matchedData(req);
+            } = matchedData(req)
+
+            let filename = undefined
+            if (req.file) {
+                filename = req.file.filename
+            }
 
             event.createEvent({
                 title: title,
                 summary: summary,
                 description: description,
-                image: req.file.filename,
-                location: {name: location},
+                image: filename,
+                location: location,
                 startDate: startDate,
                 endDate: endDate,
+                view: view,
+                status: status,
                 userId: req.user.id,
                 type: type,
                 category: category,
@@ -173,9 +193,9 @@ module.exports.getEventsRouter = () => {
                         startDate: event.startDate,
                         endDate: event.endDate,
                         view: event.view,
+                        status: event.status,
                         userId: event.userId,
                         type: event.type,
-                        tickets: event.tickets,
                         category: event.category,
                         tags: event.tags
                     })
@@ -186,74 +206,134 @@ module.exports.getEventsRouter = () => {
         }
     )
 
-    // updating events not supported yet
-    // router.put('/:eventId',
-    //     authHelper.requireAuthentication,
-    //     (req, res) => {
-    //         // TODO: authorize before updating event
-    //         const {
-    //             title,
-    //             summary,
-    //             description,
-    //             image,
-    //             images,
-    //             location,
-    //             startDate,
-    //             endDate,
-    //             view,
-    //             userId,
-    //             type,
-    //             tickets,
-    //             category,
-    //             tags
-    //         } = req.body
-    //
-    //         event.updateEvent(req.params.eventId, {
-    //                 title: title,
-    //                 summary: summary,
-    //                 description: description,
-    //                 image: image,
-    //                 images: images,
-    //                 location: location,
-    //                 startDate: startDate,
-    //                 endDate: endDate,
-    //                 view: view,
-    //                 userId: userId,
-    //                 type: type,
-    //                 tickets: tickets,
-    //                 category: category,
-    //                 tags: tags
-    //             },
-    //             (err, event) => {
-    //                 if (err) {
-    //                     return res.status(500).json({message: err.message})
-    //                 }
-    //
-    //                 return res.status(200).json(event)
-    //             }
-    //         )
-    //     }
-    // )
+    router.put('/:eventId',
+        authVerification.requireAuthentication,
+        // TODO: additional authHelper middleware for authorization based on membership type
+        storage.upload().single('image'), // also used to parse multipart/form-data
+        // TODO: validate values for enums
+        checkSchema({
+            title: stringValidators,
+            summary: stringValidators,
+            description: stringValidators,
+            'location[address]': stringValidators,
+            'location[latitude]': numberValidators,
+            'location[longitude]': numberValidators,
+            startDate: dateValidators,
+            endDate: dateValidators,
+            view: stringValidators,
+            status: stringValidators,
+            type: stringValidators,
+            category: stringValidators,
+            tags: stringArrayValidators,
+            'tags.*': stringValidators
+        }, ['body']),
+        (req, res, next) => {
+            // gather result from validations
+            const result = validationResult(req);
+            if (!result.isEmpty()) {
+                return res.status(400).json({errors: result.array()});
+            }
 
-    // deleting events not supported yet
-    // router.delete('/:eventId',
-    //     authHelper.requireAuthentication,
-    //     (req, res) => {
-    //         // TODO: authorize before deleting event
-    //         event.deleteEvent(req.params.eventId, function (err, event) {
-    //             if (err) {
-    //                 return res.status(500).json({message: err.message})
-    //             }
-    //
-    //             if (event) {
-    //                 res.status(204)
-    //             }
-    //
-    //             res.status(500).json({message: 'Unexpected error deleting event'})
-    //         })
-    //
-    //     }
-    // )
+            next()
+        },
+        (req, res) => {
+            const {
+                title,
+                summary,
+                description,
+                location,
+                startDate,
+                endDate,
+                view,
+                status,
+                type,
+                category,
+                tags
+            } = req.body
+
+            let filename = undefined
+            if (req.file) {
+                filename = req.file.filename
+            }
+
+            event.updateEvent(req.params.eventId, req.user.id, {
+                    title: title,
+                    summary: summary,
+                    description: description,
+                    image: filename,
+                    location: location,
+                    startDate: startDate,
+                    endDate: endDate,
+                    view: view,
+                    status: status,
+                    type: type,
+                    category: category,
+                    tags: tags
+                },
+                (err, event) => {
+                    if (err) {
+                        return res.status(500).json({message: err.message})
+                    }
+
+                    if (event) {
+                        return res.status(200).json({
+                            id: event.id,
+                            title: event.title,
+                            summary: event.summary,
+                            description: event.description,
+                            image: event.image,
+                            location: event.location,
+                            startDate: event.startDate,
+                            endDate: event.endDate,
+                            view: event.view,
+                            status: event.status,
+                            userId: event.userId,
+                            type: event.type,
+                            category: event.category,
+                            tags: event.tags
+                        })
+                    }
+
+                    return res.status(404).send()
+                }
+            )
+        }
+    )
+
+    router.delete('/:eventId',
+        authVerification.requireAuthentication,
+        (req, res) => {
+            // TODO: delete image and tickets first
+            event.deleteEvent(req.params.eventId, req.user.id, (err, event) => {
+                    if (err) {
+                        return res.status(500).json({message: err.message})
+                    }
+
+                    if (event) {
+                        return res.status(204).json({
+                            id: event.id,
+                            title: event.title,
+                            summary: event.summary,
+                            description: event.description,
+                            image: event.image,
+                            location: event.location,
+                            startDate: event.startDate,
+                            endDate: event.endDate,
+                            view: event.view,
+                            status: event.status,
+                            userId: event.userId,
+                            type: event.type,
+                            category: event.category,
+                            tags: event.tags
+                        })
+                    }
+
+                    return res.status(404).send()
+                }
+            )
+
+        }
+    )
 
     return router
 }

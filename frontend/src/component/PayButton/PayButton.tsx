@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import Button from '../General/Button'
+import Button from '../general/Button'
 
 //This is on hold will use it for future release xoxo
 
