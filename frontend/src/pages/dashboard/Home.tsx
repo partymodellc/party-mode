@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import CreatorDashboardFAQ from '../../component/CreatorDashboard/CreatorDashboardFAQ'
 import Button from '../../component/general/Button'
 import Sidebar from '../../component/dashboard/Sidebar'
@@ -23,11 +23,16 @@ const data = [
 ]
 
 export default function Home() {
-    const {user, getUserData} = useAuth()
+    const {getUser} = useAuth()
+
+    const [user, setUser] = useState<any>()
 
     useEffect(() => {
-        getUserData()
-    }, [])
+        getUser()
+            .then(response => {
+                setUser(response.data)
+            })
+    }, [setUser])
 
     return (
         <Sidebar>

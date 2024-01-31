@@ -1,6 +1,5 @@
-import React from 'react'
-import {NavLink, Outlet, useNavigate} from "react-router-dom"
-import LazyImage from '../general/LazyImage'
+import React, {useEffect, useState} from 'react'
+import {NavLink, useNavigate} from "react-router-dom"
 import Search from '../general/Search'
 import {useLocation} from "react-router-dom"
 import {motion} from "framer-motion"
@@ -41,11 +40,19 @@ let drawer = [
 ]
 
 export default function Sidebar({children}: Props) {
-
-    const {logout, user} = useAuth()
-
+    const {getUser, logout} = useAuth()
     const location = useLocation()
     const navigate = useNavigate()
+
+    const [user, setUser] = useState<any>()
+
+    useEffect(() => {
+        getUser()
+            .then(response => {
+                setUser(response.data)
+            })
+    }, [setUser])
+
     return (
         <div>
             <nav className='flex justify-between items-center w-[100%] h-85px'>
