@@ -1,21 +1,46 @@
 import React, {useEffect, useState} from "react"
-import {Link, NavLink} from "react-router-dom"
+import {Link, NavLink, useNavigate} from "react-router-dom"
 import Search from "./Search"
 import {motion} from "framer-motion"
 import "react-toastify/dist/ReactToastify.css"
 import '../../pages/Style.css'
 import {useAuth} from "../../context/AuthProvider"
+import {useEvent} from "../../context/EventProvider"
+import {toast} from "react-toastify"
 
 export default function HeaderEvents() {
-    const {logout, user} = useAuth()
+    const {getUser, logout} = useAuth()
+    const {createEvent} = useEvent()
+    const navigate = useNavigate()
+    const [user, setUser] = useState<any>()
     const [openNavMenu, setOpenNavMenu] = useState<boolean>(false)
     const [showMobileNav, setShowMobileNav] = useState<boolean>(false)
     // const [showInviteFriendModal, setInviteFriendModal] = useState<boolean>(false)
 
+    // get user data before accessing 'user'
+    useEffect(() => {
+        getUser()
+            .then(response => {
+                if (response.status == 200) {
+                    setUser(response.data)
+                }
+            })
+            .catch(error => {
+                toast.error(error)
+            })
+    }, [])
+
+    const createEventAndNav = async () => {
+        createEvent()
+            .then(response => {
+                navigate(`/events/${response.data.id}/basic-info`)
+            })
+    }
+
     // set default user picture/icon if user doesn't have pic
     let userPicture = undefined
     if (user) {
-        userPicture = user.picture ? user.picture : "./profile.png"
+        userPicture = user.picture ? user.picture : "/profile.png"
     }
 
     return user ?
@@ -31,7 +56,7 @@ export default function HeaderEvents() {
                         className="flex items-center gap-[3.28vw] xsm:justify-between sm:justify-between xsm:w-full sm:w-full md:w-full">
                         <div className="flex flex-1 items-center gap-[3.28vw] w-full">
                             <Link to="/">
-                                <img src="./Logo.png" className="ml-[8px] min-w-[80px]" alt=""/>
+                                <img src="/Logo.png" className="ml-[8px] min-w-[80px]" alt=""/>
                             </Link>
                             <Search whileHover={{scale: 1.03}} style={{flex: "1"}}/>
 
@@ -47,22 +72,19 @@ export default function HeaderEvents() {
 
                     <ul className="xsm:hidden sm:hidden md:hidden text-[#493c3c] text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] flex gap-[2.881844380403458vw] mr-[2vw]">
                         <div className="flex justify-center items-center relative">
-                            <NavLink to={"/create-event"} className="mx-4">
+                            <NavLink to={""} onClick={createEventAndNav} className="mx-4">
                                 <li className="flex items-center gap-[0.4610951008645533vw]">
-                                    <p className="text-[#1977F3] font-[400] text-[14px] leading-[23px] text-center">
-                                        +
-                                    </p>
                                     <motion.p
                                         whileHover={{color: "#FB4A04"}}
                                         className="text-[#1977F3] font-[400] text-[14px] leading-[23px] text-center"
                                     >
-                                        Create Events
+                                        + Create Event
                                     </motion.p>
                                 </li>
                             </NavLink>
                             <Link to="/likes" className="mx-4">
                                 <li className="flex items-center gap-[8px]">
-                                    <img src="./heart.png" alt=""/>
+                                    <img src="/heart.png" alt=""/>
                                     <motion.p
                                         whileHover={{color: "#FB4A04"}}
                                         className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
@@ -73,12 +95,12 @@ export default function HeaderEvents() {
                             </Link>
                             <Link to="/tickets" className="mx-4">
                                 <li className="flex items-center gap-[0.4610951008645533vw] ">
-                                    <img src="./ticket.png" alt=""/>
+                                    <img src="/ticket.png" alt=""/>
                                     <motion.p
                                         whileHover={{color: "#FB4A04"}}
                                         className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
                                     >
-                                        Ticket
+                                        Tickets
                                     </motion.p>
                                 </li>
                             </Link>
@@ -167,20 +189,19 @@ export default function HeaderEvents() {
                             style={showMobileNav ? {maxHeight: "1000px"} : {maxHeight: "0px", overflow: "hidden"}}
                             className="transition-all xsm:flex sm:flex md:flex flex-col hidden text-[#493c3c] py-[10px] items-center text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] gap-[5.244vw]"
                         >
-                            <Link to="/create-event">
+                            <NavLink to={""} onClick={createEventAndNav}>
                                 <li className="flex items-center gap-[8px]">
-                                    <p className="text-[#1977F3] font-[400] text-[14px] leading-[23px] text-center">+</p>
                                     <motion.p
                                         whileHover={{color: "#FB4A04"}}
                                         className="text-[#1977F3] font-[400] text-[14px] leading-[23px] text-center"
                                     >
-                                        Create Events
+                                        + Create Event
                                     </motion.p>
                                 </li>
-                            </Link>
+                            </NavLink>
                             <Link to="/likes">
                                 <li className="flex items-center gap-[8px]">
-                                    <img src="./heart.png" alt=""/>
+                                    <img src="/heart.png" alt=""/>
                                     <motion.p
                                         whileHover={{color: "#FB4A04"}}
                                         className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
@@ -191,7 +212,7 @@ export default function HeaderEvents() {
                             </Link>
                             <Link to="/tickets" className="flex items-center">
                                 <li className="flex items-center gap-[0.4610951008645533vw] ">
-                                    <img src="./ticket.png" alt=""/>
+                                    <img src="/ticket.png" alt=""/>
                                     <motion.p
                                         whileHover={{color: "#FB4A04"}}
                                         className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
@@ -260,7 +281,7 @@ export default function HeaderEvents() {
                         className="flex items-center gap-[3.28vw] xsm:justify-between sm:justify-between md:justify-between xsm:w-full sm:w-full md:w-full">
                         <div className="flex flex-1 items-center gap-[3.28vw] w-full">
                             <Link to="/">
-                                <img src="./Logo.png" className="ml-[8px] min-w-[80px]" alt=""/>
+                                <img src="/Logo.png" className="ml-[8px] min-w-[80px]" alt=""/>
                             </Link>
                             <Search whileHover={{scale: 1.03}} style={{flex: "1"}}/>
 

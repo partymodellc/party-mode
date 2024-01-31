@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import Button from '../General/Button'
-import LazyImage from '../General/LazyImage'
+import Button from '../../component/general/Button'
+import LazyImage from '../../component/general/LazyImage'
 import {motion} from 'framer-motion';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
@@ -54,7 +54,7 @@ export default function Signup({}: Props) {
                 <div className='w-[52%] xsm:w-[70%] sm:w-[62%] m-auto'>
                     <div className='pt-[38px]'>
                         <Link to="/">
-                            <img src='./Logo.png' alt=''/>
+                            <img src='/Logo.png' alt=''/>
                         </Link>
                         <h1 className='font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58px] text-[#473a3a] mt-[13px]'>Signup</h1>
                     </div>

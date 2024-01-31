@@ -48,7 +48,7 @@ router.post('/login',
     passport.authenticate('local', {
         successRedirect: '/auth/login/success',
         failureRedirect: '/auth/failure'
-    })
+    }, undefined)
 )
 
 module.exports = router

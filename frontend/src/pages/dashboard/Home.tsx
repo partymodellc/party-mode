@@ -1,16 +1,11 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import CreatorDashboardFAQ from '../../component/CreatorDashboard/CreatorDashboardFAQ'
-import Button from '../../component/General/Button'
+import Button from '../../component/general/Button'
 import Sidebar from '../../component/dashboard/Sidebar'
-import LazyImage from '../../component/General/LazyImage'
-import Search from '../../component/General/Search'
+import LazyImage from '../../component/general/LazyImage'
 import {motion} from 'framer-motion'
 import {Link} from 'react-router-dom'
-
 import {useAuth} from '../../context/AuthProvider';
-
-
-type Props = {}
 
 const data = [
     {
@@ -27,8 +22,12 @@ const data = [
     },
 ]
 
-export default function Home({}: Props) {
-    const {user} = useAuth()
+export default function Home() {
+    const {user, getUserData} = useAuth()
+
+    useEffect(() => {
+        getUserData()
+    }, [])
 
     return (
         <Sidebar>
@@ -36,7 +35,7 @@ export default function Home({}: Props) {
                 className='w-full pt-[65px] ml-[12.968299711815561vw] xsm:ml-[4vw] sm:ml-[6vw] flex gap-[7.089337175792507vw] xsm:flex-col sm:flex-col'>
                 <div>
                     <h1 className='font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58px] text-[#473a3a] ml-[10px]'>Welcome, <span
-                        className='text-[#FB4A04]'> {user.username} </span></h1>
+                        className='text-[#FB4A04]'> {user?.username} </span></h1>
                     <div
                         className='border-2 border-[#D9D9D9] rounded-tl-[20px] rounded-tr-[20px] w-[52.04610951008645vw] xsm:w-[90%] sm:w-[80%] px-[21px] divide-y-2 mt-[99px]'>
                         <div className='mb-[40px]'>
@@ -135,9 +134,9 @@ export default function Home({}: Props) {
                     className='w-[20.230547550432277vw] xsm:w-[90%] sm:w-[80%] pt-[160px] xsm:pt-[0px] sm:pt-[0px] flex flex-col xsm:items-center sm:items-center'>
                     <div
                         className='flex justify-center items-center flex-col h-[363px] border-2 border-[#D9D9D9] rounded-tl-[20px] rounded-tr-[20px] w-[20.230547550432277vw] xsm:w-[90%] sm:w-[80%]'>
-                        <img className="w-30 h-30 rounded-full" src={user.picture} alt={user.username}/>
+                        <img className="w-30 h-30 rounded-full" src={user?.picture} alt={user?.username}/>
                         <div className='w-full'>
-                            <h3 className='mt-[43px] mb-[53px] text-center font-[400] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39.09px] text-[#473a3a]'>{user.username}</h3>
+                            <h3 className='mt-[43px] mb-[53px] text-center font-[400] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39.09px] text-[#473a3a]'>{user?.username}</h3>
                             <div className='flex justify-around w-[70%] m-auto mb-[54px] xsm:flex-col xsm:items-center'>
                                 <motion.p whileHover={{color: "#FB4A04"}}
                                           className='cursor-pointer font-[400] text-[14px] leading-[22.9px] text-[#1977F3]'>View

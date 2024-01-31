@@ -1,7 +1,7 @@
 import React from 'react'
 import {NavLink, Outlet, useNavigate} from "react-router-dom"
-import LazyImage from '../General/LazyImage'
-import Search from '../General/Search'
+import LazyImage from '../general/LazyImage'
+import Search from '../general/Search'
 import {useLocation} from "react-router-dom"
 import {motion} from "framer-motion"
 import {Link} from 'react-router-dom'
@@ -44,8 +44,8 @@ export default function Sidebar({children}: Props) {
 
     const {logout, user} = useAuth()
 
-    const location = useLocation();
-    const navigate = useNavigate();
+    const location = useLocation()
+    const navigate = useNavigate()
     return (
         <div>
             <nav className='flex justify-between items-center w-[100%] h-85px'>

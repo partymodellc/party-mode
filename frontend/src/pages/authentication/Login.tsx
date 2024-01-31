@@ -1,28 +1,29 @@
 import React, {useState} from "react"
-import Button from "../General/Button"
+import Button from "../../component/general/Button"
 import {Link} from "react-router-dom"
-import LazyImage from "../General/LazyImage"
+import LazyImage from "../../component/general/LazyImage"
 import {motion} from "framer-motion"
-import axios from "axios"
 import {config} from '../../config/Config'
-
-import {useNavigate} from "react-router-dom"
+import {useNavigate, useSearchParams} from "react-router-dom"
 import {useAuth} from "../../context/AuthProvider"
 import 'react-toastify/dist/ReactToastify.css'
+import {toast} from "react-toastify"
 
 type Props = {}
 
-import {ToastContainer, toast} from "react-toastify"
-
 export default function Login({}: Props) {
+    const [searchParams, setSearchParams] = useSearchParams()
     const [loading, setLoading] = useState<boolean>(false)
     const navigate = useNavigate()
-    const authContext = useAuth()
+    const {login} = useAuth()
 
     const [user, setUser] = useState({
         email: "",
         password: "",
     })
+
+    const redirectToParam = searchParams.get('redirectTo')
+    const redirectTo = redirectToParam ? decodeURIComponent(redirectToParam) : "/"
 
     let name, value
 
@@ -35,34 +36,30 @@ export default function Login({}: Props) {
         })
     }
 
-    const LoginUser = async (e: any) => {
+    const LoginUser = (e: any) => {
         e.preventDefault()
         setLoading(true)
 
-        const reponse = await fetch(`${config.backendBaseUri}/auth/login`, {
-            method: "POST",
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "include",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({email: user.email, password: user.password}),
-        }).then(async (response) => {
-            if (response.status == 200) {
+        login(user.email, user.password)
+            .then(() => {
                 setLoading(false)
-                toast.success("You have successfully logged in!")
-                authContext.login()
-                navigate("/")
-            } else {
+                toast.success("Logged in")
+                navigate(redirectTo)
+            })
+            .catch((err) => {
                 setLoading(false)
-                toast.error("Invalid credentials!")
-            }
-        }).catch((error) => {
-            setLoading(false)
-            toast.error("Unexpected error logging in. Please try again later.")
-        })
+                toast.error("Unauthorized")
+                toast.error("err.response.data.message", {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+            })
     }
 
     const loginAsGoogle = () => {
@@ -72,16 +69,12 @@ export default function Login({}: Props) {
     return (
         <>
             <section className="w-[calc(100vw - 100%)] h-[100vh] flex xsm:flex-col sm:flex-col">
-                <ToastContainer/>
-
                 <div className="authBackground flex-1 flex justify-center items-center py-[60px]">
                     <div
                         className="authFliterEffect rounded-[50px] w-[39.76945244956772vw] xsm:min-w-[80vw] sm:min-w-[60vw] h-[331px] flex justify-center items-center ml-[-45px] xsm:ml-0 sm:ml-0 pl-[4.14985590778098vw]">
                         <h1 className="w-[35vw] xsm:min-w-[70vw] sm:min-w-[50vw] font-[700] text-[48px] leading-[78px] xsm:leading-[40px] sm:leading-[40px] text-[#fff]">
-                            Exclusive <span className="text-[#FB4A04]">events,</span>{" "}
-                            <span className="font-[700] text-[32px] leading-[52px]">
-                priceless memories.
-              </span>
+                            Exclusive<span className="text-[#FB4A04]"> events,</span>
+                            <span className="font-[700] text-[32px] leading-[52px]"> priceless memories.</span>
                         </h1>
                     </div>
                 </div>
@@ -90,7 +83,7 @@ export default function Login({}: Props) {
                     <div className="w-[52%] xsm:w-[70%] sm:w-[62%] m-auto">
                         <div className="pt-[38px]">
                             <Link to="/">
-                                <img src="./Logo.png" alt=""/>
+                                <img src="/Logo.png" alt=""/>
                             </Link>
                             <h1 className="font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58px] text-[#473a3a] mt-[13px]">
                                 Login

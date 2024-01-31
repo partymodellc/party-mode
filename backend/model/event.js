@@ -3,59 +3,59 @@ const {Schema, model} = require('mongoose')
 const event = model('event', new Schema({
         // info
         title: {
-            type: String,
-            require: true
+            type: String
         },
         summary: {
-            type: String,
-            require: true
+            type: String
         },
         // data
         description: {
-            type: String,
-            require: true
+            type: String
         },
         image: {
-            type: String,
-            require: true
+            type: String
+        },
+        gallery: {
+            type: Array
         },
         location: {
-            name: {
-                type: String,
-                require: true
+            address: {
+                type: String
             },
             latitude: Number,
             longitude: Number
         },
         startDate: {
-            type: Date,
-            require: true
+            type: Date
         },
         endDate: {
-            type: Date,
-            require: true
+            type: Date
+        },
+        view: {
+            type: String,
+            enum: ['Public', 'Private'],
+            default: 'Public'
+        },
+        status: {
+            type: String,
+            enum: ['Draft', 'Published', 'Scheduled'],
+            default: 'Draft'
         },
         // links
         userId: {
             type: String,
             require: true
         },
-        ticketIds: {
-            type: Array,
-            default: []
-        },
         // meta
         type: {
             type: String,
             // TODO: outline types
-            enum: ['type1', 'type2'],
-            require: true
+            enum: ['type1', 'type2']
         },
         category: {
             type: String,
             // TODO: outline categories
-            enum: ['cat1', 'cat2'],
-            require: true
+            enum: ['cat1', 'cat2']
         },
         tags: {
             type: Array
@@ -79,12 +79,12 @@ const createEvent = function (data, cb) {
     event.create(data, cb)
 }
 
-const updateEvent = function (id, data, cb) {
-    event.findByIdAndUpdate(id, data, cb)
+const updateEvent = function (eventId, userId, data, cb) {
+    event.findOneAndUpdate({_id: eventId, userId: userId}, data, {new: true}, cb)
 }
 
-const deleteEvent = function (id, cb) {
-    event.findByIdAndDelete(id, cb)
+const deleteEvent = function (eventId, userId, cb) {
+    event.findOneAndDelete({_id: eventId, userId: userId}, {new: false}, cb)
 }
 
 module.exports = {

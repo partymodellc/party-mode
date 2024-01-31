@@ -1,14 +1,11 @@
 import React, {useState} from 'react'
-import Footer from '../../component/General/Footer'
-import LazyImage from '../../component/General/LazyImage'
-import Search from '../../component/General/Search'
+import Footer from '../../component/general/Footer'
+import LazyImage from '../../component/general/LazyImage'
+import Search from '../../component/general/Search'
 import {motion} from "framer-motion"
 import {Link} from 'react-router-dom'
 
-type Props = {}
-
-export default function ({}: Props) {
-
+export default function () {
     const [showMobileNav, setShowMobileNav] = useState<boolean>(false);
 
     return (
@@ -18,7 +15,7 @@ export default function ({}: Props) {
                     className='flex items-center gap-[3.28vw] xsm:justify-between sm:justify-between xsm:w-full sm:w-full'>
 
                     <Link to="/">
-                        <img src='./Logo.png' className='ml-[8px] min-w-[80px]' alt=''/>
+                        <img src='/Logo.png' className='ml-[8px] min-w-[80px]' alt=''/>
                     </Link>
                     <Search whileHover={{scale: 1.03}} style={{flex: "1"}}/>
                     <div onClick={() => setShowMobileNav(!showMobileNav)}
@@ -38,7 +35,7 @@ export default function ({}: Props) {
                         </motion.li>
                     </Link>
                     <motion.li className='flex items-center gap-[8px]'>
-                        <img src='./profile.png' alt=''/>
+                        <img src='/profile.png' alt=''/>
                         <motion.p whileHover={{color: "#FB4A04"}}
                                   className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>partymode@gmail.com
                         </motion.p>
@@ -57,7 +54,7 @@ export default function ({}: Props) {
                         </motion.li>
                     </Link>
                     <motion.li className='flex items-center gap-[8px]'>
-                        <img src='./profile.png' alt=''/>
+                        <img src='/profile.png' alt=''/>
                         <motion.p whileHover={{color: "#FB4A04"}}
                                   className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>partymode@gmail.com
                         </motion.p>
@@ -76,7 +73,7 @@ export default function ({}: Props) {
                             Oct 13 at 7:00pm EDT</p>
                         <div className='flex items-center gap-[23px]'>
                             <p className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[33px] text-[#473a3a]'>Free</p>
-                            <img src='./download.png' alt=''/>
+                            <img src='/download.png' alt=''/>
                         </div>
                     </div>
                     <motion.div className='' whileHover={{scale: 1.03}} initial={{opacity: 0, scale: 0.1}}
@@ -103,7 +100,7 @@ export default function ({}: Props) {
                             Oct 13 at 7:00pm EDT</p>
                         <div className='flex items-center gap-[23px]'>
                             <p className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[33px] text-[#473a3a]'>Free</p>
-                            <img src='./download.png' alt=''/>
+                            <img src='/download.png' alt=''/>
                         </div>
                     </div>
                     <motion.div whileHover={{scale: 1.03}} initial={{opacity: 0, scale: 0.1}}

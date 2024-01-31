@@ -1,94 +1,79 @@
-import {ReactNode, FC, createContext, useContext, useState, useEffect} from 'react'
+import {ReactNode, createContext, useContext} from 'react'
+import {config} from '../config/Config'
+import axios, {AxiosResponse} from "axios"
 import {useNavigate} from "react-router-dom";
-import {config} from '../config/Config';
-import axios from "axios";
-
-type User = {
-    picture: string
-    username: string
-    email: string
-}
-type authContextType = {
-    user: User
-    login: () => void;
-    logout: () => void;
-    getUserData: () => void;
-};
-const authContextDefaultValues: authContextType = {
-    user: {
-        picture: "",
-        username: "",
-        email: ""
-    },
-    login: () => {
-    },
-    logout: () => {
-    },
-    getUserData: () => {
-    }
-};
 
 type Props = {
-    children: ReactNode;
-};
+    children: ReactNode
+}
 
-const AuthenticationContext = createContext<authContextType>(authContextDefaultValues);
+type authContextType = {
+    getUser: () => Promise<AxiosResponse<any, any>>
+    login: (email: string, password: string) => Promise<AxiosResponse<any, any>>
+    logout: () => void
+}
+
+const authContextDefaultValues: authContextType = {
+    getUser: () => {
+        return new Promise<any>(() => {
+        })
+    },
+    login: () => {
+        return new Promise<any>(() => {
+        })
+    },
+    logout: () => {
+    }
+}
+
+const AuthenticationContext = createContext<authContextType>(authContextDefaultValues)
 
 export function useAuth() {
-    return useContext(AuthenticationContext);
+    return useContext(AuthenticationContext)
 }
 
 export function AuthProvider({children}: Props) {
-    const navigate = useNavigate();
-    const [user, setUser] = useState<User | null>(null);
+    const navigate = useNavigate()
 
-    const getUserData = async () => {
-        const headers: HeadersInit = {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Credentials": "true",
-        }
-
-        const response = await axios.get(`${config.backendBaseUri}/users/me`, {
-            headers: headers,
+    const getUser = () => {
+        return axios.get(`${config.backendBaseUri}/users/me`, {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
             withCredentials: true
         })
-
-        setUser(response.data);
     }
 
-
-    useEffect(() => {
-        getUserData();
-    }, [])
-
-    const login = async () => {
-        await getUserData()
-    };
-
-    const logout = async () => {
-        const headers: HeadersInit = {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Credentials": "true",
-        }
-
-        fetch(`${config.backendBaseUri}/auth/logout`, {
-            method: "GET",
-            credentials: "include",
-            headers: headers,
+    const login = (email: string, password: string) => {
+        return axios.post(`${config.backendBaseUri}/auth/login`, JSON.stringify({email: email, password: password}), {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            withCredentials: true
         })
+    }
 
-        setUser(null)
-        navigate("/")
-    };
+    const logout = () => {
+        axios.get(`${config.backendBaseUri}/auth/logout`, {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            withCredentials: true
+        })
+            .then(() => {
+                navigate("/")
+                navigate(0)
+            })
+    }
 
     const value: authContextType = {
-        user: user!,
+        getUser: getUser,
         login: login,
-        logout: logout,
-        getUserData: getUserData
-    };
+        logout: logout
+    }
 
     return (
         <>
@@ -96,6 +81,6 @@ export function AuthProvider({children}: Props) {
                 {children}
             </AuthenticationContext.Provider>
         </>
-    );
+    )
 }
 

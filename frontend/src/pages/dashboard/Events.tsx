@@ -1,21 +1,14 @@
-import {Link, NavLink, Outlet} from 'react-router-dom'
+import {NavLink, Outlet} from 'react-router-dom'
 import Sidebar from '../../component/dashboard/Sidebar'
 import {motion} from "framer-motion"
-import {useAuth} from '../../context/AuthProvider'
 import 'react-toastify/dist/ReactToastify.css';
-import {ToastContainer} from 'react-toastify';
 
-type Props = {}
-
-export default function Events({}: Props) {
+export default function Events() {
 
     return (
         <Sidebar>
-            {/*<ToastContainer/>*/}
             <div className='w-full pt-[65px] ml-[9.682997118155619vw] xsm:ml-[4vw] sm:ml-[6vw] md:ml-[7vw]'>
-
                 <h1 className='font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58px] text-[#473a3a] ml-[10px]'>Events</h1>
-
                 <div className='transition-all flex gap-[20px] mt-[29px] mb-[84px]'>
                     <NavLink end
                              className={({isActive}) => isActive ? "border-b-[1px] border-[#473a3a] py-[10px]" : "py-[10px]"}

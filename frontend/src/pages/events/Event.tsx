@@ -1,22 +1,21 @@
 // useRef used to set variables that doesn't cause a re-render when updated
-import React, {useEffect, useRef, useState} from "react"
-
-import TicketCard from "../component/EventDescriptions/TicketCard"
+import React, {useEffect, useState} from "react"
+import TicketCard from "../../component/EventDescriptions/TicketCard"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-import Footer from "../component/General/Footer"
+import Footer from "../../component/general/Footer"
 import {Link} from "react-router-dom"
-import LazyImage from "../component/General/LazyImage"
-import {motion, useScroll, useAnimationControls} from "framer-motion"
-import Modal from "../component/General/Modal"
+import LazyImage from "../../component/general/LazyImage"
+import {motion, useScroll} from "framer-motion"
+import Modal from "../../component/general/Modal"
 import {useParams} from "react-router-dom"
-import axios from "axios"
-import {config} from "../config/Config"
+import {config} from "../../config/Config"
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import {ApiKeyManager} from "@esri/arcgis-rest-request"
 import {geocode} from "@esri/arcgis-rest-geocoding"
+import {IncomingEvent, useEvent} from "../../context/EventProvider";
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -37,18 +36,6 @@ type SingleEvent = {
     location: EventLocation
     summary: string
     description: string
-}
-
-type Ticket = {
-    _id: string
-    name: string
-    price: number
-    limit: number
-    startDate: string
-    endDate: string
-    sales: number
-    eventId: string
-    modalHandler: any
 }
 
 // const galleryCarouselSettings = {
@@ -92,12 +79,13 @@ type Ticket = {
 // }
 
 export default function Event({}: Props) {
-    const {eventID} = useParams()
+    const {eventId} = useParams()
     const {scrollY} = useScroll()
-    const [singleEvent, setSingleEvent] = useState<SingleEvent>()
+    const {getEvent, allTickets, getAllTickets} = useEvent()
+
+    const [event, setEvent] = useState<IncomingEvent>()
     const [startDateAndTime, setStartDateAndTime] = useState("")
     const [endDateAndTime, setEndDateAndTime] = useState("")
-    const [allTickets, setAllTickets] = useState<Ticket[]>([])
     const [readMore, setReadMore] = useState<boolean>(false)
     const [scrollCounter, setScrollCounter] = useState<number>(0)
     const [showTicketPaymentModal, setShowTicketPaymentModal] = useState<boolean>(false)
@@ -113,46 +101,41 @@ export default function Event({}: Props) {
 
     // get event info
     useEffect(() => {
-        const getEventInfo = async () => {
-            const resp = await axios.get(
-                `${config.backendBaseUri}/events/${eventID}`
-            )
-            setSingleEvent(resp.data)
+        if (eventId) {
+            getEvent(eventId)
+                .then(response => {
+                    setEvent(response.data)
+                })
         }
-        getEventInfo()
-    }, [eventID])
+    }, [])
 
     // convert time to current timezone
     useEffect(() => {
-        let sDT = new Date(singleEvent == undefined ? "" : singleEvent.startDate)
+        let sDT = new Date(event?.startDate || "")
         // let formattedStartDate = sDT.toLocaleString("en-US", {timeZone: timeZone})
         let formattedStartDate = dayjs.utc(sDT).tz(dayjs.tz.guess()).format("MMM D, h:m A")
         setStartDateAndTime(formattedStartDate)
 
-        let eDT = new Date(singleEvent == undefined ? "" : singleEvent.endDate)
+        let eDT = new Date(event?.endDate || "")
         // let formattedEndDate = eDT.toLocaleString("en-US", {timeZone: timeZone})
         let formattedEndDate = dayjs.utc(eDT).tz(dayjs.tz.guess()).format("MMM D, h:m A")
         setEndDateAndTime(formattedEndDate)
-    }, [singleEvent])
+    }, [event])
 
     // get ticket info
     useEffect(() => {
-        const getTicketInfo = async () => {
-            const response = await axios.get(
-                `${config.backendBaseUri}/tickets/${eventID}`
-            )
-            setAllTickets(response.data)
+        if (eventId) {
+            getAllTickets(eventId)
         }
-        getTicketInfo()
-    }, [eventID])
+    }, [])
 
-    let desc = singleEvent?.description ? singleEvent.description : ''
-    let image = `${config.backendBaseUri}/images/${singleEvent?.image}`
+    let desc = event?.description ? event.description : ''
+    let image = `${config.backendBaseUri}/images/${event?.image}`
 
     // get location coordinates
     const authentication = ApiKeyManager.fromKey(config.arcGisApiKey)
     geocode({
-        address: singleEvent?.location.name,
+        address: event?.location?.address,
         authentication,
     }).then((response) => {
         if (response.candidates.length > 0) {
@@ -353,14 +336,14 @@ export default function Event({}: Props) {
                     <div
                         className="xsm:mt-[100px] sm:mt-[100px] xsm:mb-[100px] sm:mb-[100px] mt-[215px] mb-[215px] flex-1 flex flex-col text-white">
                         <h1 className="font-bold text-[clamp(20px,2.07492795389049vw,36px)] min-w-[260px] xsm:min-w-[80vw] w-[27.089337175792508vw] xsm:leading-[35px] leading-[59px]">
-                            {singleEvent?.title}
+                            {event?.title}
                         </h1>
 
                         <div className="flex items-start gap-[7.5px]">
                             <LazyImage alt="" src={"../mainClock.png"} classes="mt-[8px]"/>
                             <div
                                 className="w-[27.04vw] min-w-[260px] xsm:min-w-[80vw] font-bold text-[clamp(14px,1.1527377521613833vw,20px)] leading-[33px]">
-                                <p>{singleEvent?.location?.name}</p>
+                                <p>{event?.location?.address}</p>
                                 <p>{startDateAndTime} - {endDateAndTime}</p>
                             </div>
                         </div>
@@ -370,7 +353,7 @@ export default function Event({}: Props) {
                                 Description
                             </h2>
                             <h3 className="w-[36.72vw] min-w-[260px] xsm:min-w-[80vw] font-bold text-[clamp(14px,1.1527377521613833vw,20px)] leading-[33px]">
-                                {singleEvent?.summary}{" "}
+                                {event?.summary}{" "}
                             </h3>
                         </div>
                         <p className="leading-[26.06px] mt-[19px] w-[38.81vw] min-w-[260px] xsm:min-w-[80vw] text-[clamp(12px,0.9221902017291066vw,16px)] font-[400]">
@@ -400,14 +383,14 @@ export default function Event({}: Props) {
             </section>
 
             {/* tickets */}
-            {allTickets?.length > 0 ? (
+            {allTickets?.length || 0 > 0 ? (
                 <section
                     className="mt-[48px] mb-[76px] w-[88%] m-auto flex flex-wrap gap-[20px] sm:justify-center md:flex-col md:items-center">
                     {allTickets?.map((ticket) => {
                         return (
                             <TicketCard
                                 // eventName={singleEvent?.title}
-                                {...ticket}
+                                ticket={ticket}
                                 // modalHandler={() => setShowModal2(true)}
                             />
                         )
@@ -462,7 +445,7 @@ export default function Event({}: Props) {
                 </div>
                 <div className="flex justify-between items-center xsm:flex-col w-[71.24vw] mx-auto mt-[40px]">
                     <p className="w-[36.714vw] min-w-[260px] xsm:min-w-[80vw] font-[700] text-[#231414] leading-[26px]">
-                        {singleEvent?.summary}
+                        {event?.summary}
                     </p>
                     <motion.button
                         initial={{scale: 1, backgroundColor: "#ffffff00"}}
@@ -498,8 +481,8 @@ export default function Event({}: Props) {
                     {`All tickets are final sale and cannot be exchanged or refunded. By
             purchasing a ticket to this event, you agree to this purchase
             policy. Before purchasing your tickets, we urge you to confirm the
-            title, time and location of the event. ${singleEvent?.title} Attraction may
-            take and use images & video of all guests. ${singleEvent?.title} at all times
+            title, time and location of the event. ${event?.title} Attraction may
+            take and use images & video of all guests. ${event?.title} at all times
             reserves the right to videotape patrons, and take still images, and
             to utilize those images and videos for any reason, including
             marketing, advertising, promotion, on social media.`}

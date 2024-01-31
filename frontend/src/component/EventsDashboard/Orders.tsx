@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import OrderRow from '../EventDescriptions/OrderRow'
-import Button from '../General/Button'
-import Search from '../General/Search'
+import Button from '../general/Button'
+import Search from '../general/Search'
 import TableRow from './TableRow'
 import TableRowOrder from './TableRowOrder'
 import {motion} from "framer-motion"

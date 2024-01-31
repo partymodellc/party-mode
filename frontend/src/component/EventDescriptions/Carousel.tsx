@@ -1,7 +1,7 @@
 import React from 'react'
 import Slider from "react-slick";
 import {useRef} from 'react';
-import LazyImage from '../General/LazyImage';
+import LazyImage from '../general/LazyImage';
 import {motion} from "framer-motion"
 
 type Props = {

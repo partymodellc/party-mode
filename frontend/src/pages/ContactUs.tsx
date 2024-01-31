@@ -1,9 +1,9 @@
 import { useScroll, motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Footer from '../component/General/Footer'
-import Button from '../component/General/Button'
-import LazyImage from '../component/General/LazyImage'
+import Footer from '../component/general/Footer'
+import Button from '../component/general/Button'
+import LazyImage from '../component/general/LazyImage'
 
 type Props = {}
 

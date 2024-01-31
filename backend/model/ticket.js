@@ -7,20 +7,15 @@ const ticket = model('ticket', new Schema({
             require: true
         },
         // data
+        image: {
+            type: String
+        },
         price: {
             type: Number,
             require: true
         },
         limit: {
             type: Number,
-        },
-        startDate: {
-            type: Date,
-            require: true,
-        },
-        endDate: {
-            type: Date,
-            require: true
         },
         // meta
         sales: {
@@ -39,7 +34,7 @@ const ticket = model('ticket', new Schema({
     }
 ))
 
-const getTicketsByEventId = function (eventId, cb) {
+const getAllTicketsByEventId = function (eventId, cb) {
     ticket.find({eventId: eventId}, cb)
 }
 
@@ -52,7 +47,7 @@ const deleteTicket = function (id, cb) {
 }
 
 module.exports = {
-    getTicketsByEventId: getTicketsByEventId,
+    getAllTicketsByEventId: getAllTicketsByEventId,
     createTicket: createTicket,
     deleteTicket: deleteTicket
 }
