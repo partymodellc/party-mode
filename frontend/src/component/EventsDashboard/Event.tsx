@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '../general/Button'
-import Search from '../general/Search'
 import TableRow from './TableRow'
 import axios from 'axios'
 import { useEvent } from '../../context/EventProvider'
+import Search from "../general/Search";
 
 type Props = {}
 
@@ -28,11 +28,11 @@ const data: any = [
 ]
 
 export default function Events({ }: Props) {
-  const {allEvents, setRefresh, refresh} = useEvent();
+  const {allEvents} = useEvent();
 
   useEffect(()=>{
 
-    refresh == true? setRefresh(false) : setRefresh(true);
+    // refresh == true? setRefresh(false) : setRefresh(true);
 
   },[])
 
@@ -64,7 +64,7 @@ export default function Events({ }: Props) {
             </tr>
           </thead>
           <tbody className='divide-y-2 w-[78.32853025936599vw]'>
-            {allEvents.length > 0 && allEvents.map((d: any, index: any) => {
+            {allEvents!.length > 0 && allEvents?.map((d: any, index: any) => {
               return (
                 <TableRow data={d}  index={index}  />
               )
@@ -73,7 +73,7 @@ export default function Events({ }: Props) {
           </tbody>
         </table>
       </div>
-      {allEvents.length === 0 &&
+      {allEvents!.length === 0 &&
         <div className='w-[78.32853025936599vw] flex justify-center items-center'>
           <div className='mt-[129px] flex flex-col justify-center items-center'>
             <img src='noData.png' alt='' />
