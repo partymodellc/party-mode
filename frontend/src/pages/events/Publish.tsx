@@ -288,7 +288,7 @@ export default function Publish() {
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer showFooterHeaders={false} />
         </>
     )
 }

@@ -55,7 +55,23 @@ const stringArrayValidators = {
 module.exports.getEventsRouter = () => {
     router.get('/', (req, res) => {
         let filter = {}
-        // TODO: support query params
+
+        const {userId} = req.query
+        if (userId) {
+            filter = {
+                ...filter,
+                userId: userId
+            }
+        }
+
+        const {ids} = req.query
+        if (ids) {
+            filter = {
+                ...filter,
+                _id: {$in: ids.split(',')}
+            }
+        }
+
         event.getAllEvents(filter, function (err, events) {
             if (err) {
                 return res.status(500).json({message: err.message})
@@ -67,7 +83,7 @@ module.exports.getEventsRouter = () => {
                 title: evt.title,
                 summary: evt.summary,
                 description: evt.description,
-                image: encodeURIComponent(evt.image),
+                image: evt.image ? encodeURIComponent(evt.image) : evt.image,
                 location: evt.location,
                 startDate: evt.startDate,
                 endDate: evt.endDate,
@@ -188,7 +204,7 @@ module.exports.getEventsRouter = () => {
                         title: event.title,
                         summary: event.summary,
                         description: event.description,
-                        image: event.image,
+                        image: event.image ? encodeURIComponent(event.image) : event.image,
                         location: event.location,
                         startDate: event.startDate,
                         endDate: event.endDate,
@@ -281,7 +297,7 @@ module.exports.getEventsRouter = () => {
                             title: event.title,
                             summary: event.summary,
                             description: event.description,
-                            image: event.image,
+                            image: event.image ? encodeURIComponent(event.image) : event.image,
                             location: event.location,
                             startDate: event.startDate,
                             endDate: event.endDate,
@@ -315,7 +331,7 @@ module.exports.getEventsRouter = () => {
                             title: event.title,
                             summary: event.summary,
                             description: event.description,
-                            image: event.image,
+                            image: event.image ? encodeURIComponent(event.image) : event.image,
                             location: event.location,
                             startDate: event.startDate,
                             endDate: event.endDate,

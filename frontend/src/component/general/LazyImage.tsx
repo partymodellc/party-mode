@@ -1,11 +1,11 @@
-import React from 'react';
-import {LazyLoadImage} from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import React from 'react'
+import {LazyLoadImage} from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 type Props = {
-    alt?: string,
-    src: string,
-    width?: string,
+    alt?: string
+    src: string
+    width?: string
     style?: any
     classes?: string
 }

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import CreatorDashboardFAQ from '../../component/CreatorDashboard/CreatorDashboardFAQ'
 import Button from '../../component/general/Button'
 import Sidebar from '../../component/dashboard/Sidebar'
 import LazyImage from '../../component/general/LazyImage'
 import {motion} from 'framer-motion'
 import {Link} from 'react-router-dom'
-import {useAuth} from '../../context/AuthProvider';
+import {useAuth} from '../../context/AuthProvider'
 
 const data = [
     {
@@ -23,16 +23,9 @@ const data = [
 ]
 
 export default function Home() {
-    const {getUser} = useAuth()
+    const {user, getUser} = useAuth()
 
-    const [user, setUser] = useState<any>()
-
-    useEffect(() => {
-        getUser()
-            .then(response => {
-                setUser(response.data)
-            })
-    }, [setUser])
+    const userPicture = user?.image ? user.image : "/profile.png"
 
     return (
         <Sidebar>
@@ -139,9 +132,9 @@ export default function Home() {
                     className='w-[20.230547550432277vw] xsm:w-[90%] sm:w-[80%] pt-[160px] xsm:pt-[0px] sm:pt-[0px] flex flex-col xsm:items-center sm:items-center'>
                     <div
                         className='flex justify-center items-center flex-col h-[363px] border-2 border-[#D9D9D9] rounded-tl-[20px] rounded-tr-[20px] w-[20.230547550432277vw] xsm:w-[90%] sm:w-[80%]'>
-                        <img className="w-30 h-30 rounded-full" src={user?.picture} alt={user?.username}/>
+                        <img className="w-30 h-30 rounded-full" src={userPicture} alt={user?.username}/>
                         <div className='w-full'>
-                            <h3 className='mt-[43px] mb-[53px] text-center font-[400] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39.09px] text-[#473a3a]'>{user?.username}</h3>
+                            <h3 className='mt-[20px] mb-[20px] text-center font-[400] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39.09px] text-[#473a3a]'>{user?.username}</h3>
                             <div className='flex justify-around w-[70%] m-auto mb-[54px] xsm:flex-col xsm:items-center'>
                                 <motion.p whileHover={{color: "#FB4A04"}}
                                           className='cursor-pointer font-[400] text-[14px] leading-[22.9px] text-[#1977F3]'>View
@@ -149,9 +142,11 @@ export default function Home() {
                                 <motion.p whileHover={{color: "#FB4A04"}}
                                           className='cursor-pointer font-[400] text-[14px] leading-[22.9px] text-[#1977F3]'>Edit
                                 </motion.p>
-                                <motion.p whileHover={{color: "#FB4A04"}}
-                                          className='cursor-pointer font-[400] text-[14px] leading-[22.9px] text-[#1977F3]'>Copy
-                                    profile url
+                                <motion.p
+                                    whileHover={{color: "#FB4A04"}}
+                                    className='cursor-pointer font-[400] text-[14px] leading-[22.9px] text-[#1977F3]'
+                                >
+                                    Copy Profile Url
                                 </motion.p>
                             </div>
                         </div>

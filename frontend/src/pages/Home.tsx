@@ -6,9 +6,7 @@ import {Link} from "react-router-dom"
 import './Style.css'
 import Header from '../component/general/Header'
 import {useEvent} from "../context/EventProvider"
-import {useEffect} from "react";
-
-type Props = {}
+import {useEffect} from "react"
 
 let settings = {
     dots: true,
@@ -105,7 +103,7 @@ settings = {
     ]
 }
 
-export default function Home({}: Props) {
+export default function Home() {
     const {allEvents, getAllEvents} = useEvent()
 
     useEffect(() => {
@@ -148,7 +146,7 @@ export default function Home({}: Props) {
                         </div>
                     </div>
 
-                    <section id='checkin' style={{marginTop: "40px"}}>
+                    <section id='checkin' className="mt-[40px]">
                         <div className='flex flex-col justify-center items-center'>
                             <h2 className="font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-[#473a3a]">
                                 Check out trending categories
@@ -157,48 +155,51 @@ export default function Home({}: Props) {
                         </div>
                     </section>
 
-                    <section className='mt-[160px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards mainText='Christmas🎅' data={allEvents}/>
+                    <section className='mt-[120px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
+                        <EventCards category='Christmas🎅' data={allEvents}/>
                     </section>
 
                     <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards mainText='Festivals' data={allEvents}/>
+                        <EventCards category='Festivals' data={allEvents}/>
                     </section>
 
                     <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards mainText='Electronic' data={allEvents}/>
+                        <EventCards category='Electronic' data={allEvents}/>
                     </section>
 
                     <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards mainText='Pop Culture' data={allEvents}/>
+                        <EventCards category='Pop Culture' data={allEvents}/>
                     </section>
 
                     <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards mainText='Music Venues' data={allEvents}/>
+                        <EventCards category='Music Venues' data={allEvents}/>
                     </section>
 
                     <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards mainText='Music Venues' data={allEvents}/>
+                        <EventCards category='Music Venues' data={allEvents}/>
                     </section>
 
-                    <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards mainText='Miami' data={allEvents}/>
+                    <section className='mt-[93px] mb-[216px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
+                        <EventCards category='Miami' data={allEvents}/>
                     </section>
 
-                    <section className='mb-[216px]'>
-                        <div className='mb-[45px] mt-[60px]     w-[86.1671469740634vw] m-auto'>
-                            <h2 className='font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-[#473a3a]'>
-                                Other Categories
-                            </h2>
-                        </div>
-                        <div className='overflow-hidden'>
-                            <Carousel maxWidth={'728px'} width={"41.95965417867435vw"} settings={settings}
-                                      carouselData={carouselData} classes="min-w-[280px]"/>
-                        </div>
-                        <div className='w-[86.1671469740634vw] m-auto'>
-                            <hr className='mt-[23px] w-[119px] !h-[2px] border-[#FB4A04] !p-0'></hr>
-                        </div>
-                    </section>
+                    {/* TODO: figure how to make this functional */}
+                    {/*<section className='mb-[216px]'>*/}
+                    {/*    <div className='mb-[45px] mt-[60px] w-[86.1671469740634vw] m-auto'>*/}
+                    {/*        <h2 className='font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-[#473a3a]'>*/}
+                    {/*            Other Categories*/}
+                    {/*        </h2>*/}
+                    {/*    </div>*/}
+                    {/*    <div className='overflow-hidden'>*/}
+                    {/*        <Carousel*/}
+                    {/*            maxWidth={'728px'} width={"41.95965417867435vw"} settings={settings}*/}
+                    {/*            carouselData={carouselData} classes="min-w-[280px]"*/}
+                    {/*        />*/}
+                    {/*    </div>*/}
+                    {/*    <div className='w-[86.1671469740634vw] m-auto'>*/}
+                    {/*        <hr className='mt-[23px] w-[119px] !h-[2px] border-[#FB4A04] !p-0'/>*/}
+                    {/*    </div>*/}
+                    {/*</section>*/}
                 </div>
             </div>
             <Footer/>

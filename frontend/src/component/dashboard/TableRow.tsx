@@ -1,49 +1,57 @@
 import React, {useState} from "react"
 import {motion} from "framer-motion"
-import {useEvent} from "../../context/EventProvider"
-import {toast} from "react-toastify"
+import {IncomingEvent, useEvent} from "../../context/EventProvider"
 import {useNavigate} from "react-router-dom"
+import {config} from "../../config/Config"
+// @ts-ignore
+import {CopyToClipboard} from "react-copy-to-clipboard"
 
-export default function TableRow({data, index}: any) {
-    const [contextMenu, setContextMenu] = useState<boolean>(false)
+type Props = {
+    event: IncomingEvent
+    index: number
+}
+
+export default function TableRow({event, index}: Props) {
     const {deleteEvent} = useEvent()
-
     const navigate = useNavigate()
 
-    const onClickDelete = () => {
-        deleteEvent(data._id)
-        // refresh == true ? setRefresh(false) : setRefresh(true)
-        toast.success("Event Deleted")
-        setContextMenu(false)
+    const [contextMenu, setContextMenu] = useState<boolean>(false)
 
+    const handleDeleteEvent = () => {
+        deleteEvent(event.id)
+        setContextMenu(false)
+        navigate(0)
     }
 
     return (
         <tr className="py-[15px]">
             <td className="w-[2%]">{index + 1}</td>
             <td className="w-32 h-32">
-                {data.eventImage ? (
-                    <img
-                        className="w-full h-full rounded"
-                        src={`http://localhost:8000/Storage/${data.eventImage}`}
-                        alt={data.eventImage}
-                    />
-                ) : (
-                    <img
-                        className="w-full h-full rounded"
-                        src="https://via.placeholder.com/64"
-                        alt={data.eventImage}
-                    />
-                )}
+                {event.image ?
+                    (
+                        <img
+                            className="w-full h-full rounded"
+                            src={`${config.backendBaseUri}/images/${event.image}`}
+                            alt={event.image}
+                        />
+                    )
+                    :
+                    (
+                        <img
+                            className="w-full h-full rounded"
+                            src="https://via.placeholder.com/64"
+                            alt={event.image}
+                        />
+                    )}
             </td>
 
             <td className="w-[15%]">
                 {" "}
-                <span> {data.title || "Untitled"}</span>
+                <span> {event.title || "Untitled"}</span>
             </td>
-            <td>{data.sold || "0"}</td>
-            <td>{data.gross || "$ 0"}</td>
-            <td>{data.status}</td>
+            <td>{'event.sold' || "0"}</td>
+            <td>{'event.gross' || "$ 0"}</td>
+            <td>{event.status}</td>
             <td className="relative">
                 <div
                     className="cursor-pointer flex flex-col gap-[5px] justify-center items-start relative z-[10]"
@@ -61,18 +69,19 @@ export default function TableRow({data, index}: any) {
                         className="absolute bg-white z-[2000]  w-[165px] h-[139px] right-[20%] "
                     >
                         <div className="flex flex-col justify-around m-auto w-[80%] h-full">
-                            <motion.p
-                                whileHover={{color: "#FB4A04"}}
-                                className="font-[400] cursor-pointer text-[16px] leading-[26px] text-[black]"
+                            <CopyToClipboard
+                                text={`${window.location.origin}/events/${event.id}`}
+                                onCopy={() => setContextMenu(false)}
                             >
-                                Copy Event url
-                            </motion.p>
+                                <motion.p
+                                    whileHover={{color: "#FB4A04"}}
+                                    className="font-[400] cursor-pointer text-[16px] leading-[26px] text-[black]"
+                                >
+                                    Copy Event Url
+                                </motion.p>
+                            </CopyToClipboard>
                             <motion.p
-                                onClick={() => {
-                                    navigate(`/event-description/${data._id}`)
-                                }}
-
-
+                                onClick={() => navigate(`/events/${event.id}`)}
                                 whileHover={{color: "#FB4A04"}}
                                 className="font-[400] cursor-pointer text-[16px] leading-[26px] text-[black]"
                             >
@@ -80,20 +89,18 @@ export default function TableRow({data, index}: any) {
                             </motion.p>
 
                             <motion.p
-                                onClick={() => {
-                                    navigate(`/create-event/basic-info/${data._id}`)
-                                }}
+                                onClick={() => navigate(`/events/${event.id}/basic-info`)}
                                 whileHover={{color: "#FB4A04"}}
                                 className="font-[400] cursor-pointer text-[16px] leading-[26px] text-[black]"
                             >
                                 Edit
                             </motion.p>
                             <motion.p
-                                onClick={onClickDelete}
+                                onClick={handleDeleteEvent}
                                 whileHover={{color: "#FB4A04"}}
                                 className="font-[400] cursor-pointer text-[16px] leading-[26px] text-[black]"
                             >
-                                delete
+                                Delete
                             </motion.p>
                         </div>
                     </motion.div>

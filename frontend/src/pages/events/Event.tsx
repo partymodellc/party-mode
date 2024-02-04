@@ -15,7 +15,7 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import {ApiKeyManager} from "@esri/arcgis-rest-request"
 import {geocode} from "@esri/arcgis-rest-geocoding"
-import {IncomingEvent, useEvent} from "../../context/EventProvider";
+import {IncomingEvent, useEvent} from "../../context/EventProvider"
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -26,16 +26,6 @@ type EventLocation = {
     longitude: number
     latitude: number
     name: string
-}
-
-type SingleEvent = {
-    startDate: string
-    endDate: string
-    image: string
-    title: string
-    location: EventLocation
-    summary: string
-    description: string
 }
 
 // const galleryCarouselSettings = {
@@ -383,20 +373,15 @@ export default function Event({}: Props) {
             </section>
 
             {/* tickets */}
-            {allTickets?.length || 0 > 0 ? (
+            {allTickets?.length || 0 > 0 && (
                 <section
-                    className="mt-[48px] mb-[76px] w-[88%] m-auto flex flex-wrap gap-[20px] sm:justify-center md:flex-col md:items-center">
+                    className="mt-[48px] mb-[76px] w-[88%] m-auto flex flex-wrap gap-[20px] sm:justify-center md:flex-col md:items-center"
+                >
                     {allTickets?.map((ticket) => {
-                        return (
-                            <TicketCard
-                                // eventName={singleEvent?.title}
-                                ticket={ticket}
-                                // modalHandler={() => setShowModal2(true)}
-                            />
-                        )
+                        return (<TicketCard ticket={ticket}/>)
                     })}
                 </section>
-            ) : ("")}
+            )}
 
             {/* event video */}
             {/*{<section>*/}

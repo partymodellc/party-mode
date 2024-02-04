@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import {NavLink, useNavigate} from "react-router-dom"
+import {NavLink} from "react-router-dom"
 import Search from '../general/Search'
 import {useLocation} from "react-router-dom"
 import {motion} from "framer-motion"
 import {Link} from 'react-router-dom'
-import {useAuth} from '../../context/AuthProvider'
+import {IncomingUser, useAuth} from '../../context/AuthProvider'
 
 type Props = {
     children: any
@@ -12,46 +12,42 @@ type Props = {
 
 let drawer = [
     {
-        iconWhite: "../drawerDashboardWhite.svg",
-        iconOrange: "../drawercreatorDashboard.svg",
+        name: "dashboard-home",
+        iconActive: "/drawerDashboardWhite.svg",
+        iconInactive: "/drawercreatorDashboard.svg",
         route: "/dashboard"
     },
     {
-        iconWhite: "../drawerEventDashboard.svg",
-        iconOrange: "../drawerEventDashboardOrange.svg",
+        name: "dashboard-events",
+        iconActive: "/drawerEventDashboard.svg",
+        iconInactive: "/drawerEventDashboardOrange.svg",
         route: "/dashboard/events"
     },
     {
-        iconWhite: "../drawerReportAnalysis.svg",
-        iconOrange: "../drawerReportAnalysisOrange.svg",
+        name: "dashboard-analytics",
+        iconActive: "/drawerReportAnalysis.svg",
+        iconInactive: "/drawerReportAnalysisOrange.svg",
         route: "/dashboard/analytics"
     },
     {
-        iconWhite: "../drawerInvoiceAndBilling.svg",
-        iconOrange: "../drawerInvoiceAndBillingOrange.svg",
+        name: "dashboard-invoice-and-billing",
+        iconActive: "/drawerInvoiceAndBilling.svg",
+        iconInactive: "/drawerInvoiceAndBillingOrange.svg",
         route: "/dashboard/invoice-and-billing"
     },
     {
-        icon: "./",
-        iconWhite: "../drawerSetting.svg",
-        iconOrange: "../drawerSettingOrange.svg",
-        route: "/dashboard/settings"
+        name: "dashboard-settings",
+        iconActive: "/drawerSetting.svg",
+        iconInactive: "/drawerSettingOrange.svg",
+        route: "/dashboard/settings/profile-edit"
     },
 ]
 
 export default function Sidebar({children}: Props) {
-    const {getUser, logout} = useAuth()
+    const {user, logout} = useAuth()
     const location = useLocation()
-    const navigate = useNavigate()
 
-    const [user, setUser] = useState<any>()
-
-    useEffect(() => {
-        getUser()
-            .then(response => {
-                setUser(response.data)
-            })
-    }, [setUser])
+    const userPicture = user?.image ? user.image : "/profile.png"
 
     return (
         <div>
@@ -65,34 +61,37 @@ export default function Sidebar({children}: Props) {
                     </div>
                 </div>
 
-                <ul className='text-[#493c3c] text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] flex gap-[31px] mr-[7.37vw] items-center border-[1px] px-[21px] py-[6px] rounded-full border-[#473a3a] '>
+                <ul className='text-[#493c3c] text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] flex gap-[31px] mr-[7.37vw] items-center border-[1px] px-[21px] py-[6px] rounded-full border-[#473a3a]'>
                     <li className='flex items-center gap-[8px]'>
-                        <img className="w-10 h-10 rounded-full" src={user?.picture} alt={user?.username}/>
-                        <p className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center ml-[20px]'> {user?.username} </p>
-                        <img className='ml-[41px]' src='/dropdown.svg' alt=''/>
+                        <img className="w-10 h-10 rounded-full" src={userPicture} alt={user?.username}/>
+                        <p className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>{user?.username}</p>
+                        {/*<img className='ml-[41px]' src='/dropdown.svg' alt=''/>*/}
                     </li>
                 </ul>
             </nav>
             <div className='flex'>
                 <div
-                    className='  w-[78px] xsm:w-[57px] sm:w-[57px] bg-[#FB4A04] h-[1015px] flex flex-col justify-between items-end pt-[65px] '>
+                    className='w-[78px] xsm:w-[57px] sm:w-[57px] bg-[#FB4A04] h-[1015px] flex flex-col justify-between items-end pt-[65px] '
+                >
                     <div className='flex flex-col justify-between gap-[12px]'>
                         {drawer.map((item) => {
                             return (
-                                <NavLink key={item.route} to={item.route} end>
+                                <NavLink key={item.name} to={item.route} end>
                                     <div
+                                        key={item.name} className='w-[57px] h-[61px] flex justify-center items-center'
                                         style={location.pathname == item.route ? {background: "#ffffff"} : {background: "#FB4A04"}}
-                                        key={item.route} className='w-[57px] h-[61px] flex justify-center items-center'>
+                                    >
                                         <img
-                                            src={location.pathname == item.route ? item.iconOrange : item.iconWhite}
-                                            alt=""/>
+                                            src={location.pathname == item.route ? item.iconInactive : item.iconActive}
+                                            alt={item.name}
+                                        />
                                     </div>
                                 </NavLink>
                             )
                         })}
                     </div>
                     <div onClick={logout} className='m-auto my-0 mb-[45px] cursor-pointer'>
-                        <img src='../log-out.svg'/>
+                        <img src='/log-out.svg'/>
                     </div>
                 </div>
 

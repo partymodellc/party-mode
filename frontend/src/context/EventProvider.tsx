@@ -70,8 +70,9 @@ type eventContextType = {
     allEvents?: IncomingEvent[]
     allTickets?: IncomingTicket[]
     getEvent: (eventId: string) => Promise<AxiosResponse<any, any>>
-    getAllEvents: () => void
-    createEvent: () => Promise<AxiosResponse<any, any>>
+    getAllEvents: (searchFilter?: string | null, ids?: string[]) => void
+    getUserEvents: (userId: string) => Promise<AxiosResponse<any, any>>
+    createEventAndNav: () => void
     updateEventAndNav: (eventId: string, page: string, event?: OutgoingEvent) => void
     deleteEvent: (eventId: string) => void
     getAllTickets: (eventId: string) => void
@@ -84,11 +85,13 @@ const eventContextDefaultValues: eventContextType = {
         return new Promise<any>(() => {
         })
     },
-    getAllEvents: () => {
+    getAllEvents: (searchFilter?: string | null) => {
     },
-    createEvent: () => {
+    getUserEvents: () => {
         return new Promise<any>(() => {
         })
+    },
+    createEventAndNav: () => {
     },
     updateEventAndNav: () => {
         return new Promise<any>(() => {
@@ -123,15 +126,26 @@ export function EventProvider({children}: Props) {
         return axios.get(`${config.backendBaseUri}/events/${eventId}`)
     }
 
-    const getAllEvents = () => {
-        axios.get(`${config.backendBaseUri}/events`)
+    const getAllEvents = (searchFilter?: string | null, ids?: string[]) => {
+        let query = "?"
+        query = query + (searchFilter ? `title=${encodeURIComponent(searchFilter)}` : "")
+        query = query + (ids ? `ids=${encodeURIComponent(ids.toString())}` : "")
+
+        axios.get(`${config.backendBaseUri}/events${query == "?" ? "" : query}`)
             .then(response => {
                 setAllEvents(response.data)
             })
     }
 
-    const createEvent = () => {
-        return axios.post(`${config.backendBaseUri}/events`, undefined, {withCredentials: true})
+    const getUserEvents = (userId: string) => {
+        return axios.get(`${config.backendBaseUri}/events?userId=${userId}`)
+    }
+
+    const createEventAndNav = () => {
+        axios.post(`${config.backendBaseUri}/events`, undefined, {withCredentials: true})
+            .then(response => {
+                navigate(`/events/${response.data.id}/basic-info`)
+            })
     }
 
     const updateEventAndNav = (eventId: string, page: string, event?: OutgoingEvent) => {
@@ -148,7 +162,7 @@ export function EventProvider({children}: Props) {
     const deleteEvent = (eventId: string) => {
         axios.delete(`${config.backendBaseUri}/events/${eventId}`, {withCredentials: true})
             .then(response => {
-                toast.success("Event deleted")
+                toast.success("Event Deleted")
             })
     }
 
@@ -169,7 +183,7 @@ export function EventProvider({children}: Props) {
     const deleteTicket = (ticketId: string) => {
         axios.delete(`${config.backendBaseUri}/tickets/${ticketId}`, {withCredentials: true})
             .then(response => {
-                toast.success("Ticket deleted")
+                toast.success("Ticket Deleted")
             })
     }
 
@@ -178,7 +192,8 @@ export function EventProvider({children}: Props) {
         allTickets: allTickets,
         getEvent: getEvent,
         getAllEvents: getAllEvents,
-        createEvent: createEvent,
+        getUserEvents: getUserEvents,
+        createEventAndNav: createEventAndNav,
         updateEventAndNav: updateEventAndNav,
         deleteEvent: deleteEvent,
         getAllTickets: getAllTickets,
