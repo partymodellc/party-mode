@@ -1,46 +1,26 @@
-import React, {useEffect, useState} from "react"
+import React, {useState} from "react"
 import {Link, NavLink, useNavigate} from "react-router-dom"
 import Search from "./Search"
 import {motion} from "framer-motion"
 import "react-toastify/dist/ReactToastify.css"
 import '../../pages/Style.css'
-import {useAuth} from "../../context/AuthProvider"
+import {IncomingUser, useAuth} from "../../context/AuthProvider"
 import {useEvent} from "../../context/EventProvider"
-import {toast} from "react-toastify"
 
-export default function HeaderEvents() {
-    const {getUser, logout} = useAuth()
-    const {createEvent} = useEvent()
+export default function Header() {
+    const {user, logout} = useAuth()
+    const {createEventAndNav} = useEvent()
     const navigate = useNavigate()
-    const [user, setUser] = useState<any>()
     const [openNavMenu, setOpenNavMenu] = useState<boolean>(false)
     const [showMobileNav, setShowMobileNav] = useState<boolean>(false)
     // const [showInviteFriendModal, setInviteFriendModal] = useState<boolean>(false)
 
-    // get user data before accessing 'user'
-    useEffect(() => {
-        getUser()
-            .then(response => {
-                if (response.status == 200) {
-                    setUser(response.data)
-                }
-            })
-            .catch(error => {
-                toast.error(error)
-            })
-    }, [])
-
-    const createEventAndNav = async () => {
-        createEvent()
-            .then(response => {
-                navigate(`/events/${response.data.id}/basic-info`)
-            })
-    }
-
     // set default user picture/icon if user doesn't have pic
-    let userPicture = undefined
-    if (user) {
-        userPicture = user.picture ? user.picture : "/profile.png"
+    const userPicture = user?.image ? user.image : "/profile.png"
+
+    const searchOnSubmit = (e: any) => {
+        e.preventDefault()
+        navigate(`/search?title=${encodeURIComponent(e.target.search.value)}`)
     }
 
     return user ?
@@ -58,7 +38,9 @@ export default function HeaderEvents() {
                             <Link to="/">
                                 <img src="/Logo.png" className="ml-[8px] min-w-[80px]" alt=""/>
                             </Link>
-                            <Search whileHover={{scale: 1.03}} style={{flex: "1"}}/>
+                            <form onSubmit={searchOnSubmit}>
+                                <Search whileHover={{scale: 1.03}} style={{flex: "1"}}/>
+                            </form>
 
                             {/* mobile nav menu button */}
                             <div onClick={() => setShowMobileNav(!showMobileNav)}
@@ -118,7 +100,7 @@ export default function HeaderEvents() {
                                     whileHover={{color: "#FB4A04"}}
                                     className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
                                 >
-                                    {user.email}
+                                    {user.username}
                                 </motion.p>
                             </li>
                         </Link>

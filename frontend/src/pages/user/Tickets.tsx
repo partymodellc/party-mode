@@ -1,78 +1,35 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Footer from '../../component/general/Footer'
 import Button from '../../component/general/Button'
-import LazyImage from '../../component/general/LazyImage'
-import Search from '../../component/general/Search'
 import {motion} from "framer-motion"
 import {Link} from 'react-router-dom'
+import {useAuth} from "../../context/AuthProvider"
+import Header from "../../component/general/Header"
 
-type Props = {}
+export default function Tickets() {
+    const {user} = useAuth()
 
-export default function Tickets({}: Props) {
-    const [showMobileNav, setShowMobileNav] = useState<boolean>(false);
+    const userPicture = user?.image ? user.image : "/profile.svg"
 
     return (
-        <div>
-            <nav className='flex justify-between items-center w-[100%]'>
-                <div
-                    className='flex items-center gap-[3.28vw] xsm:justify-between sm:justify-between xsm:w-full sm:w-full'>
-                    <Link to="/">
-                        <img alt="" src={"/Logo.png"} className='ml-[8px] min-w-[80px] '/>
-                    </Link>
-                    <Search whileHover={{scale: 1.03}} style={{flex: "1"}}/>
-                    <div onClick={() => setShowMobileNav(!showMobileNav)}
-                         className='xsm:flex sm:flex cursor-pointer hidden flex-col items-center gap-[5px] mr-[10px]'>
-                        <div className='min-w-[29px] min-h-[5px] bg-[#473a3a] rounded-full'></div>
-                        <div className='min-w-[29px] min-h-[5px] bg-[#473a3a] rounded-full'></div>
-                        <div className='min-w-[29px] min-h-[5px] bg-[#473a3a] rounded-full'></div>
-                    </div>
-                </div>
-
-                <ul className='text-[#493c3c] xsm:hidden sm:hidden text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] flex gap-[31px] mr-[7.37vw] items-center'>
-                    <Link to="/dashboard">
-                        <motion.li className='flex items-center gap-[8px]'>
-                            <motion.p whileHover={{color: "#FB4A04"}}
-                                      className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>Back
-                            </motion.p>
-                        </motion.li>
-                    </Link>
-                    <motion.li className='flex items-center gap-[8px]'>
-                        <img src='./profile.png' alt=''/>
-                        <motion.p whileHover={{color: "#FB4A04"}}
-                                  className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>partymode@gmail.com
-                        </motion.p>
-                    </motion.li>
-                </ul>
-            </nav>
-
-            {showMobileNav &&
-                <ul style={showMobileNav ? {maxHeight: "1000px"} : {maxHeight: "0px", overflow: "hidden"}}
-                    className='flex-col-reverse transition-all xsm:flex sm:flex hidden text-[#493c3c] py-[10px] items-center text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] gap-[5.244vw]'>
-                    <Link to="/dashboard">
-                        <motion.li className='flex items-center gap-[8px]'>
-                            <motion.p whileHover={{color: "#FB4A04"}}
-                                      className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>Back
-                            </motion.p>
-                        </motion.li>
-                    </Link>
-                    <motion.li className='flex items-center gap-[8px]'>
-                        <img src='./profile.png' alt=''/>
-                        <motion.p whileHover={{color: "#FB4A04"}}
-                                  className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>partymode@gmail.com
-                        </motion.p>
-                    </motion.li>
-                </ul>
-            }
-
-            <div className='flex gap-[48px] items-center ml-[6.916426512968299vw] mt-[100px] xsm:flex-col'>
-                <motion.div whileHover={{scale: 1.03}}
-                            className='flex justify-center items-center w-[155px] h-[149px] rounded-full bg-[#F5F5F5]'>
-                    <img src='./profile.svg' alt=''/>
+        <>
+            <Header/>
+            <div className='flex gap-[48px] items-center ml-[6.916426512968299vw] mt-[60px] xsm:flex-col'>
+                <motion.div
+                    whileHover={{scale: 1.03}}
+                    className='flex justify-center items-center w-[155px] h-[149px] rounded-full bg-[#F5F5F5]'
+                >
+                    <img src={userPicture} alt=''/>
                 </motion.div>
                 <div>
                     <div className='flex gap-[12px] items-center'>
                         <h2 className='font-[700] text-[32px] leading-[52px] text-[#473a3a]'>Name & Surname</h2>
-                        <motion.img whileHover={{scale: 1.09}} className="cursor-pointer" src='./editIcon.svg' alt=''/>
+                        <Link to="/dashboard/settings/profile-edit">
+                            <motion.img
+                                whileHover={{scale: 1.09}} className="cursor-pointer" src='/editIcon.svg'
+                                alt=''
+                            />
+                        </Link>
                     </div>
                     <div className='flex'>
                         <p className='font-[400] text-[clamp(14px,1.1527377521613833vw,20px)] leading-[33px] text-[#473a3a]'>0
@@ -85,7 +42,7 @@ export default function Tickets({}: Props) {
                 </div>
             </div>
 
-            <div className='w-[42.70893371757925vw]  xsm:w-[90%] sm:w-[80%] m-auto'>
+            <div className='w-[42.70893371757925vw]  xsm:w-[90%] sm:w-[80%] m-auto mb-[242px]'>
                 <h3 className='font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px] text-[#473a3a] ml-[3%] mt-[85px]'>Orders</h3>
                 <div className='flex flex-col items-center'>
                     <h3 className='font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px] text-[#473a3a] mb-[13px]'>Looking
@@ -93,7 +50,7 @@ export default function Tickets({}: Props) {
                     <p className='font-[400] text-[clamp(14px,1.1527377521613833vw,20px)] leading-[33px] text-[#473a3a] mb-[36px]'>You
                         need to verify your email to view transfers and gifts.</p>
                     <Link to={"/ticket-verified"}>
-                        <Button whileHover={{background: "#FB4A04", color: "white", scale: 1.03}} width='232px'
+                        <Button whileHover={{background: "#FB4A04", color: "#ffffff", scale: 1.03}} width='232px'
                                 height='51px' text='Verify your email' style={{
                             marginBottom: "36px",
                             background: "#fff",
@@ -104,7 +61,7 @@ export default function Tickets({}: Props) {
                             fontWeight: "400"
                         }}/>
                     </Link>
-                    <img className='mb-[36px]' src='./ticketIcon.svg' alt=''/>
+                    <img className='mb-[36px]' src='/ticketIcon.svg' alt=''/>
                     <p className='font-[400] text-[clamp(14px,1.1527377521613833vw,20px)] leading-[33px] text-[#473a3a] mb-[36px]'>No
                         upcoming order</p>
                 </div>
@@ -124,7 +81,7 @@ export default function Tickets({}: Props) {
                                             ease: [0, 0.71, 0.2, 1.01]
                                         }}
                                         className='shadow-xl w-[20.576368876080693vw] xsm:min-w-[100%] sm:min-w-[100%]'
-                                        src='./likes1.png' alt=''/>
+                                        src='/likes1.png' alt=''/>
                             <div className='flex flex-col justify-center'>
                                 <h2 className='font-[700] xsm:min-w-[100%] sm:min-w-[100%] text-[clamp(14px,1.1527377521613833vw,20px)] leading-[33px] text-[#473a3a] w-[20.403458213256485vw]'>Hush
                                     Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.</h2>
@@ -132,7 +89,7 @@ export default function Tickets({}: Props) {
                                     <p className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[33px] text-[#F2141483]'>Thurs
                                         Oct 13 at 7:00pm EDT</p>
                                     <motion.img whileHover={{scale: 1.09}} className="cursor-pointer"
-                                                src='./download.png' alt=''/>
+                                                src='/download.png' alt=''/>
                                 </div>
                             </div>
                         </div>
@@ -146,7 +103,7 @@ export default function Tickets({}: Props) {
                                             ease: [0, 0.71, 0.2, 1.01]
                                         }}
                                         className='shadow-xl w-[20.576368876080693vw] xsm:min-w-[100%] sm:min-w-[100%]'
-                                        src='./likes2.png' alt=''/>
+                                        src='/likes2.png' alt=''/>
                             <div className='flex flex-col justify-center'>
                                 <h2 className='font-[700] xsm:min-w-[100%] sm:min-w-[100%] text-[clamp(14px,1.1527377521613833vw,20px)] leading-[33px] text-[#473a3a] w-[20.403458213256485vw]'>Hush
                                     Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.</h2>
@@ -154,17 +111,14 @@ export default function Tickets({}: Props) {
                                     <p className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[33px] text-[#F2141483]'>Thurs
                                         Oct 13 at 7:00pm EDT</p>
                                     <motion.img whileHover={{scale: 1.09}} className="cursor-pointer"
-                                                src='./download.png' alt=''/>
+                                                src='/download.png' alt=''/>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div className='mt-[242px]'>
-                <Footer showFooterHeaders={false}/>
-            </div>
-        </div>
+            <Footer showFooterHeaders={false}/>
+        </>
     )
 }

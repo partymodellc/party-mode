@@ -3,10 +3,11 @@ import {Route, Routes} from "react-router-dom"
 import Event from "./pages/events/Event"
 import LoadingAnimation from "./component/general/LoadingAnimation"
 import "react-toastify/dist/ReactToastify.css"
-import PrivateRoutes from "./utils/PrivateRoutes";
-import AuthRoutes from "./utils/AuthRoutes";
+import PrivateRoutes from "./utils/PrivateRoutes"
+import AuthRoutes from "./utils/AuthRoutes"
 
 const Home = lazy(() => import("./pages/Home"))
+const SearchResults = lazy(() => import("./pages/SearchResults"))
 const Login = lazy(() => import("./pages/authentication/Login"))
 const Signup = lazy(() => import("./pages/authentication/Signup"))
 const PaymentSuccess = lazy(() => import("./pages/PaymentSuccess"))
@@ -18,11 +19,11 @@ const Tickets = lazy(() => import("./pages/user/Tickets"))
 const TicketVerifiedEmail = lazy(() => import("./pages/user/TicketVerifiedEmail"))
 const DashboardHome = lazy(() => import("./pages/dashboard/Home"))
 const DashboardEvents = lazy(() => import("./pages/dashboard/Events"))
-const Orders = lazy(() => import("./component/EventsDashboard/Orders"))
+const DashboardOrders = lazy(() => import("./pages/dashboard/Orders"))
 const DashboardAnalytics = lazy(() => import("./pages/dashboard/Analytics"))
 const DashboardInvoiceAndBilling = lazy(() => import("./pages/dashboard/InvoiceAndBilling"))
 const DashboardSettings = lazy(() => import("./pages/dashboard/Settings"))
-const ProfileEdit = lazy(() => import("./component/Setting/ProfileEdit"))
+const ProfileEdit = lazy(() => import("./pages/dashboard/settings/ProfileEdit"))
 const InviteTeam = lazy(() => import("./component/Setting/InviteTeam"))
 const AppInstallation = lazy(() => import("./component/Setting/AppInstallation"))
 const Interests = lazy(() => import("./component/Authentication/Interests"))
@@ -42,6 +43,7 @@ export default function App() {
                     {/* content routes */}
                     <Route path="" element={<Home/>}/>
                     <Route path="events/:eventId" element={<Event/>}/>
+                    <Route path="/search" element={<SearchResults/>}/>
 
                     {/* auth routes */}
                     <Route element={<AuthRoutes/>}>
@@ -60,9 +62,9 @@ export default function App() {
 
                         <Route path="dashboard" element={<DashboardHome/>}/>
                         <Route path="dashboard/events" element={<DashboardEvents/>}/>
-                        <Route path="dashboard/events/orders" element={<Orders/>}/>
+                        <Route path="dashboard/orders" element={<DashboardOrders/>}/>
                         <Route path="dashboard/analytics" element={<DashboardAnalytics/>}/>
-                        <Route path="dashboard/settings" element={<DashboardSettings/>}/>
+                        <Route path="dashboard/settings/profile-edit" element={<ProfileEdit/>}/>
                         <Route path="dashboard/invoice-and-billing" element={<DashboardInvoiceAndBilling/>}/>
 
                         <Route path="likes" element={<Likes/>}/>

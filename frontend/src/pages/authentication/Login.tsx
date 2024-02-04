@@ -5,19 +5,17 @@ import LazyImage from "../../component/general/LazyImage"
 import {motion} from "framer-motion"
 import {config} from '../../config/Config'
 import {useNavigate, useSearchParams} from "react-router-dom"
-import {useAuth} from "../../context/AuthProvider"
+import {LoginCredentials, useAuth} from "../../context/AuthProvider"
 import 'react-toastify/dist/ReactToastify.css'
 import {toast} from "react-toastify"
 
-type Props = {}
-
-export default function Login({}: Props) {
+export default function Login() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [loading, setLoading] = useState<boolean>(false)
     const navigate = useNavigate()
     const {login} = useAuth()
 
-    const [user, setUser] = useState({
+    const [loginCredentials, setLoginCredentials] = useState<LoginCredentials>({
         email: "",
         password: "",
     })
@@ -25,14 +23,10 @@ export default function Login({}: Props) {
     const redirectToParam = searchParams.get('redirectTo')
     const redirectTo = redirectToParam ? decodeURIComponent(redirectToParam) : "/"
 
-    let name, value
-
-    const inputhandler = (e: any) => {
-        name = e.target.name
-        value = e.target.value
-        setUser({
-            ...user,
-            [name]: value,
+    const inputHandler = (e: any) => {
+        setLoginCredentials({
+            ...loginCredentials,
+            [e.target.name]: e.target.value,
         })
     }
 
@@ -40,11 +34,12 @@ export default function Login({}: Props) {
         e.preventDefault()
         setLoading(true)
 
-        login(user.email, user.password)
+        login(loginCredentials)
             .then(() => {
                 setLoading(false)
                 toast.success("Logged in")
                 navigate(redirectTo)
+                navigate(0)
             })
             .catch((err) => {
                 setLoading(false)
@@ -102,8 +97,8 @@ export default function Login({}: Props) {
                                     className="w-[27.608069164265128vw] xsm:min-w-full sm:min-w-full h-[50px] block rounded-[10px] border-[1px] border-[#473a3a]"
                                     style={{padding: "0 10px"}}
                                     name="email"
-                                    onChange={inputhandler}
-                                    value={user.email}
+                                    onChange={inputHandler}
+                                    value={loginCredentials.email}
                                 />
                             </div>
                             <div className="mt-[15px]">
@@ -117,8 +112,8 @@ export default function Login({}: Props) {
                                     className="w-[27.608069164265128vw] xsm:min-w-full sm:min-w-full h-[50px] block rounded-[10px] border-[1px] border-[#473a3a]"
                                     style={{padding: "0 10px"}}
                                     name="password"
-                                    onChange={inputhandler}
-                                    value={user.password}
+                                    onChange={inputHandler}
+                                    value={loginCredentials.password}
                                 />
                                 <div className="flex justify-between mt-[19px]">
                                     <div className="flex gap-[10px]">

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import TableRowOrder from "../EventsDashboard/TableRowOrder";
+import TableRowOrder from "../dashboard/TableRowOrder";
 import {motion} from "framer-motion";
 
 type Props = {};

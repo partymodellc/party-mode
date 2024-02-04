@@ -463,7 +463,7 @@ export default function BasicInfo() {
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer showFooterHeaders={false}/>
         </>
     )
 }

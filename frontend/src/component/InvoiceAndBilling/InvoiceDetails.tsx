@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import TableRowOrder from '../EventsDashboard/TableRowOrder'
+import TableRowOrder from '../dashboard/TableRowOrder'
 import Button from '../general/Button'
 import LazyImage from '../general/LazyImage'
 import Modal from '../general/Modal'

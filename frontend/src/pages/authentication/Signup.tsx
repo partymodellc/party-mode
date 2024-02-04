@@ -1,46 +1,35 @@
 import React, {useState} from 'react'
 import Button from '../../component/general/Button'
 import LazyImage from '../../component/general/LazyImage'
-import {motion} from 'framer-motion';
-import {Link} from 'react-router-dom';
-import axios from 'axios';
-import {config} from '../../config/Config';
+import {motion} from 'framer-motion'
+import {Link} from 'react-router-dom'
+import axios from 'axios'
+import {config} from '../../config/Config'
+import {useNavigate} from "react-router-dom"
 
-import {useNavigate} from "react-router-dom";
-
-type Props = {}
-
-
-export default function Signup({}: Props) {
-
+export default function Signup() {
+    const navigate = useNavigate()
     const [user, setUser] = useState({
         name: '', email: '', password: ''
     })
-    const navigate = useNavigate();
 
-    let name, value;
-    const inputhandler = (e: any) => {
-        name = e.target.name;
-        value = e.target.value;
+    const inputHandler = (e: any) => {
         setUser({
-            ...user, [name]: value
+            ...user, [e.target.name]: e.target.value
         })
     }
-    const registerUser = async (e: any) => {
-        e.preventDefault();
-        const userData = await axios.post(`${config.backendBaseUri}/auth/register`, user)
+    const registerUser = (e: any) => {
+        e.preventDefault()
+        axios.post(`${config.backendBaseUri}/auth/register`, user)
             .then(() => {
-                // alert("You're reigstered Successfully.");
-                navigate("/login");
+                // alert("You're reigstered Successfully.")
+                navigate("/login")
             })
             .catch((error) => {
                 alert(error)
             })
-
-
     }
     return (
-
         <section className='w-[calc(100vw - 100%)] h-[100vh] flex xsm:flex-col sm:flex-col'>
             <div className='authBackground flex-1 flex justify-center items-center py-[60px]'>
                 <div
@@ -67,7 +56,7 @@ export default function Signup({}: Props) {
                                     className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26.06px] text-[#473a3a] '
                                     style={{fontWeight: '600'}}>Name</label>
                                 <input className=' h-[50px] rounded-[10px] border-[1px] border-[#473a3a]'
-                                       style={{padding: "0 10px"}} name='name' onChange={inputhandler}
+                                       style={{padding: "0 10px"}} name='name' onChange={inputHandler}
                                        value={user.name}/>
                             </div>
                             <div className='flex-1 flex flex-col'>
@@ -75,7 +64,7 @@ export default function Signup({}: Props) {
                                     className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26.06px] text-[#473a3a] '
                                     style={{fontWeight: '600'}}>Email</label>
                                 <input className=' h-[50px] rounded-[10px] border-[1px] border-[#473a3a]'
-                                       style={{padding: "0 10px"}} name='email' onChange={inputhandler}
+                                       style={{padding: "0 10px"}} name='email' onChange={inputHandler}
                                        value={user.email}/>
                             </div>
                         </div>
@@ -85,7 +74,7 @@ export default function Signup({}: Props) {
                                 style={{fontWeight: '600'}}>Password</label>
                             <input
                                 className='w-[27.608069164265128vw] sm:flex-col xsm:w-full sm:w-full h-[50px] block rounded-[10px] border-[1px] border-[#473a3a]'
-                                style={{padding: "0 10px"}} name='password' onChange={inputhandler}
+                                style={{padding: "0 10px"}} name='password' onChange={inputHandler}
                                 value={user.password}/>
                             <div className='flex mt-[19px] gap-[10px]'>
                                 <input type={"checkbox"} style={{padding: "0 10px"}}/>
@@ -109,16 +98,22 @@ export default function Signup({}: Props) {
                         </div>
 
                         <div className='flex justify-between my-[30px]'>
-                            <motion.div whileHover={{scale: 1.05}}
-                                        className='rounded-[10px] flex justify-center items-center w-[102px] h-[78px] border-[1px] border-[#D9D9D9]'>
+                            <motion.div
+                                whileHover={{scale: 1.05}}
+                                className='rounded-[10px] flex justify-center items-center w-[102px] h-[78px] border-[1px] border-[#D9D9D9]'
+                            >
                                 <LazyImage alt="" src="/facebook.png"/>
                             </motion.div>
-                            <motion.div whileHover={{scale: 1.05}}
-                                        className='rounded-[10px] flex justify-center items-center w-[102px] h-[78px] border-[1px] border-[#D9D9D9]'>
+                            <motion.div
+                                whileHover={{scale: 1.05}}
+                                className='rounded-[10px] flex justify-center items-center w-[102px] h-[78px] border-[1px] border-[#D9D9D9]'
+                            >
                                 <LazyImage alt="" src="/google.png"/>
                             </motion.div>
-                            <motion.div whileHover={{scale: 1.05}}
-                                        className='rounded-[10px] flex justify-center items-center w-[102px] h-[78px] border-[1px] border-[#D9D9D9]'>
+                            <motion.div
+                                whileHover={{scale: 1.05}}
+                                className='rounded-[10px] flex justify-center items-center w-[102px] h-[78px] border-[1px] border-[#D9D9D9]'
+                            >
                                 <LazyImage alt="" src="/apple.png"/>
                             </motion.div>
                         </div>

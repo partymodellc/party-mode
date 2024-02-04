@@ -455,7 +455,7 @@ export default function Tickets() {
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer showFooterHeaders={false}/>
         </>
     )
 }
