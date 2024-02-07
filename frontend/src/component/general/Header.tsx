@@ -4,7 +4,7 @@ import Search from "./Search"
 import {motion} from "framer-motion"
 import "react-toastify/dist/ReactToastify.css"
 import '../../pages/Style.css'
-import {IncomingUser, useAuth} from "../../context/AuthProvider"
+import {useAuth} from "../../context/AuthProvider"
 import {useEvent} from "../../context/EventProvider"
 
 export default function Header() {
@@ -21,6 +21,7 @@ export default function Header() {
     const searchOnSubmit = (e: any) => {
         e.preventDefault()
         navigate(`/search?title=${encodeURIComponent(e.target.search.value)}`)
+        navigate(0)
     }
 
     return user ?
@@ -38,8 +39,8 @@ export default function Header() {
                             <Link to="/">
                                 <img src="/Logo.png" className="ml-[8px] min-w-[80px]" alt=""/>
                             </Link>
-                            <form onSubmit={searchOnSubmit}>
-                                <Search whileHover={{scale: 1.03}} style={{flex: "1"}}/>
+                            <form onSubmit={searchOnSubmit} style={{flex: "1"}}>
+                                <Search whileHover={{scale: 1.03}}/>
                             </form>
 
                             {/* mobile nav menu button */}
@@ -159,93 +160,93 @@ export default function Header() {
                             )}
                         </li>
                     </ul>
+
+                    {/* user mobile nav menu */}
+                    {showMobileNav &&
+                        <div>
+                            <ul
+                                style={showMobileNav ? {maxHeight: "1000px"} : {maxHeight: "0px", overflow: "hidden"}}
+                                className="transition-all xsm:flex sm:flex md:flex flex-col hidden text-[#493c3c] py-[10px] items-center text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] gap-[5.244vw]"
+                            >
+                                <NavLink to={""} onClick={createEventAndNav}>
+                                    <li className="flex items-center gap-[8px]">
+                                        <motion.p
+                                            whileHover={{color: "#FB4A04"}}
+                                            className="text-[#1977F3] font-[400] text-[14px] leading-[23px] text-center"
+                                        >
+                                            + Create Event
+                                        </motion.p>
+                                    </li>
+                                </NavLink>
+                                <Link to="/likes">
+                                    <li className="flex items-center gap-[8px]">
+                                        <img src="/heart.png" alt=""/>
+                                        <motion.p
+                                            whileHover={{color: "#FB4A04"}}
+                                            className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
+                                        >
+                                            Likes
+                                        </motion.p>
+                                    </li>
+                                </Link>
+                                <Link to="/tickets" className="flex items-center">
+                                    <li className="flex items-center gap-[0.4610951008645533vw] ">
+                                        <img src="/ticket.png" alt=""/>
+                                        <motion.p
+                                            whileHover={{color: "#FB4A04"}}
+                                            className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
+                                        >
+                                            Ticket
+                                        </motion.p>
+                                    </li>
+                                </Link>
+                                <Link to="/dashboard">
+                                    <li className="flex items-center gap-[8px]">
+                                        <img
+                                            className="w-10 h-10 rounded-full"
+                                            src={userPicture}
+                                        />
+                                        <motion.p
+                                            whileHover={{color: "#FB4A04"}}
+                                            className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
+                                        >
+                                            {user.email}
+                                        </motion.p>
+                                    </li>
+                                </Link>
+                                <Link to="/community">
+                                    <motion.p
+                                        whileHover={{color: "#FB4A04"}}
+                                        className="text-[#473a3a] cursor-pointer font-[400] text-[clamp(14px,0.9221902017291066vw,16px)] leading-[23px] text-center"
+                                    >
+                                        Explore Community
+                                    </motion.p>
+                                </Link>
+                                {/*<li className="flex items-center gap-[8px]">*/}
+                                {/*    <motion.p*/}
+                                {/*        onClick={() => setInviteFriendModal(true)} whileHover={{color: "#FB4A04"}}*/}
+                                {/*        className="text-[#473a3a] cursor-pointer font-[400] text-[14px] leading-[23px] text-center"*/}
+                                {/*    >*/}
+                                {/*        Invite a Friend*/}
+                                {/*    </motion.p>*/}
+                                {/*</li>*/}
+                                <li className="flex items-center gap-[8px]">
+                                    <button onClick={logout}>
+                                        <motion.p
+                                            whileHover={{color: "#FB4A04"}}
+                                            className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
+                                        >
+                                            Logout
+                                        </motion.p>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    }
                 </nav>
 
                 {/* to push contents down due to fixed nav */}
                 <div className="h-[92px]"></div>
-
-                {/* user mobile nav menu */}
-                {showMobileNav &&
-                    <div>
-                        <ul
-                            style={showMobileNav ? {maxHeight: "1000px"} : {maxHeight: "0px", overflow: "hidden"}}
-                            className="transition-all xsm:flex sm:flex md:flex flex-col hidden text-[#493c3c] py-[10px] items-center text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] gap-[5.244vw]"
-                        >
-                            <NavLink to={""} onClick={createEventAndNav}>
-                                <li className="flex items-center gap-[8px]">
-                                    <motion.p
-                                        whileHover={{color: "#FB4A04"}}
-                                        className="text-[#1977F3] font-[400] text-[14px] leading-[23px] text-center"
-                                    >
-                                        + Create Event
-                                    </motion.p>
-                                </li>
-                            </NavLink>
-                            <Link to="/likes">
-                                <li className="flex items-center gap-[8px]">
-                                    <img src="/heart.png" alt=""/>
-                                    <motion.p
-                                        whileHover={{color: "#FB4A04"}}
-                                        className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
-                                    >
-                                        Likes
-                                    </motion.p>
-                                </li>
-                            </Link>
-                            <Link to="/tickets" className="flex items-center">
-                                <li className="flex items-center gap-[0.4610951008645533vw] ">
-                                    <img src="/ticket.png" alt=""/>
-                                    <motion.p
-                                        whileHover={{color: "#FB4A04"}}
-                                        className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
-                                    >
-                                        Ticket
-                                    </motion.p>
-                                </li>
-                            </Link>
-                            <Link to="/dashboard">
-                                <li className="flex items-center gap-[8px]">
-                                    <img
-                                        className="w-10 h-10 rounded-full"
-                                        src={userPicture}
-                                    />
-                                    <motion.p
-                                        whileHover={{color: "#FB4A04"}}
-                                        className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
-                                    >
-                                        {user.email}
-                                    </motion.p>
-                                </li>
-                            </Link>
-                            <Link to="/community">
-                                <motion.p
-                                    whileHover={{color: "#FB4A04"}}
-                                    className="text-[#473a3a] cursor-pointer font-[400] text-[clamp(14px,0.9221902017291066vw,16px)] leading-[23px] text-center"
-                                >
-                                    Explore Community
-                                </motion.p>
-                            </Link>
-                            {/*<li className="flex items-center gap-[8px]">*/}
-                            {/*    <motion.p*/}
-                            {/*        onClick={() => setInviteFriendModal(true)} whileHover={{color: "#FB4A04"}}*/}
-                            {/*        className="text-[#473a3a] cursor-pointer font-[400] text-[14px] leading-[23px] text-center"*/}
-                            {/*    >*/}
-                            {/*        Invite a Friend*/}
-                            {/*    </motion.p>*/}
-                            {/*</li>*/}
-                            <li className="flex items-center gap-[8px]">
-                                <button onClick={logout}>
-                                    <motion.p
-                                        whileHover={{color: "#FB4A04"}}
-                                        className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
-                                    >
-                                        Logout
-                                    </motion.p>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                }
             </>
         )
 
@@ -307,8 +308,10 @@ export default function Header() {
 
                 {/* mobile guest nav */}
                 {showMobileNav &&
-                    <ul style={showMobileNav ? {maxHeight: "1000px"} : {maxHeight: "0px", overflow: "hidden"}}
-                        className='transition-all xsm:flex sm:flex md:flex flex-col hidden text-[#493c3c] py-[10px] items-center text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] gap-[5.244vw] relative'>
+                    <ul
+                        style={showMobileNav ? {maxHeight: "1000px"} : {maxHeight: "0px", overflow: "hidden"}}
+                        className='transition-all xsm:flex sm:flex md:flex flex-col hidden text-[#493c3c] py-[10px] items-center text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] gap-[5.244vw] relative'
+                    >
                         <Link to={"/help-sub"}>
                             <button>Live Stream</button>
                         </Link>

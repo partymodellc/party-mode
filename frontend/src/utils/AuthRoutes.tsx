@@ -5,5 +5,5 @@ import LoadingAnimation from "../component/general/LoadingAnimation"
 export default function AuthRoutes() {
     const {user, loading} = useAuth()
 
-    return loading ? <LoadingAnimation/> : (user ? <Navigate to={"/"}/> : <Outlet/>)
+    return loading ? <LoadingAnimation/> : (user ? <Navigate to={"/dashboard"}/> : <Outlet/>)
 }

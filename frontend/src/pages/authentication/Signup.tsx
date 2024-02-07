@@ -10,7 +10,7 @@ import {useNavigate} from "react-router-dom"
 export default function Signup() {
     const navigate = useNavigate()
     const [user, setUser] = useState({
-        name: '', email: '', password: ''
+        username: '', email: '', password: ''
     })
 
     const inputHandler = (e: any) => {
@@ -54,10 +54,10 @@ export default function Signup() {
                             <div className='flex-1 flex flex-col'>
                                 <label
                                     className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26.06px] text-[#473a3a] '
-                                    style={{fontWeight: '600'}}>Name</label>
+                                    style={{fontWeight: '600'}}>Username</label>
                                 <input className=' h-[50px] rounded-[10px] border-[1px] border-[#473a3a]'
-                                       style={{padding: "0 10px"}} name='name' onChange={inputHandler}
-                                       value={user.name}/>
+                                       style={{padding: "0 10px"}} name='username' onChange={inputHandler}
+                                       value={user.username}/>
                             </div>
                             <div className='flex-1 flex flex-col'>
                                 <label

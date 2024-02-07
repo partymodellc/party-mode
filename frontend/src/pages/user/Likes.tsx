@@ -7,14 +7,16 @@ import {useEvent} from "../../context/EventProvider"
 import {config} from "../../config/Config"
 import {Link} from "react-router-dom"
 import moment from "moment"
-import {useAuth} from "../../context/AuthProvider";
+import {useAuth} from "../../context/AuthProvider"
 
 export default function () {
     const {user} = useAuth()
     const {allEvents, getAllEvents} = useEvent()
 
     useEffect(() => {
-        getAllEvents(undefined, user?.likes)
+        if (user?.likes?.length || 0 > 0) {
+            getAllEvents(undefined, user?.likes)
+        }
     }, [])
 
     return (

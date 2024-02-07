@@ -1,4 +1,3 @@
-import Carousel from '../component/EventDescriptions/Carousel'
 import EventCards from '../component/Events/EventCards'
 import Footer from '../component/general/Footer'
 import Button from '../component/general/Button'
@@ -7,101 +6,6 @@ import './Style.css'
 import Header from '../component/general/Header'
 import {useEvent} from "../context/EventProvider"
 import {useEffect} from "react"
-
-let settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 2.3,
-    slidesToScroll: 1,
-    responsive: [
-        {
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 2.3,
-                slidesToScroll: 1,
-            }
-        },
-        {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 2.3,
-                slidesToScroll: 1,
-            }
-        },
-        {
-            breakpoint: 768,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-                arrows: false
-            }
-        },
-        {
-            breakpoint: 576,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows: false
-            }
-        }
-    ]
-}
-
-let carouselData = [
-    {
-        id: "1",
-        image: "./EventCrousal1.png",
-    },
-    {
-        id: "2",
-        image: "./EventCrousal2.png",
-    },
-    {
-        id: "3",
-        image: "./EventCrousal1 copy.png",
-    },
-]
-
-settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 2.3,
-    slidesToScroll: 1,
-    responsive: [
-        {
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 2.3,
-                slidesToScroll: 1,
-            }
-        },
-        {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 2.3,
-                slidesToScroll: 1,
-            }
-        },
-        {
-            breakpoint: 768,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-                arrows: false
-            }
-        },
-        {
-            breakpoint: 576,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows: false
-            }
-        }
-    ]
-}
 
 export default function Home() {
     const {allEvents, getAllEvents} = useEvent()
@@ -121,14 +25,20 @@ export default function Home() {
                             <h1 className="mb-[23px] eventTextFont w-[28.587896253602306vw] min-w-[260px] font-[400] text-[clamp(48px,5.53314121037464vw,96px)] xsm:leading-[45px] sm:leading-[45px] leading-[113px] text-[#ffffff]">NOW <span
                                 className='eventTextFont text-[clamp(32px,3.6887608069164264vw,64px)]'>IS YOUR</span> TIME
                             </h1>
-                            <Link to='/community'>
-                                <Button initial={{scale: 1, backgroundColor: '#FB4A04', color: "#fff"}} whileHover={{
-                                    scale: 1.02,
-                                    backgroundColor: "#ffffff",
-                                    border: "3px solid #FB4A04",
-                                    color: "#FB4A04"
-                                }} width={"17.75vw"} height={"61px"} text={"Find your next Event"}
-                                        style={{minWidth: "240px"}}/>
+                            <Link to='/search'>
+                                <Button
+                                    initial={{scale: 1, backgroundColor: '#FB4A04', color: "#fff"}}
+                                    whileHover={{
+                                        scale: 1.02,
+                                        backgroundColor: "#ffffff",
+                                        border: "3px solid #FB4A04",
+                                        color: "#FB4A04"
+                                    }}
+                                    width={"17.75vw"}
+                                    height={"61px"}
+                                    text={"Find your next Event"}
+                                    style={{minWidth: "240px"}}
+                                />
                             </Link>
                         </div>
                     </section>

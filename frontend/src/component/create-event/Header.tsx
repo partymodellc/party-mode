@@ -30,7 +30,7 @@ export default function Header() {
                     {/*</NavLink>*/}
                     <NavLink end
                              className={({isActive}) => isActive ? "border-b-[2px] border-white p-[5px] transition-all" : "border-b-[2px] border-transparent p-[5px] transition-all"}
-                             to={`/events/${eventId}/tickets`}>
+                             to={`/events/${eventId}/ticketss`}>
                         <li className='font-[400] text-[15px] xsm:text-[8px] leading-[24.43px] text-[#FFFFFF]'>Tickets</li>
                     </NavLink>
                     <NavLink end

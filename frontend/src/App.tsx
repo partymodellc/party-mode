@@ -5,6 +5,7 @@ import LoadingAnimation from "./component/general/LoadingAnimation"
 import "react-toastify/dist/ReactToastify.css"
 import PrivateRoutes from "./utils/PrivateRoutes"
 import AuthRoutes from "./utils/AuthRoutes"
+import NotFound from "./pages/NotFound";
 
 const Home = lazy(() => import("./pages/Home"))
 const SearchResults = lazy(() => import("./pages/SearchResults"))
@@ -19,7 +20,6 @@ const Tickets = lazy(() => import("./pages/user/Tickets"))
 const TicketVerifiedEmail = lazy(() => import("./pages/user/TicketVerifiedEmail"))
 const DashboardHome = lazy(() => import("./pages/dashboard/Home"))
 const DashboardEvents = lazy(() => import("./pages/dashboard/Events"))
-const DashboardOrders = lazy(() => import("./pages/dashboard/Orders"))
 const DashboardAnalytics = lazy(() => import("./pages/dashboard/Analytics"))
 const DashboardInvoiceAndBilling = lazy(() => import("./pages/dashboard/InvoiceAndBilling"))
 const DashboardSettings = lazy(() => import("./pages/dashboard/Settings"))
@@ -32,8 +32,8 @@ const Details = lazy(() => import("./pages/events/Details"))
 const OnlinePageEvent = lazy(() => import("./pages/events/OnlinePageEvent"))
 const EventTickets = lazy(() => import("./pages/events/Tickets"))
 const Publish = lazy(() => import("./pages/events/Publish"))
-const Community = lazy(() => import("./pages/Community"))
-const Community2 = lazy(() => import("./pages/Community2"))
+const CommunityHome = lazy(() => import("./pages/community/Home"))
+const Community = lazy(() => import("./pages/community/Community"))
 
 export default function App() {
     return (
@@ -51,6 +51,9 @@ export default function App() {
                         <Route path="signup" element={<Signup/>}/>
                     </Route>
 
+                    {/* TODO: is this an auth or private routes? */}
+                    <Route path="interests" element={<Interests/>}/>
+
                     {/* protected routes */}
                     <Route element={<PrivateRoutes/>}>
                         <Route path="events/:eventId/basic-info" element={<BasicInfo/>}/>
@@ -62,13 +65,13 @@ export default function App() {
 
                         <Route path="dashboard" element={<DashboardHome/>}/>
                         <Route path="dashboard/events" element={<DashboardEvents/>}/>
-                        <Route path="dashboard/orders" element={<DashboardOrders/>}/>
                         <Route path="dashboard/analytics" element={<DashboardAnalytics/>}/>
                         <Route path="dashboard/settings/profile-edit" element={<ProfileEdit/>}/>
                         <Route path="dashboard/invoice-and-billing" element={<DashboardInvoiceAndBilling/>}/>
 
                         <Route path="likes" element={<Likes/>}/>
                         <Route path="tickets" element={<Tickets/>}/>
+                        <Route path="ticket-verified" element={<TicketVerifiedEmail/>}/>
 
                         <Route path="settings" element={<ProfileEdit/>}/>
                         <Route path="settings/invite-team" element={<InviteTeam/>}/>
@@ -78,15 +81,16 @@ export default function App() {
                     {/* info routes */}
                     <Route path="contact-us" element={<ContactUs/>}/>
                     <Route path="help-sub" element={<HelpSub/>}/>
+                    <Route path="subscription-and-pricing" element={<SubscriptionAndPricing/>}/>
 
                     {/* misc routes */}
                     <Route path="payment-success" element={<PaymentSuccess/>}/>
-                    <Route path="interests" element={<Interests/>}/>
-                    <Route path="subscription-and-pricing" element={<SubscriptionAndPricing/>}/>
 
-                    <Route path="community" element={<Community/>}/>
-                    <Route path="community-join" element={<Community2/>}/>
-                    <Route path="ticket-verified" element={<TicketVerifiedEmail/>}/>
+                    <Route path="community" element={<CommunityHome/>}/>
+                    {/* TODO: support community */}
+                    {/*<Route path="community-join" element={<Community/>}/>*/}
+
+                    <Route path='*' element={<NotFound/>}/>
                 </Routes>
             </Suspense>
         </main>
