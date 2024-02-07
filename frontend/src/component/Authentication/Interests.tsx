@@ -29,7 +29,7 @@ export default function Interests({ }: Props) {
                         <div className='w-[35.04322766570605vw] xsm:w-full sm:w-full flex flex-wrap gap-[1.037463976945245vw]'>
                             {likes.map((like) => {
                                 return (
-                                    <Button whileHover={{ background: "#FB4A04", color: "white" }} width='106px' height="38px" text={like} style={{ border: "1px solid #FB4A04", borderRadius: "10px", fontSize: "14px", lineHeight: "22.8px", color: "#000000", background: "rgba(0,0,0,0)" }}></Button>
+                                    <Button whileHover={{ background: "#eece93", color: "white" }} width='106px' height="38px" text={like} style={{ border: "1px solid #eece93", borderRadius: "10px", fontSize: "14px", lineHeight: "22.8px", color: "#000000", background: "rgba(0,0,0,0)" }}></Button>
                                 )
                             })}
                         </div>
@@ -45,7 +45,7 @@ export default function Interests({ }: Props) {
                         <div className='w-[35.04322766570605vw] xsm:w-full sm:w-full flex flex-wrap gap-[1.037463976945245vw]'>
                             {likes.map((like) => {
                                 return (
-                                    <Button whileHover={{ background: "#FB4A04", color: "white" }} width='106px' height="38px" text={like} style={{ border: "1px solid #FB4A04", borderRadius: "10px", fontSize: "14px", lineHeight: "22.8px", color: "#000000", background: "rgba(0,0,0,0)" }}></Button>
+                                    <Button whileHover={{ background: "#eece93", color: "white" }} width='106px' height="38px" text={like} style={{ border: "1px solid #eece93", borderRadius: "10px", fontSize: "14px", lineHeight: "22.8px", color: "#000000", background: "rgba(0,0,0,0)" }}></Button>
                                 )
                             })}
                         </div>
@@ -57,7 +57,7 @@ export default function Interests({ }: Props) {
                 </div>
                 <div className='xsm:w-[80%] xsm:m-auto sm:w-[80%] sm:m-auto flex justify-end'>
                     <Link to="/dashboard">
-                        <Button whileHover={{ background: "rgba(0,0,0,0)", color: "#473a3a" }} width='231px' height="58px" text={"Complete"} style={{ alignSelf: "flex-end", margin: "80px 0", border: "3px solid #FB4A04", borderRadius: "20px", fontSize: "14px", lineHeight: "22.8px", color: "#fff", background: "#FB4A04" }}></Button>
+                        <Button whileHover={{ background: "rgba(0,0,0,0)", color: "#473a3a" }} width='231px' height="58px" text={"Complete"} style={{ alignSelf: "flex-end", margin: "80px 0", border: "3px solid #eece93", borderRadius: "20px", fontSize: "14px", lineHeight: "22.8px", color: "#fff", background: "#eece93" }}></Button>
                     </Link>
                 </div>
             </div>

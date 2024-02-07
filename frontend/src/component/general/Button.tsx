@@ -13,7 +13,7 @@ type Props = {
 }
 
 export default function Button({ width, height, text, style, initial, whileHover, classes, onClick }: Props) {
-  const classes1 = 'rounded-[20px] text-[clamp(16px,1.38328530259366vw,24px)] font-[700] leading-[40px] bg-[#FB4A04] text-white' + " " + classes;
+  const classes1 = 'rounded-[20px] text-[clamp(16px,1.38328530259366vw,24px)] font-[700] leading-[40px] bg-[#eece93] text-white' + " " + classes;
   return (
     <motion.button initial={{ opacity: 0, scale: 0.1, ...initial }}
       whileInView={{ opacity: 1, scale: 1 }}

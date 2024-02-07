@@ -1,4 +1,3 @@
-import Carousel from '../component/EventDescriptions/Carousel'
 import EventCards from '../component/Events/EventCards'
 import Footer from '../component/general/Footer'
 import Button from '../component/general/Button'
@@ -7,101 +6,6 @@ import './Style.css'
 import Header from '../component/general/Header'
 import {useEvent} from "../context/EventProvider"
 import {useEffect} from "react"
-
-let settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 2.3,
-    slidesToScroll: 1,
-    responsive: [
-        {
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 2.3,
-                slidesToScroll: 1,
-            }
-        },
-        {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 2.3,
-                slidesToScroll: 1,
-            }
-        },
-        {
-            breakpoint: 768,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-                arrows: false
-            }
-        },
-        {
-            breakpoint: 576,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows: false
-            }
-        }
-    ]
-}
-
-let carouselData = [
-    {
-        id: "1",
-        image: "./EventCrousal1.png",
-    },
-    {
-        id: "2",
-        image: "./EventCrousal2.png",
-    },
-    {
-        id: "3",
-        image: "./EventCrousal1 copy.png",
-    },
-]
-
-settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 2.3,
-    slidesToScroll: 1,
-    responsive: [
-        {
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 2.3,
-                slidesToScroll: 1,
-            }
-        },
-        {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 2.3,
-                slidesToScroll: 1,
-            }
-        },
-        {
-            breakpoint: 768,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-                arrows: false
-            }
-        },
-        {
-            breakpoint: 576,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows: false
-            }
-        }
-    ]
-}
 
 export default function Home() {
     const {allEvents, getAllEvents} = useEvent()
@@ -121,21 +25,27 @@ export default function Home() {
                             <h1 className="mb-[23px] eventTextFont w-[28.587896253602306vw] min-w-[260px] font-[400] text-[clamp(48px,5.53314121037464vw,96px)] xsm:leading-[45px] sm:leading-[45px] leading-[113px] text-[#ffffff]">NOW <span
                                 className='eventTextFont text-[clamp(32px,3.6887608069164264vw,64px)]'>IS YOUR</span> TIME
                             </h1>
-                            <Link to='/community'>
-                                <Button initial={{scale: 1, backgroundColor: '#FB4A04', color: "#fff"}} whileHover={{
-                                    scale: 1.02,
-                                    backgroundColor: "#ffffff",
-                                    border: "3px solid #FB4A04",
-                                    color: "#FB4A04"
-                                }} width={"17.75vw"} height={"61px"} text={"Find your next Event"}
-                                        style={{minWidth: "240px"}}/>
+                            <Link to='/search'>
+                                <Button
+                                    initial={{scale: 1, backgroundColor: '#eece93', color: "#fff"}}
+                                    whileHover={{
+                                        scale: 1.02,
+                                        backgroundColor: "#ffffff",
+                                        border: "3px solid #eece93",
+                                        color: "#eece93"
+                                    }}
+                                    width={"17.75vw"}
+                                    height={"61px"}
+                                    text={"Find your next Event"}
+                                    style={{minWidth: "240px"}}
+                                />
                             </Link>
                         </div>
                     </section>
 
                     <div
                         className='bg-white relative top-[-28px] p-[14px] eventDivBoxShadow w-[85.76368876080691vw] m-auto'>
-                        <div className='pt-[5px] pb-[18px] pl-[10px] border-l-[2px] border-[#FB4A04]'>
+                        <div className='pt-[5px] pb-[18px] pl-[10px] border-l-[2px] border-[#eece93]'>
                             <h2 className='mb-[8px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] text-[#473a3a]'>
                                 Do events help you find connection?
                             </h2>
@@ -151,7 +61,7 @@ export default function Home() {
                             <h2 className="font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-[#473a3a]">
                                 Check out trending categories
                             </h2>
-                            <hr className='mt-[23px] w-[232px] !h-[2px] border-[#FB4A04] !p-0'></hr>
+                            <hr className='mt-[23px] w-[232px] !h-[2px] border-[#eece93] !p-0'></hr>
                         </div>
                     </section>
 
@@ -197,7 +107,7 @@ export default function Home() {
                     {/*        />*/}
                     {/*    </div>*/}
                     {/*    <div className='w-[86.1671469740634vw] m-auto'>*/}
-                    {/*        <hr className='mt-[23px] w-[119px] !h-[2px] border-[#FB4A04] !p-0'/>*/}
+                    {/*        <hr className='mt-[23px] w-[119px] !h-[2px] border-[#eece93] !p-0'/>*/}
                     {/*    </div>*/}
                     {/*</section>*/}
                 </div>

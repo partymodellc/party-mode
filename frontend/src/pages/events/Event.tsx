@@ -20,55 +20,7 @@ import {IncomingEvent, useEvent} from "../../context/EventProvider"
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-type Props = {}
-
-type EventLocation = {
-    longitude: number
-    latitude: number
-    name: string
-}
-
-// const galleryCarouselSettings = {
-//     dots: true,
-//     infinite: true,
-//     speed: 500,
-//     slidesToShow: 3,
-//     slidesToScroll: 1,
-//     responsive: [
-//         {
-//             breakpoint: 1200,
-//             settings: {
-//                 slidesToShow: 3,
-//                 slidesToScroll: 1,
-//             },
-//         },
-//         {
-//             breakpoint: 1024,
-//             settings: {
-//                 slidesToShow: 2,
-//                 slidesToScroll: 1,
-//             },
-//         },
-//         {
-//             breakpoint: 768,
-//             settings: {
-//                 slidesToShow: 2,
-//                 slidesToScroll: 1,
-//                 arrows: false,
-//             },
-//         },
-//         {
-//             breakpoint: 576,
-//             settings: {
-//                 slidesToShow: 1,
-//                 slidesToScroll: 1,
-//                 arrows: false,
-//             },
-//         },
-//     ],
-// }
-
-export default function Event({}: Props) {
+export default function Event() {
     const {eventId} = useParams()
     const {scrollY} = useScroll()
     const {getEvent, allTickets, getAllTickets} = useEvent()
@@ -164,7 +116,7 @@ export default function Event({}: Props) {
                                 Card Number
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#eece933D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
@@ -173,7 +125,7 @@ export default function Event({}: Props) {
                                 CVC
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#eece933D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
@@ -182,18 +134,18 @@ export default function Event({}: Props) {
                                 Expire Date
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#eece933D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
                         <motion.button
-                            initial={{scale: 1, backgroundColor: "#FB4A04"}}
+                            initial={{scale: 1, backgroundColor: "#eece93"}}
                             whileHover={{
                                 scale: 1.02,
                                 backgroundColor: "transparent",
-                                color: "#FB4A04",
+                                color: "#eece93",
                             }}
-                            className="my-[79px] text-[white] border-2 border-[#FB4A04] w-[100%] h-[79px] rounded-[20px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px]"
+                            className="my-[79px] text-[white] border-2 border-[#eece93] w-[100%] h-[79px] rounded-[20px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px]"
                         >
                             Book Ticket
                         </motion.button>
@@ -228,7 +180,7 @@ export default function Event({}: Props) {
                                 Name*
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#eece933D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
@@ -237,7 +189,7 @@ export default function Event({}: Props) {
                                 Email address
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#eece933D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
@@ -245,26 +197,26 @@ export default function Event({}: Props) {
                             <label className="font-[400] text-[20px] text-[#231414D4] leading0[32.58px]">
                                 Choose Ticket
                             </label>
-                            <select className=" w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]">
-                                <option className="bg-[#FB4A041A] hover:bg-[#FB4A04]">
+                            <select className=" w-full h-[79px] border-[1px] border-[#eece933D] rounded-[20px]">
+                                <option className="bg-[#eece931A] hover:bg-[#eece93]">
                                     Fast Pass Admission
                                 </option>
-                                <option className="bg-[#FB4A041A] hover:bg-[#FB4A04]">
+                                <option className="bg-[#eece931A] hover:bg-[#eece93]">
                                     Immediate Admission
                                 </option>
-                                <option className="bg-[#FB4A041A] hover:bg-[#FB4A04]">
+                                <option className="bg-[#eece931A] hover:bg-[#eece93]">
                                     Stream Live
                                 </option>
                             </select>
                         </div>
                         <motion.button
-                            initial={{scale: 1, backgroundColor: "#FB4A04"}}
+                            initial={{scale: 1, backgroundColor: "#eece93"}}
                             whileHover={{
                                 scale: 1.02,
                                 backgroundColor: "transparent",
-                                color: "#FB4A04",
+                                color: "#eece93",
                             }}
-                            className="my-[79px] text-[white] border-2 border-[#FB4A04] w-[100%] h-[79px] rounded-[20px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px]"
+                            className="my-[79px] text-[white] border-2 border-[#eece93] w-[100%] h-[79px] rounded-[20px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px]"
                         >
                             Proceed
                         </motion.button>
@@ -298,11 +250,11 @@ export default function Event({}: Props) {
                         }
                     >
                         <Link to="/">
-                            <motion.li whileHover={{color: "#FB4A04"}} className="text-inherit">Events</motion.li>
+                            <motion.li whileHover={{color: "#eece93"}} className="text-inherit">Events</motion.li>
                         </Link>
 
                         <Link to="/login">
-                            <motion.li whileHover={{color: "#FB4A04"}} className="text-inherit">Login</motion.li>
+                            <motion.li whileHover={{color: "#eece93"}} className="text-inherit">Login</motion.li>
                         </Link>
                     </motion.ul>
                 </motion.nav>
@@ -358,7 +310,7 @@ export default function Event({}: Props) {
                             (
                                 <motion.button
                                     initial={{scale: 1, backgroundColor: "#ffffff00"}}
-                                    whileHover={{scale: 1.02, backgroundColor: "#FB4A04"}}
+                                    whileHover={{scale: 1.02, backgroundColor: "#eece93"}}
                                     className="mt-[15px] w-[231px] h-[47px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px] border-[4px] border-white"
                                     onClick={() => {
                                         !readMore ? setReadMore(true) : setReadMore(false)
@@ -436,10 +388,10 @@ export default function Event({}: Props) {
                         initial={{scale: 1, backgroundColor: "#ffffff00"}}
                         whileHover={{
                             scale: 1.02,
-                            backgroundColor: "#FB4A04",
+                            backgroundColor: "#eece93",
                             color: "#fff",
                         }}
-                        className="xsm:mt-[20px] xsm:mb-[50px] border-[2px] border-[#FB4A04] w-[177px] h-[60px] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26px] font-[700]"
+                        className="xsm:mt-[20px] xsm:mb-[50px] border-[2px] border-[#eece93] w-[177px] h-[60px] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26px] font-[700]"
                     >
                         Open In Maps
                     </motion.button>

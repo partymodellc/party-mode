@@ -10,7 +10,7 @@ import {useNavigate} from "react-router-dom"
 export default function Signup() {
     const navigate = useNavigate()
     const [user, setUser] = useState({
-        name: '', email: '', password: ''
+        username: '', email: '', password: ''
     })
 
     const inputHandler = (e: any) => {
@@ -35,7 +35,7 @@ export default function Signup() {
                 <div
                     className='authFliterEffect rounded-[50px] w-[39.76945244956772vw] xsm:min-w-[80vw] sm:min-w-[60vw] h-[331px] flex justify-center items-center ml-[-45px] xsm:ml-0 sm:ml-0 pl-[4.14985590778098vw]'>
                     <h1 className='w-[35vw] xsm:min-w-[70vw] sm:min-w-[50vw] font-[700] text-[48px] leading-[78px] xsm:leading-[40px] sm:leading-[40px] text-[#fff]'>Exclusive <span
-                        className='text-[#FB4A04]'>events,</span> <span
+                        className='text-[#eece93]'>events,</span> <span
                         className='font-[700] text-[32px] leading-[52px]'>priceless memories.</span></h1>
                 </div>
             </div>
@@ -54,10 +54,10 @@ export default function Signup() {
                             <div className='flex-1 flex flex-col'>
                                 <label
                                     className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26.06px] text-[#473a3a] '
-                                    style={{fontWeight: '600'}}>Name</label>
+                                    style={{fontWeight: '600'}}>Username</label>
                                 <input className=' h-[50px] rounded-[10px] border-[1px] border-[#473a3a]'
-                                       style={{padding: "0 10px"}} name='name' onChange={inputHandler}
-                                       value={user.name}/>
+                                       style={{padding: "0 10px"}} name='username' onChange={inputHandler}
+                                       value={user.username}/>
                             </div>
                             <div className='flex-1 flex flex-col'>
                                 <label
@@ -86,9 +86,9 @@ export default function Signup() {
 
                         {/* <Link to="/interests"> */}
                         <Button onClick={registerUser}
-                                whileHover={{background: "#fff", border: "3px solid #FB4A04", color: "#FB4A04"}}
+                                whileHover={{background: "#fff", border: "3px solid #eece93", color: "#eece93"}}
                                 width="27.608069164265128vw" height='57px' text="SignUp"
-                                style={{background: "#FB4A04", color: "#fff", marginTop: "25px", minWidth: "100%"}}/>
+                                style={{background: "#eece93", color: "#fff", marginTop: "25px", minWidth: "100%"}}/>
                         {/* </Link> */}
 
                         <div className='flex justify-between items-center mt-[37px]'>

@@ -74,7 +74,7 @@ export default function TableRow({event, index}: Props) {
                                 onCopy={() => setContextMenu(false)}
                             >
                                 <motion.p
-                                    whileHover={{color: "#FB4A04"}}
+                                    whileHover={{color: "#eece93"}}
                                     className="font-[400] cursor-pointer text-[16px] leading-[26px] text-[black]"
                                 >
                                     Copy Event Url
@@ -82,7 +82,7 @@ export default function TableRow({event, index}: Props) {
                             </CopyToClipboard>
                             <motion.p
                                 onClick={() => navigate(`/events/${event.id}`)}
-                                whileHover={{color: "#FB4A04"}}
+                                whileHover={{color: "#eece93"}}
                                 className="font-[400] cursor-pointer text-[16px] leading-[26px] text-[black]"
                             >
                                 View
@@ -90,14 +90,14 @@ export default function TableRow({event, index}: Props) {
 
                             <motion.p
                                 onClick={() => navigate(`/events/${event.id}/basic-info`)}
-                                whileHover={{color: "#FB4A04"}}
+                                whileHover={{color: "#eece93"}}
                                 className="font-[400] cursor-pointer text-[16px] leading-[26px] text-[black]"
                             >
                                 Edit
                             </motion.p>
                             <motion.p
                                 onClick={handleDeleteEvent}
-                                whileHover={{color: "#FB4A04"}}
+                                whileHover={{color: "#eece93"}}
                                 className="font-[400] cursor-pointer text-[16px] leading-[26px] text-[black]"
                             >
                                 Delete
