@@ -8,7 +8,7 @@ type Props = {
 
 export default function Footer({ showFooterHeaders = true }: Props) {
     return (
-        <footer className={showFooterHeaders ? "flex flex-col justify-between w-[100%] bg-[#FB4A04] text-[#ffffff] xsm:h-auto sm:h-auto h-auto" : "flex flex-col justify-between w-[100%] bg-[#FB4A04] text-[#ffffff] xsm:h-auto"}>
+        <footer className={showFooterHeaders ? "flex flex-col justify-between w-[100%] bg-[#eece93] text-[#ffffff] xsm:h-auto sm:h-auto h-auto" : "flex flex-col justify-between w-[100%] bg-[#eece93] text-[#ffffff] xsm:h-auto"}>
             {
                 showFooterHeaders &&
                 <motion.div className='w-[90%] mb-[77px] m-auto flex justify-around mt-[55px] xsm:flex-col flex-wrap xsm:gap-[40px] sm:gap-[40px]'>

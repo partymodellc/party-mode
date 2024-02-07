@@ -78,14 +78,14 @@ export default function TicketCard({ticket, phase, addTicketHandler}: Props) {
                 {phase === "creation" ?
                     (<div
                         onClick={() => deleteTicket(ticket.id)}
-                        className="cursor-pointer flex justify-center items-center w-[4.43vw] bg-[#FB4A04] xsm:min-w-[77px] sm:min-w-[55px] md:min-w-[60px]"
+                        className="cursor-pointer flex justify-center items-center w-[4.43vw] bg-[#eece93] xsm:min-w-[77px] sm:min-w-[55px] md:min-w-[60px]"
                     >
                         <LazyImage alt="" src={"/delete.png"}/>
                     </div>)
                     :
                     (<div
                         onClick={() => addTicketHandler && addTicketHandler()}
-                        className="cursor-pointer flex justify-center items-center w-[4.43vw] bg-[#FB4A04] xsm:min-w-[77px] sm:min-w-[55px] md:min-w-[60px]"
+                        className="cursor-pointer flex justify-center items-center w-[4.43vw] bg-[#eece93] xsm:min-w-[77px] sm:min-w-[55px] md:min-w-[60px]"
                     >
                         {purchaseLoading ?
                             (<div>

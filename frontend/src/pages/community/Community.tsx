@@ -30,14 +30,14 @@ export default function Community({}: Props) {
                 <ul className='text-[#493c3c] xsm:hidden sm:hidden text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] flex gap-[1.7867435158501441vw] mr-[7.37vw] items-center'>
                     <Link to={'/'}>
                         <li className='flex items-center gap-[8px]'>
-                            <motion.p whileHover={{color: "#FB4A04"}}
+                            <motion.p whileHover={{color: "#eece93"}}
                                       className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>Events
                             </motion.p>
                         </li>
                     </Link>
                     <motion.li className='flex items-center gap-[8px]'>
                         <img src='./profile.png' alt=''/>
-                        <motion.p whileHover={{color: "#FB4A04"}}
+                        <motion.p whileHover={{color: "#eece93"}}
                                   className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>partymode@gmail.com
                         </motion.p>
                     </motion.li>
@@ -48,14 +48,14 @@ export default function Community({}: Props) {
                     className='flex-col-reverse transition-all xsm:flex sm:flex hidden text-[#493c3c] py-[10px] items-center text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] gap-[5.244vw]'>
                     <Link to={'/'}>
                         <li className='flex items-center gap-[8px]'>
-                            <motion.p whileHover={{color: "#FB4A04"}}
+                            <motion.p whileHover={{color: "#eece93"}}
                                       className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>Events
                             </motion.p>
                         </li>
                     </Link>
                     <li className='flex items-center gap-[8px]'>
                         <img src='./profile.png' alt=''/>
-                        <motion.p whileHover={{color: "#FB4A04"}}
+                        <motion.p whileHover={{color: "#eece93"}}
                                   className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>partymode@gmail.com
                         </motion.p>
                     </li>
@@ -63,7 +63,7 @@ export default function Community({}: Props) {
             }
 
             <main className='w-[93.8328530259366vw] m-auto mt-[75px]'>
-                <div className='w-full h-[105px] bg-[#FB4A040F] flex items-center rounded-[20px]'>
+                <div className='w-full h-[105px] bg-[#eece930F] flex items-center rounded-[20px]'>
                     <motion.img whileHover={{scale: 1.03}} src='./Ellipse 66.png' alt=''
                                 className="shadow-md rounded-full w-[4.14985590778098vw] min-w-[48px] ml-[2.0172910662824206vw] mr-[2.5360230547550433vw]"/>
                     <Search whileHover={{scale: 1.03}} text='What’s on your mind?' style={{
@@ -71,7 +71,7 @@ export default function Community({}: Props) {
                         background: "transparent",
                         textIndent: "1.4985590778097984vw",
                         height: "65px",
-                        border: "1px solid #FB4A04",
+                        border: "1px solid #eece93",
                         borderRadius: "52px",
                         width: "31.585014409221902vw"
                     }}/>
@@ -89,7 +89,7 @@ export default function Community({}: Props) {
                 <div
                     className='flex justify-between mt-[35px] xsm:flex-col sm:flex-col md:flex-col xsm:gap-[20px] sm:gap-[20px] md:gap-[20px]'>
                     <div
-                        className='w-[53.94812680115274vw] xsm:w-full sm:w-full md:w-full px-[1.3%]  h-full rounded-[20px] bg-[#FB4A040F]'>
+                        className='w-[53.94812680115274vw] xsm:w-full sm:w-full md:w-full px-[1.3%]  h-full rounded-[20px] bg-[#eece930F]'>
                         <div className='flex items-center  gap-[2.190201729106628vw] mt-[21px] xsm:flex-col'>
                             <motion.img whileHover={{scale: 1.03}} className='xsm:self-start shadow-md rounded-[20px]'
                                         src='./c21.png'/>
@@ -102,7 +102,7 @@ export default function Community({}: Props) {
                                                     src='./Ellipse 66.png'/>
                                     </div>
                                     <h6 className='font-[700] text-[24px] leading-[39.09px] text-[#231414D4]'>Jonathan</h6>
-                                    <span className='min-w-[3px] min-h-[35px] rounded-full bg-[#FB4A0466]'></span>
+                                    <span className='min-w-[3px] min-h-[35px] rounded-full bg-[#eece9366]'></span>
                                     <p className='font-[700] text-[24px] leading-[39.09px] text-[#A3A3A3]'>2 mins</p>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@ export default function Community({}: Props) {
                                     background: "transparent",
                                     textIndent: "19px",
                                     height: "65px",
-                                    border: "1px solid #FB4A04",
+                                    border: "1px solid #eece93",
                                     borderRadius: "52px",
                                     width: "100%"
                                 }}/>
@@ -138,13 +138,13 @@ export default function Community({}: Props) {
                         </div>
                     </div>
                     <div
-                        className='w-[38.44380403458213vw] xsm:w-full sm:w-full md:w-full h-full rounded-[20px] bg-[#FB4A040F] divide-y-[5px] divide-[#FB4A043D]'>
+                        className='w-[38.44380403458213vw] xsm:w-full sm:w-full md:w-full h-full rounded-[20px] bg-[#eece930F] divide-y-[5px] divide-[#eece933D]'>
                         <div className='px-[1.38328530259366vw] py-[21px]'>
                             <h2 className='font-[700] text-[36px] leading-[58.64px] text-[#231414D4]'>My community</h2>
                         </div>
                         <div className='px-[1.38328530259366vw] pt-[46px]'>
                             <div className='flex flex-col gap-[46px]'>
-                                <motion.div whileHover={{color: "#FB4A04"}}
+                                <motion.div whileHover={{color: "#eece93"}}
                                             className='flex  gap-[2.9971181556195967vw] xsm:flex-col'>
                                     <motion.img whileHover={{scale: 1.03}} className='shadow-md rounded-[20px]'
                                                 src='./c23.png'/>
@@ -156,7 +156,7 @@ export default function Community({}: Props) {
                                             member</p>
                                     </div>
                                 </motion.div>
-                                <motion.div whileHover={{color: "#FB4A04"}}
+                                <motion.div whileHover={{color: "#eece93"}}
                                             className='flex gap-[2.9971181556195967vw] xsm:flex-col'>
                                     <motion.img whileHover={{scale: 1.03}} className='shadow-md rounded-[20px]'
                                                 src='./c24.png'/>
@@ -168,7 +168,7 @@ export default function Community({}: Props) {
                                             member</p>
                                     </div>
                                 </motion.div>
-                                <motion.div whileHover={{color: "#FB4A04"}}
+                                <motion.div whileHover={{color: "#eece93"}}
                                             className='flex gap-[2.9971181556195967vw] xsm:flex-col'>
                                     <motion.img whileHover={{scale: 1.03}} className='shadow-md rounded-[20px]'
                                                 src='./c25.png'/>
@@ -180,7 +180,7 @@ export default function Community({}: Props) {
                                             member</p>
                                     </div>
                                 </motion.div>
-                                <motion.div whileHover={{color: "#FB4A04"}}
+                                <motion.div whileHover={{color: "#eece93"}}
                                             className='flex gap-[2.9971181556195967vw] xsm:flex-col'>
                                     <motion.img whileHover={{scale: 1.03}} className='shadow-md rounded-[20px]'
                                                 src='./c26.png'/>
@@ -193,12 +193,12 @@ export default function Community({}: Props) {
                                     </div>
                                 </motion.div>
 
-                                <Button whileHover={{scale: 1.03, background: "#FB4A04", color: "#fff"}} width='100%'
+                                <Button whileHover={{scale: 1.03, background: "#eece93", color: "#fff"}} width='100%'
                                         height='94px' text='See All' style={{
                                     marginBottom: "65px",
                                     borderRadius: "52px",
-                                    border: "2px solid #FB4A04",
-                                    color: "#FB4A04",
+                                    border: "2px solid #eece93",
+                                    color: "#eece93",
                                     background: "transparent"
                                 }}/>
                             </div>
@@ -210,16 +210,16 @@ export default function Community({}: Props) {
                 <div
                     className='flex justify-between mt-[53px] xsm:flex-col sm:flex-col md:flex-col xsm:gap-[20px] sm:gap-[20px] md:gap-[20px] gap-[20px]'>
 
-                    <div className='flex-1 h-full rounded-[20px] bg-[#FB4A040F] '>
+                    <div className='flex-1 h-full rounded-[20px] bg-[#eece930F] '>
                         <div
-                            className='w-[38.454755043227664vw]  xsm:w-[80%] sm:w-[80%] md:w-[80%]  m-auto divide-y-[5px] divide-[#FB4A043D]'>
+                            className='w-[38.454755043227664vw]  xsm:w-[80%] sm:w-[80%] md:w-[80%]  m-auto divide-y-[5px] divide-[#eece933D]'>
                             <div className='px-[1.38328530259366vw] py-[21px]'>
                                 <h2 className='font-[700] text-[36px] leading-[58.64px] text-[#231414D4]'>Other
                                     Events</h2>
                             </div>
                             <div className='px-[1.38328530259366vw] pt-[46px]'>
                                 <div className='flex flex-col gap-[46px]'>
-                                    <motion.div whileHover={{color: "#FB4A04"}}
+                                    <motion.div whileHover={{color: "#eece93"}}
                                                 className='flex  gap-[2.9971181556195967vw] xsm:flex-col'>
                                         <motion.img whileHover={{scale: 1.03}} className='shadow-md rounded-[20px]'
                                                     src='./c23.png'/>
@@ -231,7 +231,7 @@ export default function Community({}: Props) {
                                                 member</p>
                                         </div>
                                     </motion.div>
-                                    <motion.div whileHover={{color: "#FB4A04"}}
+                                    <motion.div whileHover={{color: "#eece93"}}
                                                 className='flex gap-[2.9971181556195967vw] xsm:flex-col'>
                                         <motion.img whileHover={{scale: 1.03}} className='shadow-md rounded-[20px]'
                                                     src='./c24.png'/>
@@ -243,7 +243,7 @@ export default function Community({}: Props) {
                                                 member</p>
                                         </div>
                                     </motion.div>
-                                    <motion.div whileHover={{color: "#FB4A04"}}
+                                    <motion.div whileHover={{color: "#eece93"}}
                                                 className='flex gap-[2.9971181556195967vw] xsm:flex-col'>
                                         <motion.img whileHover={{scale: 1.03}} className='shadow-md rounded-[20px]'
                                                     src='./c25.png'/>
@@ -255,7 +255,7 @@ export default function Community({}: Props) {
                                                 member</p>
                                         </div>
                                     </motion.div>
-                                    <motion.div whileHover={{color: "#FB4A04"}}
+                                    <motion.div whileHover={{color: "#eece93"}}
                                                 className='flex gap-[2.9971181556195967vw] xsm:flex-col'>
                                         <motion.img whileHover={{scale: 1.03}} className='shadow-md rounded-[20px]'
                                                     src='./c26.png'/>
@@ -268,12 +268,12 @@ export default function Community({}: Props) {
                                         </div>
                                     </motion.div>
 
-                                    <Button whileHover={{scale: 1.03, background: "#FB4A04", color: "#fff"}}
+                                    <Button whileHover={{scale: 1.03, background: "#eece93", color: "#fff"}}
                                             width='100%' height='94px' text='Go to Event page' style={{
                                         marginBottom: "28px",
                                         borderRadius: "52px",
-                                        border: "2px solid #FB4A04",
-                                        color: "#FB4A04",
+                                        border: "2px solid #eece93",
+                                        color: "#eece93",
                                         background: "transparent"
                                     }}/>
                                 </div>
@@ -282,16 +282,16 @@ export default function Community({}: Props) {
                     </div>
 
                     <div id='top-vibe'
-                         className='flex-1 h-full rounded-[20px] bg-[#FB4A040F] divide-y-[5px] divide-[#FB4A043D]'>
+                         className='flex-1 h-full rounded-[20px] bg-[#eece930F] divide-y-[5px] divide-[#eece933D]'>
                         <div
-                            className='w-[38.454755043227664vw] xsm:w-[80%] sm:w-[80%] md:w-[80%] m-auto divide-y-[5px] divide-[#FB4A043D]'>
+                            className='w-[38.454755043227664vw] xsm:w-[80%] sm:w-[80%] md:w-[80%] m-auto divide-y-[5px] divide-[#eece933D]'>
                             <div className='px-[1.38328530259366vw] py-[21px]'>
                                 <h2 className='font-[700] text-[36px] leading-[58.64px] text-[#231414D4]'>Events with
                                     Top vibes </h2>
                             </div>
                             <div className='px-[1.38328530259366vw] pt-[46px]'>
                                 <div className='flex flex-col gap-[46px]'>
-                                    <motion.div whileHover={{color: "#FB4A04"}}
+                                    <motion.div whileHover={{color: "#eece93"}}
                                                 className='flex  gap-[2.9971181556195967vw] xsm:flex-col'>
                                         <motion.img whileHover={{scale: 1.03}} className='shadow-md rounded-[20px]'
                                                     src='./c23.png'/>
@@ -303,7 +303,7 @@ export default function Community({}: Props) {
                                                 member</p>
                                         </div>
                                     </motion.div>
-                                    <motion.div whileHover={{color: "#FB4A04"}}
+                                    <motion.div whileHover={{color: "#eece93"}}
                                                 className='flex gap-[2.9971181556195967vw] xsm:flex-col'>
                                         <motion.img whileHover={{scale: 1.03}} className='shadow-md rounded-[20px]'
                                                     src='./c24.png'/>
@@ -315,7 +315,7 @@ export default function Community({}: Props) {
                                                 member</p>
                                         </div>
                                     </motion.div>
-                                    <motion.div whileHover={{color: "#FB4A04"}}
+                                    <motion.div whileHover={{color: "#eece93"}}
                                                 className='flex gap-[2.9971181556195967vw] xsm:flex-col'>
                                         <motion.img whileHover={{scale: 1.03}} className='shadow-md rounded-[20px]'
                                                     src='./c25.png'/>
@@ -327,7 +327,7 @@ export default function Community({}: Props) {
                                                 member</p>
                                         </div>
                                     </motion.div>
-                                    <motion.div whileHover={{color: "#FB4A04"}}
+                                    <motion.div whileHover={{color: "#eece93"}}
                                                 className='flex gap-[2.9971181556195967vw] xsm:flex-col'>
                                         <motion.img whileHover={{scale: 1.03}} className='shadow-md rounded-[20px]'
                                                     src='./c26.png'/>
@@ -340,12 +340,12 @@ export default function Community({}: Props) {
                                         </div>
                                     </motion.div>
 
-                                    <Button whileHover={{scale: 1.03, background: "#FB4A04", color: "#fff"}}
+                                    <Button whileHover={{scale: 1.03, background: "#eece93", color: "#fff"}}
                                             width='100%' height='94px' text='View all' style={{
                                         marginBottom: "28px",
                                         borderRadius: "52px",
-                                        border: "2px solid #FB4A04",
-                                        color: "#FB4A04",
+                                        border: "2px solid #eece93",
+                                        color: "#eece93",
                                         background: "transparent"
                                     }}/>
                                 </div>

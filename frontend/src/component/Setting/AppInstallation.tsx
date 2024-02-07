@@ -26,7 +26,7 @@ export default function AppInstallation({ }: Props) {
         <div className='w-[78.04034582132564vw] flex flex-col justify-center items-center'>
             <div className='w-full whitespace-nowrap overflow-auto'>
                 <table className="transition-all table-fixed min-w-[400px] w-full mt-[43px] relative z-10 mb-[50px]">
-                    <thead className='bg-[#FB4A04]'>
+                    <thead className='bg-[#eece93]'>
                         <tr className=''>
                             <th className='py-[17px] text-white pl-[1%] text-left w-[50%] sm:w-[25%] xsm:w-auto'>App Name</th>
                             <th className='py-[17px] text-white'>Description</th>
@@ -49,7 +49,7 @@ export default function AppInstallation({ }: Props) {
                     </tbody>
                 </table>
             </div>
-            <Button whileHover={{background:"#fff",color:"#FB4A04",border:"1px solid #FB4A04"}} width="255px" height='47px' text="Browse Apps" style={{background:"#FB4A04", borderRadius: "0px", fontSize: "20px", alignSelf: "flex-end", marginTop: "150px" }} />
+            <Button whileHover={{background:"#fff",color:"#eece93",border:"1px solid #eece93"}} width="255px" height='47px' text="Browse Apps" style={{background:"#eece93", borderRadius: "0px", fontSize: "20px", alignSelf: "flex-end", marginTop: "150px" }} />
         </div>
     )
 }

@@ -50,7 +50,7 @@ export default function Tickets() {
                     <p className='font-[400] text-[clamp(14px,1.1527377521613833vw,20px)] leading-[33px] text-[#473a3a] mb-[36px]'>You
                         need to verify your email to view transfers and gifts.</p>
                     <Link to={"/ticket-verified"}>
-                        <Button whileHover={{background: "#FB4A04", color: "#ffffff", scale: 1.03}} width='232px'
+                        <Button whileHover={{background: "#eece93", color: "#ffffff", scale: 1.03}} width='232px'
                                 height='51px' text='Verify your email' style={{
                             marginBottom: "36px",
                             background: "#fff",

@@ -27,12 +27,12 @@ export default function Home() {
                             </h1>
                             <Link to='/search'>
                                 <Button
-                                    initial={{scale: 1, backgroundColor: '#FB4A04', color: "#fff"}}
+                                    initial={{scale: 1, backgroundColor: '#eece93', color: "#fff"}}
                                     whileHover={{
                                         scale: 1.02,
                                         backgroundColor: "#ffffff",
-                                        border: "3px solid #FB4A04",
-                                        color: "#FB4A04"
+                                        border: "3px solid #eece93",
+                                        color: "#eece93"
                                     }}
                                     width={"17.75vw"}
                                     height={"61px"}
@@ -45,7 +45,7 @@ export default function Home() {
 
                     <div
                         className='bg-white relative top-[-28px] p-[14px] eventDivBoxShadow w-[85.76368876080691vw] m-auto'>
-                        <div className='pt-[5px] pb-[18px] pl-[10px] border-l-[2px] border-[#FB4A04]'>
+                        <div className='pt-[5px] pb-[18px] pl-[10px] border-l-[2px] border-[#eece93]'>
                             <h2 className='mb-[8px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] text-[#473a3a]'>
                                 Do events help you find connection?
                             </h2>
@@ -61,7 +61,7 @@ export default function Home() {
                             <h2 className="font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-[#473a3a]">
                                 Check out trending categories
                             </h2>
-                            <hr className='mt-[23px] w-[232px] !h-[2px] border-[#FB4A04] !p-0'></hr>
+                            <hr className='mt-[23px] w-[232px] !h-[2px] border-[#eece93] !p-0'></hr>
                         </div>
                     </section>
 
@@ -107,7 +107,7 @@ export default function Home() {
                     {/*        />*/}
                     {/*    </div>*/}
                     {/*    <div className='w-[86.1671469740634vw] m-auto'>*/}
-                    {/*        <hr className='mt-[23px] w-[119px] !h-[2px] border-[#FB4A04] !p-0'/>*/}
+                    {/*        <hr className='mt-[23px] w-[119px] !h-[2px] border-[#eece93] !p-0'/>*/}
                     {/*    </div>*/}
                     {/*</section>*/}
                 </div>

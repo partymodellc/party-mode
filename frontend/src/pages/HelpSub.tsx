@@ -15,10 +15,10 @@ export default function HelpSub({ }: Props) {
                 </Link>
                 <motion.ul className='text-[#473a3a] text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] flex gap-[5.244vw] mr-[8.94vw]'>
                     <Link to="/contact-us">
-                        <motion.li whileHover={{ color: "#FB4A04" }} className="text-inherit">Help centers</motion.li>
+                        <motion.li whileHover={{ color: "#eece93" }} className="text-inherit">Help centers</motion.li>
                     </Link>
                     <Link to="/">
-                        <motion.li whileHover={{ color: "#FB4A04" }} className="text-inherit">Events</motion.li>
+                        <motion.li whileHover={{ color: "#eece93" }} className="text-inherit">Events</motion.li>
                     </Link>
                 </motion.ul>
             </motion.nav>
