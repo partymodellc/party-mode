@@ -1,13 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: #eece93;
-        stroke-width: 0px;
-      }
-    </style>
-  </defs>
-  <path class="cls-1" d="M33.75,29.25v2.25H3.38l-1.12-1.12V0h2.25v29.25h29.25Z"/>
-  <path class="cls-1" d="M29.25,7.22l-11.58,11.58h-1.59l-3.7-3.71-8.2,8.21-1.59-1.59,9-9h1.59l3.7,3.71,11.58-11.58h1.59l4.5,4.5-1.59,1.59-3.7-3.71Z"/>
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M33.75 29.25V31.5H3.375L2.25 30.375V0H4.5V29.25H33.75Z" fill="#FB4A04"/>
+<path d="M29.2496 7.21574L17.6711 18.7965H16.0781L12.3746 15.0907L4.17112 23.2965L2.57812 21.7035L11.5781 12.7035H13.1711L16.8746 16.4092L28.4531 4.82849H30.0439L34.5439 9.32849L32.9531 10.9215L29.2496 7.21574Z" fill="#FB4A04"/>
 </svg>

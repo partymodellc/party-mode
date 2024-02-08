@@ -29,12 +29,12 @@ export default function TicketVerifiedEmail({ }: Props) {
                 <ul className='text-[#493c3c] xsm:hidden sm:hidden text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] flex gap-[31px] mr-[7.37vw] items-center'>
                     <Link to="/dashboard">
                         <motion.li className='flex items-center gap-[8px]'>
-                            <motion.p whileHover={{ color: "#eece93" }} className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>Back</motion.p>
+                            <motion.p whileHover={{ color: "#FB4A04" }} className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>Back</motion.p>
                         </motion.li>
                     </Link>
                     <motion.li className='flex items-center gap-[8px]'>
                         <img src='./profile.png' alt='' />
-                        <motion.p whileHover={{ color: "#eece93" }} className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>partymode@gmail.com</motion.p>
+                        <motion.p whileHover={{ color: "#FB4A04" }} className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>partymode@gmail.com</motion.p>
                     </motion.li>
                 </ul>
             </nav>
@@ -43,12 +43,12 @@ export default function TicketVerifiedEmail({ }: Props) {
                 <ul style={showMobileNav ? { maxHeight: "1000px" } : { maxHeight: "0px", overflow: "hidden" }} className='flex-col-reverse transition-all xsm:flex sm:flex hidden text-[#493c3c] py-[10px] items-center text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] gap-[5.244vw]'>
                     <Link to="/dashboard">
                         <motion.li className='flex items-center gap-[8px]'>
-                            <motion.p whileHover={{ color: "#eece93" }} className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>Back</motion.p>
+                            <motion.p whileHover={{ color: "#FB4A04" }} className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>Back</motion.p>
                         </motion.li>
                     </Link>
                     <motion.li className='flex items-center gap-[8px]'>
                         <img src='./profile.png' alt='' />
-                        <motion.p whileHover={{ color: "#eece93" }} className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>partymode@gmail.com</motion.p>
+                        <motion.p whileHover={{ color: "#FB4A04" }} className='text-[#473a3a] font-[700] text-[14px] leading-[23px] text-center'>partymode@gmail.com</motion.p>
                     </motion.li>
                 </ul>
             }
@@ -74,7 +74,7 @@ export default function TicketVerifiedEmail({ }: Props) {
             <div className='w-[42.70893371757925vw] xsm:w-[90%] sm:w-[80%] m-auto'>
                 <h3 className='font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px] text-[#473a3a] ml-[3%] mt-[85px] mb-[90px]'>Orders</h3>
                 <div className='flex flex-col gap-[28px] items-center'>
-                    <motion.div whileHover={{ scale: 1.03 }} className='shadow-sm flex gap-[20px] border-[1px] border-[#eece9324] w-[41.95965417867435vw] xsm:w-[90%] sm:w-[80%] xsm:flex-col sm:flex-col'>
+                    <motion.div whileHover={{ scale: 1.03 }} className='shadow-sm flex gap-[20px] border-[1px] border-[#FB4A0424] w-[41.95965417867435vw] xsm:w-[90%] sm:w-[80%] xsm:flex-col sm:flex-col'>
                         <img className='w-[13.314121037463977vw] xsm:min-w-[100%] sm:min-w-[100%]' src='./verifiedTicket1.png' alt='' />
                         <div className='flex flex-col justify-start'>
                             <h2 className='font-[700] text-[clamp(14px,1.1527377521613833vw,20px)] leading-[33px] text-[#473a3a] w-[20.403458213256485vw] xsm:w-[90%] sm:w-[80%]'>Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.</h2>
@@ -85,7 +85,7 @@ export default function TicketVerifiedEmail({ }: Props) {
                         </div>
                     </motion.div>
 
-                    <motion.div whileHover={{ scale: 1.03 }} className='shadow-sm flex gap-[20px] border-[1px] border-[#eece9324] w-[41.95965417867435vw] xsm:flex-col sm:flex-col xsm:w-[90%] sm:w-[80%]'>
+                    <motion.div whileHover={{ scale: 1.03 }} className='shadow-sm flex gap-[20px] border-[1px] border-[#FB4A0424] w-[41.95965417867435vw] xsm:flex-col sm:flex-col xsm:w-[90%] sm:w-[80%]'>
                         <img className='w-[13.314121037463977vw] xsm:min-w-[100%] sm:min-w-[100%]' src='./verifiedTicket2.png' alt='' />
                         <div className='flex flex-col justify-start'>
                             <h2 className='font-[700] text-[clamp(14px,1.1527377521613833vw,20px)] leading-[33px] text-[#473a3a] w-[20.403458213256485vw] xsm:w-[90%] sm:w-[80%'>Hush Haunt 2022 - Oct 13 Hush Haunted Attraction, Westland.</h2>

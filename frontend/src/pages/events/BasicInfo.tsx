@@ -172,7 +172,7 @@ export default function BasicInfo() {
                 ></textarea>
                                     <Button
                                         whileHover={{
-                                            background: "#eece93",
+                                            background: "#FB4A04",
                                             color: "#ffffff",
                                             scale: 1.03,
                                         }}
@@ -220,7 +220,7 @@ export default function BasicInfo() {
                             {/*    <div className="flex gap-[1.1527377521613833vw] pt-[37px] xsm:flex-col sm:flex-col">*/}
                             {/*        <Button*/}
                             {/*            whileHover={{*/}
-                            {/*                background: "#eece93",*/}
+                            {/*                background: "#FB4A04",*/}
                             {/*                color: "white",*/}
                             {/*                scale: 1.03,*/}
                             {/*            }}*/}
@@ -239,7 +239,7 @@ export default function BasicInfo() {
                             {/*        />*/}
                             {/*        <Button*/}
                             {/*            whileHover={{*/}
-                            {/*                background: "#eece93",*/}
+                            {/*                background: "#FB4A04",*/}
                             {/*                color: "white",*/}
                             {/*                scale: 1.03,*/}
                             {/*            }}*/}
@@ -258,7 +258,7 @@ export default function BasicInfo() {
                             {/*        />*/}
                             {/*        <Button*/}
                             {/*            whileHover={{*/}
-                            {/*                background: "#eece93",*/}
+                            {/*                background: "#FB4A04",*/}
                             {/*                color: "white",*/}
                             {/*                scale: 1.03,*/}
                             {/*            }}*/}
@@ -303,7 +303,7 @@ export default function BasicInfo() {
                             {/*    <div className="flex gap-[1.1527377521613833vw] pt-[37px] xsm:flex-col sm:flex-col">*/}
                             {/*        <Button*/}
                             {/*            whileHover={{*/}
-                            {/*                background: "#eece93",*/}
+                            {/*                background: "#FB4A04",*/}
                             {/*                color: "white",*/}
                             {/*                scale: 1.03,*/}
                             {/*            }}*/}
@@ -322,7 +322,7 @@ export default function BasicInfo() {
                             {/*        />*/}
                             {/*        <Button*/}
                             {/*            whileHover={{*/}
-                            {/*                background: "#eece93",*/}
+                            {/*                background: "#FB4A04",*/}
                             {/*                color: "white",*/}
                             {/*                scale: 1.03,*/}
                             {/*            }}*/}
@@ -421,7 +421,7 @@ export default function BasicInfo() {
                         <div className="flex gap-[20px] xsm:flex-col sm:flex-col">
                             <Button
                                 whileHover={{
-                                    background: "#eece93",
+                                    background: "#FB4A04",
                                     color: "#ffffff",
                                     scale: 1.03,
                                 }}
@@ -431,7 +431,7 @@ export default function BasicInfo() {
                                 style={{
                                     minWidth: "213px",
                                     background: "#ffffff",
-                                    color: "#eece93",
+                                    color: "#FB4A04",
                                     border: "1px solid #231414D4",
                                     borderRadius: "10px",
                                     fontSize: "24px",
@@ -442,15 +442,15 @@ export default function BasicInfo() {
                             <Button
                                 whileHover={{
                                     background: "#ffffff",
-                                    color: "#eece93",
+                                    color: "#FB4A04",
                                     scale: 1.03,
-                                    border: "1px solid #eece93",
+                                    border: "1px solid #FB4A04",
                                 }}
                                 width="13.198847262247838vw"
                                 height="65px"
                                 text="Save & Continue"
                                 style={{
-                                    background: "#eece93",
+                                    background: "#FB4A04",
                                     color: "#ffffff",
                                     minWidth: "213px",
                                     borderRadius: "10px",

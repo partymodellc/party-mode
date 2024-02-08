@@ -58,7 +58,7 @@ export default function Header() {
                             <NavLink to={""} onClick={createEventAndNav} className="mx-4">
                                 <li className="flex items-center gap-[0.4610951008645533vw]">
                                     <motion.p
-                                        whileHover={{color: "#eece93"}}
+                                        whileHover={{color: "#FB4A04"}}
                                         className="text-[#1977F3] font-[400] text-[14px] leading-[23px] text-center"
                                     >
                                         + Create Event
@@ -69,7 +69,7 @@ export default function Header() {
                                 <li className="flex items-center gap-[8px]">
                                     <img src="/heart.png" alt=""/>
                                     <motion.p
-                                        whileHover={{color: "#eece93"}}
+                                        whileHover={{color: "#FB4A04"}}
                                         className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
                                     >
                                         Likes
@@ -80,7 +80,7 @@ export default function Header() {
                                 <li className="flex items-center gap-[0.4610951008645533vw] ">
                                     <img src="/ticket.png" alt=""/>
                                     <motion.p
-                                        whileHover={{color: "#eece93"}}
+                                        whileHover={{color: "#FB4A04"}}
                                         className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
                                     >
                                         Tickets
@@ -98,7 +98,7 @@ export default function Header() {
                                 />
 
                                 <motion.p
-                                    whileHover={{color: "#eece93"}}
+                                    whileHover={{color: "#FB4A04"}}
                                     className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
                                 >
                                     {user.username}
@@ -116,15 +116,15 @@ export default function Header() {
                                 }}
                             >
                                 <div
-                                    style={openNavMenu ? {background: "#eece93"} : {background: "#473a3a"}}
+                                    style={openNavMenu ? {background: "#FB4A04"} : {background: "#473a3a"}}
                                     className="min-w-[29px] min-h-[5px] rounded-full"
                                 ></div>
                                 <div
-                                    style={openNavMenu ? {background: "#eece93"} : {background: "#473a3a"}}
+                                    style={openNavMenu ? {background: "#FB4A04"} : {background: "#473a3a"}}
                                     className="min-w-[29px] min-h-[5px] rounded-full"
                                 ></div>
                                 <div
-                                    style={openNavMenu ? {background: "#eece93"} : {background: "#473a3a"}}
+                                    style={openNavMenu ? {background: "#FB4A04"} : {background: "#473a3a"}}
                                     className="min-w-[29px] min-h-[5px] rounded-full"
                                 ></div>
                             </div>
@@ -135,7 +135,7 @@ export default function Header() {
                                 >
                                     <Link to="/community">
                                         <motion.p
-                                            whileHover={{color: "#eece93"}}
+                                            whileHover={{color: "#FB4A04"}}
                                             className="text-[#473a3a] cursor-pointer font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[23px] text-center"
                                         >
                                             Explore Community
@@ -143,14 +143,14 @@ export default function Header() {
                                     </Link>
                                     {/*<motion.p*/}
                                     {/*    onClick={() => setInviteFriendModal(true)}*/}
-                                    {/*    whileHover={{color: "#eece93"}}*/}
+                                    {/*    whileHover={{color: "#FB4A04"}}*/}
                                     {/*    className="text-[#473a3a] cursor-pointer font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[23px] text-center"*/}
                                     {/*>*/}
                                     {/*    Invite a Friend*/}
                                     {/*</motion.p>*/}
                                     <button onClick={logout}>
                                         <motion.p
-                                            whileHover={{color: "#eece93"}}
+                                            whileHover={{color: "#FB4A04"}}
                                             className="text-[#473a3a] cursor-pointer font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[23px] text-center"
                                         >
                                             Logout
@@ -171,7 +171,7 @@ export default function Header() {
                                 <NavLink to={""} onClick={createEventAndNav}>
                                     <li className="flex items-center gap-[8px]">
                                         <motion.p
-                                            whileHover={{color: "#eece93"}}
+                                            whileHover={{color: "#FB4A04"}}
                                             className="text-[#1977F3] font-[400] text-[14px] leading-[23px] text-center"
                                         >
                                             + Create Event
@@ -182,7 +182,7 @@ export default function Header() {
                                     <li className="flex items-center gap-[8px]">
                                         <img src="/heart.png" alt=""/>
                                         <motion.p
-                                            whileHover={{color: "#eece93"}}
+                                            whileHover={{color: "#FB4A04"}}
                                             className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
                                         >
                                             Likes
@@ -193,7 +193,7 @@ export default function Header() {
                                     <li className="flex items-center gap-[0.4610951008645533vw] ">
                                         <img src="/ticket.png" alt=""/>
                                         <motion.p
-                                            whileHover={{color: "#eece93"}}
+                                            whileHover={{color: "#FB4A04"}}
                                             className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
                                         >
                                             Ticket
@@ -207,7 +207,7 @@ export default function Header() {
                                             src={userPicture}
                                         />
                                         <motion.p
-                                            whileHover={{color: "#eece93"}}
+                                            whileHover={{color: "#FB4A04"}}
                                             className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
                                         >
                                             {user.email}
@@ -216,7 +216,7 @@ export default function Header() {
                                 </Link>
                                 <Link to="/community">
                                     <motion.p
-                                        whileHover={{color: "#eece93"}}
+                                        whileHover={{color: "#FB4A04"}}
                                         className="text-[#473a3a] cursor-pointer font-[400] text-[clamp(14px,0.9221902017291066vw,16px)] leading-[23px] text-center"
                                     >
                                         Explore Community
@@ -224,7 +224,7 @@ export default function Header() {
                                 </Link>
                                 {/*<li className="flex items-center gap-[8px]">*/}
                                 {/*    <motion.p*/}
-                                {/*        onClick={() => setInviteFriendModal(true)} whileHover={{color: "#eece93"}}*/}
+                                {/*        onClick={() => setInviteFriendModal(true)} whileHover={{color: "#FB4A04"}}*/}
                                 {/*        className="text-[#473a3a] cursor-pointer font-[400] text-[14px] leading-[23px] text-center"*/}
                                 {/*    >*/}
                                 {/*        Invite a Friend*/}
@@ -233,7 +233,7 @@ export default function Header() {
                                 <li className="flex items-center gap-[8px]">
                                     <button onClick={logout}>
                                         <motion.p
-                                            whileHover={{color: "#eece93"}}
+                                            whileHover={{color: "#FB4A04"}}
                                             className="text-[#473a3a] font-[400] text-[14px] leading-[23px] text-center"
                                         >
                                             Logout
@@ -282,20 +282,20 @@ export default function Header() {
                         <ul className='text-[#493c3c] text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] flex gap-[3.8vw] mr-[2vw]'
                             style={{display: 'flex', alignItems: "center"}}>
                             <Link to={"/help-sub"}>
-                                <motion.li whileHover={{color: "#eece93"}}>Live Stream</motion.li>
+                                <motion.li whileHover={{color: "#FB4A04"}}>Live Stream</motion.li>
                             </Link>
                             <Link to={"/subscription-and-pricing"}>
-                                <motion.li whileHover={{color: "#eece93"}}>Pricing</motion.li>
+                                <motion.li whileHover={{color: "#FB4A04"}}>Pricing</motion.li>
                             </Link>
                             <Link to={"/contact-us"}>
-                                <motion.li whileHover={{color: "#eece93"}}>Help</motion.li>
+                                <motion.li whileHover={{color: "#FB4A04"}}>Help</motion.li>
                             </Link>
                             <Link to="/login">
-                                <motion.li whileHover={{color: "#eece93"}}>Log In</motion.li>
+                                <motion.li whileHover={{color: "#FB4A04"}}>Log In</motion.li>
                             </Link>
                             <Link to="/signup">
                                 <button className="SignInBtn">
-                                    {/* <motion.li whileHover={{ color: "#473a3a" }} className='text-[#eece93]'></motion.li> */}
+                                    {/* <motion.li whileHover={{ color: "#473a3a" }} className='text-[#FB4A04]'></motion.li> */}
                                     Sign Up
                                 </button>
                             </Link>

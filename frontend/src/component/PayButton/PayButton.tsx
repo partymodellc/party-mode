@@ -15,7 +15,7 @@ const PayButton = (props: Props) => {
 
   return (
     <div>
-        <Button onClick={()=>handleCheckout()} whileHover={{ background: "#fff", border: "3px solid #eece93", color: "#eece93" }} width="27.608069164265128vw" height='57px' text="SignUp" style={{ background: "#eece93", color: "#fff", marginTop: "25px", minWidth: "100%" }}  />
+        <Button onClick={()=>handleCheckout()} whileHover={{ background: "#fff", border: "3px solid #FB4A04", color: "#FB4A04" }} width="27.608069164265128vw" height='57px' text="SignUp" style={{ background: "#FB4A04", color: "#fff", marginTop: "25px", minWidth: "100%" }}  />
     </div>
   )
 }

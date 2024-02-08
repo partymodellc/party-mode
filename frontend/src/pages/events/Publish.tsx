@@ -252,13 +252,13 @@ export default function Publish() {
                     <div
                         className="mt-[94px] xsm:w-[100%] xsm:items-center xsm:ml-0 flex gap-[20px] justify-end mb-[203px] xsm:flex-col-reverse sm:flex-col-reverse">
                         <Button
-                            whileHover={{background: "#eece93", color: "#ffffff", scale: 1.03}}
+                            whileHover={{background: "#FB4A04", color: "#ffffff", scale: 1.03}}
                             width="229px"
                             height="65px"
                             text="Back"
                             style={{
                                 background: "#ffffff",
-                                color: "#eece93",
+                                color: "#FB4A04",
                                 border: "1px solid #231414D4",
                                 borderRadius: "10px",
                                 fontSize: "24px",
@@ -269,15 +269,15 @@ export default function Publish() {
                         <Button
                             whileHover={{
                                 background: "#ffffff",
-                                color: "#eece93",
+                                color: "#FB4A04",
                                 scale: 1.03,
-                                border: "1px solid #eece93",
+                                border: "1px solid #FB4A04",
                             }}
                             width="229px"
                             height="65px"
                             text="Save"
                             style={{
-                                background: "#eece93",
+                                background: "#FB4A04",
                                 color: "#ffffff",
                                 borderRadius: "10px",
                                 fontSize: "24px",

@@ -102,7 +102,7 @@ export default function Tickets() {
                 {/*                        style={{*/}
                 {/*                            border: "1px solid #231414D4",*/}
                 {/*                            borderRadius: "0px",*/}
-                {/*                            background: "#eece933D",*/}
+                {/*                            background: "#FB4A043D",*/}
                 {/*                            color: "#231414D4",*/}
                 {/*                            fontSize: "20px",*/}
                 {/*                            lineHeight: "22.8px",*/}
@@ -150,7 +150,7 @@ export default function Tickets() {
                                         style={{
                                             border: "1px solid #231414D4",
                                             borderRadius: "0px",
-                                            background: "#eece933D",
+                                            background: "#FB4A043D",
                                             color: "#231414D4",
                                             fontSize: "20px",
                                             lineHeight: "22.8px",
@@ -312,7 +312,7 @@ export default function Tickets() {
                                 <div className="flex justify-between mt-[20px] mb-[27px] gap-[2.07492795389049vw]">
                                     <Button
                                         whileHover={{
-                                            background: "#eece93",
+                                            background: "#FB4A04",
                                             color: "#ffffff",
                                             scale: 1.03,
                                         }}
@@ -332,15 +332,15 @@ export default function Tickets() {
                                     <Button
                                         whileHover={{
                                             background: "#ffffff",
-                                            color: "#eece93",
+                                            color: "#FB4A04",
                                             scale: 1.03,
-                                            border: "1px solid #eece93",
+                                            border: "1px solid #FB4A04",
                                         }}
                                         width="222px"
                                         height="60px"
                                         text="Save"
                                         style={{
-                                            background: "#eece93",
+                                            background: "#FB4A04",
                                             color: "#ffffff",
                                             borderRadius: "0px",
                                             fontSize: "20px",
@@ -365,14 +365,14 @@ export default function Tickets() {
                     <div className="flex gap-[20px] mt-[53px] xsm:flex-col sm:flex-col">
                         {/* TODO: support ticket sections */}
                         {/*<Button*/}
-                        {/*    whileHover={{background: "#eece93", color: "white", scale: 1.03}}*/}
+                        {/*    whileHover={{background: "#FB4A04", color: "white", scale: 1.03}}*/}
                         {/*    onClick={() => setShowCreateSectionModal(true)}*/}
                         {/*    width="231px"*/}
                         {/*    height="57px"*/}
                         {/*    text="Create section"*/}
                         {/*    style={{*/}
                         {/*        background: "transparent",*/}
-                        {/*        color: "#eece93",*/}
+                        {/*        color: "#FB4A04",*/}
                         {/*        border: "1px solid #231414D4",*/}
                         {/*        borderRadius: "10px",*/}
                         {/*        fontSize: "20px",*/}
@@ -382,16 +382,16 @@ export default function Tickets() {
                         <Button
                             whileHover={{
                                 background: "#ffffff",
-                                color: "#eece93",
+                                color: "#FB4A04",
                                 scale: 1.03,
-                                border: "1px solid #eece93",
+                                border: "1px solid #FB4A04",
                             }}
                             onClick={() => setShowCreateTicketModal(true)}
                             width="231px"
                             height="57px"
                             text="Create Ticket"
                             style={{
-                                background: "#eece93",
+                                background: "#FB4A04",
                                 color: "#ffffff",
                                 borderRadius: "10px",
                                 fontSize: "20px",
@@ -419,13 +419,13 @@ export default function Tickets() {
                     <div
                         className="xsm:w-[100%] xsm:items-center xsm:ml-0 flex gap-[20px] justify-end mb-[203px] xsm:flex-col-reverse sm:flex-col-reverse">
                         <Button
-                            whileHover={{background: "#eece93", color: "#ffffff", scale: 1.03}}
+                            whileHover={{background: "#FB4A04", color: "#ffffff", scale: 1.03}}
                             width="229px"
                             height="65px"
                             text="Back"
                             style={{
                                 background: "#ffffff",
-                                color: "#eece93",
+                                color: "#FB4A04",
                                 border: "1px solid #231414D4",
                                 borderRadius: "10px",
                                 fontSize: "24px",
@@ -436,15 +436,15 @@ export default function Tickets() {
                         <Button
                             whileHover={{
                                 background: "#ffffff",
-                                color: "#eece93",
+                                color: "#FB4A04",
                                 scale: 1.03,
-                                border: "1px solid #eece93",
+                                border: "1px solid #FB4A04",
                             }}
                             width="229px"
                             height="65px"
                             text="Continue"
                             style={{
-                                background: "#eece93",
+                                background: "#FB4A04",
                                 color: "#ffffff",
                                 borderRadius: "10px",
                                 fontSize: "24px",

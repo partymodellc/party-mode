@@ -52,7 +52,7 @@ export default function SubscriptionAndPricing() {
             <Header/>
             <main>
                 <div className='relative '>
-                    <section className='w-full bg-[#fcdcb9]'>
+                    <section className='w-full bg-[#ffe7de]'>
                         <div className='flex flex-col items-center overflow-hidden'>
                             <div className='flex justify-center pt-[129px]'>
                                 <LazyImage alt="" src={"./SAdesign.png"}
@@ -152,8 +152,8 @@ export default function SubscriptionAndPricing() {
                             {/*    }}*/}
                             {/*    whileHover={{scale: 1.03}}*/}
                             {/*    className='w-[27.738616714697405vw] xsm:min-w-[92vw] sm:min-w-[62vw] mb-[20px] h-[724px] xsm:mb-[50px] sm:mb-[50px] md:mb-[50px] bg-white rounded-[50px] overflow-hidden min-w-[280px] mt-[50px]'>*/}
-                            {/*    <div className='w-full h-[109px] bg-[#eece93]'>*/}
-                            {/*        <div className='w-full h-[109px] bg-[#eece93] flex justify-center items-center'>*/}
+                            {/*    <div className='w-full h-[109px] bg-[#FB4A04]'>*/}
+                            {/*        <div className='w-full h-[109px] bg-[#FB4A04] flex justify-center items-center'>*/}
                             {/*            <div className='flex flex-col justify-center items-center gap-[4px]'>*/}
                             {/*                <div className='min-w-[108px] min-h-[3px] bg-[#fff]'></div>*/}
                             {/*                <h2 className='font-[400] text-[32px] leading-[52px] text-[#fff]'>Membership*/}
@@ -166,10 +166,10 @@ export default function SubscriptionAndPricing() {
                             {/*    <div className='flex flex-col items-center'>*/}
                             {/*        <h3 className='font-[400] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58px] text-[#473a3a] mt-[25px] mb-[33px]'>$24.99per/month</h3>*/}
                             {/*        <Button*/}
-                            {/*            whileHover={{background: "#fff", color: "#eece93", border: "3px solid #eece93"}}*/}
+                            {/*            whileHover={{background: "#fff", color: "#FB4A04", border: "3px solid #FB4A04"}}*/}
                             {/*            width='22.76657060518732vw' height='55px' text="SignUp For Free" style={{*/}
                             {/*            minWidth: "200px",*/}
-                            {/*            background: "#eece93",*/}
+                            {/*            background: "#FB4A04",*/}
                             {/*            color: "#fff",*/}
                             {/*            borderRadius: "0px",*/}
                             {/*            marginBottom: "19px"*/}

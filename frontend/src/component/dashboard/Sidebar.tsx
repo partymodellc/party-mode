@@ -71,7 +71,7 @@ export default function Sidebar({children}: Props) {
             </nav>
             <div className='flex'>
                 <div
-                    className='w-[78px] xsm:w-[57px] sm:w-[57px] bg-[#eece93] h-[1015px] flex flex-col justify-between items-end pt-[65px] '
+                    className='w-[78px] xsm:w-[57px] sm:w-[57px] bg-[#FB4A04] h-[1015px] flex flex-col justify-between items-end pt-[65px] '
                 >
                     <div className='flex flex-col justify-between gap-[12px]'>
                         {drawer.map((item) => {
@@ -79,7 +79,7 @@ export default function Sidebar({children}: Props) {
                                 <NavLink key={item.name} to={item.route} end>
                                     <div
                                         key={item.name} className='w-[57px] h-[61px] flex justify-center items-center'
-                                        style={location.pathname == item.route ? {background: "#ffffff"} : {background: "#eece93"}}
+                                        style={location.pathname == item.route ? {background: "#ffffff"} : {background: "#FB4A04"}}
                                     >
                                         <img
                                             src={location.pathname == item.route ? item.iconInactive : item.iconActive}

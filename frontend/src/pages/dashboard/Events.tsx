@@ -64,7 +64,7 @@ export default function Events() {
                                 delay: 0.1,
                                 ease: [0, 0.71, 0.2, 1.01]
                             }}
-                            whileHover={{color: "#eece93"}}
+                            whileHover={{color: "#FB4A04"}}
                             name="events"
                             onClick={toggleEventsOrders}
                         >
@@ -82,7 +82,7 @@ export default function Events() {
                                 delay: 0.1,
                                 ease: [0, 0.71, 0.2, 1.01]
                             }}
-                            whileHover={{color: "#eece93"}}
+                            whileHover={{color: "#FB4A04"}}
                             name="orders"
                             onClick={toggleEventsOrders}
                         >
@@ -102,7 +102,7 @@ export default function Events() {
                                         width: "27.780979827089336vw",
                                         height: "47px",
                                         borderRadius: "0px",
-                                        border: "3px solid #eece93",
+                                        border: "3px solid #f6ccbb",
                                         minWidth: "240px"
                                     }}
                                     onChangeHandler={filterEvents}
@@ -110,15 +110,15 @@ export default function Events() {
                                 <Link to="" onClick={createEventAndNav}>
                                     <Button initial={{
                                         scale: 1.03,
-                                        background: "#eece93",
+                                        background: "#FB4A04",
                                         border: "0px solid #fff",
                                         color: "#fff"
                                     }}
                                             whileHover={{
                                                 scale: 1.03,
                                                 background: "#fff",
-                                                border: "1px solid #eece93",
-                                                color: "#eece93"
+                                                border: "1px solid #FB4A04",
+                                                color: "#FB4A04"
                                             }} width='150px' height='47px' text="Create Event"
                                             style={{borderRadius: "0px", fontSize: "16px"}}></Button>
                                 </Link>

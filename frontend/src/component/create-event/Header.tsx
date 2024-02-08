@@ -6,7 +6,7 @@ export default function Header() {
 
     return (
         <div>
-            <nav className='w-full h-[63px] bg-[#eece93]'>
+            <nav className='w-full h-[63px] bg-[#FB4A04]'>
                 <ul className='flex gap-[3.0547550432276656vw] items-center justify-center h-full'>
                     <NavLink end
                              className={({isActive}) => isActive ? "border-b-[2px] border-white p-[5px] transition-all" : "border-b-[2px] border-transparent p-[5px] transition-all"}
