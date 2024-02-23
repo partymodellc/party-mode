@@ -13,7 +13,7 @@ export default function Search({style, text = "Search Events", whileHover, onCha
         <motion.input
             name="search"
             whileHover={whileHover} style={style}
-            className='inputBackground indent-[5.53vw] xsm:pl-[15px] w-[35.04vw] lg:w-[25.04vw] md:w-full xsm:w-full h-[54px] rounded-[20px] border-[3px] border-[#eece93]'
+            className='inputBackground indent-[5.53vw] xsm:pl-[15px] w-[35.04vw] lg:w-[25.04vw] md:w-full xsm:w-full h-[54px] rounded-[20px] border-[3px] border-[#f6ccbb]'
             placeholder={text}
             onChange={onChangeHandler}
         >

@@ -21,11 +21,11 @@ export default function CreatorDashboardFAQ({data}: Props) {
             <div className='flex justify-between px-[17px] py-[30px]'>
                 {data.link[0] === "#" ?
                     <HashLink smooth to={data.link}>
-                        <motion.h3 whileHover={{color: "#eece93"}}
+                        <motion.h3 whileHover={{color: "#FB4A04"}}
                                    className='font-[700] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26.06px] text-[#473a3a] mt-[12px]'>{data.heading}</motion.h3>
                     </HashLink> :
                     <Link to={data.link}>
-                        <motion.h3 whileHover={{color: "#eece93"}}
+                        <motion.h3 whileHover={{color: "#FB4A04"}}
                                    className='font-[700] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26.06px] text-[#473a3a] mt-[12px]'>{data.heading}</motion.h3>
                     </Link>
                 }

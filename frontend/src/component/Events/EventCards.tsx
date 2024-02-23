@@ -29,10 +29,10 @@ export default function EventCards({category, data = []}: Props) {
                             }}
                             whileHover={{
                                 scale: 1.09,
-                                backgroundColor: "#eece93",
+                                backgroundColor: "#FB4A04",
                                 color: "#ffffff",
                             }}
-                            className="w-[9.855907780979827vw] min-w-[120px] h-[53px] border-2 border-[#eece93] font-[400] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] text-[#473a3a]"
+                            className="w-[9.855907780979827vw] min-w-[120px] h-[53px] border-2 border-[#FB4A04] font-[400] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] text-[#473a3a]"
                         >
                             See More
                         </motion.button>

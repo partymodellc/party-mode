@@ -13,9 +13,8 @@ import {config} from "../../config/Config"
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
-import {ApiKeyManager} from "@esri/arcgis-rest-request"
-import {geocode} from "@esri/arcgis-rest-geocoding"
 import {IncomingEvent, useEvent} from "../../context/EventProvider"
+import {toast} from "react-toastify"
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -32,8 +31,6 @@ export default function Event() {
     const [scrollCounter, setScrollCounter] = useState<number>(0)
     const [showTicketPaymentModal, setShowTicketPaymentModal] = useState<boolean>(false)
     const [showTicketSelectionModal, setShowTicketSelectionModal] = useState<boolean>(false)
-    const [lat, setLat] = useState<number>(0)
-    const [lon, setLon] = useState<number>(0)
 
     useEffect(() => {
         return scrollY.onChange((latest) => {
@@ -47,6 +44,9 @@ export default function Event() {
             getEvent(eventId)
                 .then(response => {
                     setEvent(response.data)
+                })
+                .catch(response => {
+                    toast.error(response.message)
                 })
         }
     }, [])
@@ -73,24 +73,8 @@ export default function Event() {
 
     let desc = event?.description ? event.description : ''
     let image = `${config.backendBaseUri}/images/${event?.image}`
-
-    // get location coordinates
-    const authentication = ApiKeyManager.fromKey(config.arcGisApiKey)
-    geocode({
-        address: event?.location?.address,
-        authentication,
-    }).then((response) => {
-        if (response.candidates.length > 0) {
-            let loc = response.candidates[0];
-            response.candidates.forEach((res) => {
-                if (res.score > loc.score) {
-                    loc = res
-                }
-            })
-            setLat(loc.location.x)
-            setLon(loc.location.y)
-        }
-    })
+    let lat = event?.location?.latitude || 0
+    let lon = event?.location?.longitude || 0
 
     return (
         <>
@@ -116,7 +100,7 @@ export default function Event() {
                                 Card Number
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#eece933D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
@@ -125,7 +109,7 @@ export default function Event() {
                                 CVC
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#eece933D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
@@ -134,18 +118,18 @@ export default function Event() {
                                 Expire Date
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#eece933D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
                         <motion.button
-                            initial={{scale: 1, backgroundColor: "#eece93"}}
+                            initial={{scale: 1, backgroundColor: "#FB4A04"}}
                             whileHover={{
                                 scale: 1.02,
                                 backgroundColor: "transparent",
-                                color: "#eece93",
+                                color: "#FB4A04",
                             }}
-                            className="my-[79px] text-[white] border-2 border-[#eece93] w-[100%] h-[79px] rounded-[20px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px]"
+                            className="my-[79px] text-[white] border-2 border-[#FB4A04] w-[100%] h-[79px] rounded-[20px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px]"
                         >
                             Book Ticket
                         </motion.button>
@@ -180,7 +164,7 @@ export default function Event() {
                                 Name*
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#eece933D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
@@ -189,7 +173,7 @@ export default function Event() {
                                 Email address
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#eece933D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
@@ -197,26 +181,26 @@ export default function Event() {
                             <label className="font-[400] text-[20px] text-[#231414D4] leading0[32.58px]">
                                 Choose Ticket
                             </label>
-                            <select className=" w-full h-[79px] border-[1px] border-[#eece933D] rounded-[20px]">
-                                <option className="bg-[#eece931A] hover:bg-[#eece93]">
+                            <select className=" w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]">
+                                <option className="bg-[#FB4A041A] hover:bg-[#FB4A04]">
                                     Fast Pass Admission
                                 </option>
-                                <option className="bg-[#eece931A] hover:bg-[#eece93]">
+                                <option className="bg-[#FB4A041A] hover:bg-[#FB4A04]">
                                     Immediate Admission
                                 </option>
-                                <option className="bg-[#eece931A] hover:bg-[#eece93]">
+                                <option className="bg-[#FB4A041A] hover:bg-[#FB4A04]">
                                     Stream Live
                                 </option>
                             </select>
                         </div>
                         <motion.button
-                            initial={{scale: 1, backgroundColor: "#eece93"}}
+                            initial={{scale: 1, backgroundColor: "#FB4A04"}}
                             whileHover={{
                                 scale: 1.02,
                                 backgroundColor: "transparent",
-                                color: "#eece93",
+                                color: "#FB4A04",
                             }}
-                            className="my-[79px] text-[white] border-2 border-[#eece93] w-[100%] h-[79px] rounded-[20px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px]"
+                            className="my-[79px] text-[white] border-2 border-[#FB4A04] w-[100%] h-[79px] rounded-[20px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px]"
                         >
                             Proceed
                         </motion.button>
@@ -250,11 +234,11 @@ export default function Event() {
                         }
                     >
                         <Link to="/">
-                            <motion.li whileHover={{color: "#eece93"}} className="text-inherit">Events</motion.li>
+                            <motion.li whileHover={{color: "#FB4A04"}} className="text-inherit">Events</motion.li>
                         </Link>
 
                         <Link to="/login">
-                            <motion.li whileHover={{color: "#eece93"}} className="text-inherit">Login</motion.li>
+                            <motion.li whileHover={{color: "#FB4A04"}} className="text-inherit">Login</motion.li>
                         </Link>
                     </motion.ul>
                 </motion.nav>
@@ -310,7 +294,7 @@ export default function Event() {
                             (
                                 <motion.button
                                     initial={{scale: 1, backgroundColor: "#ffffff00"}}
-                                    whileHover={{scale: 1.02, backgroundColor: "#eece93"}}
+                                    whileHover={{scale: 1.02, backgroundColor: "#FB4A04"}}
                                     className="mt-[15px] w-[231px] h-[47px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px] border-[4px] border-white"
                                     onClick={() => {
                                         !readMore ? setReadMore(true) : setReadMore(false)
@@ -330,7 +314,12 @@ export default function Event() {
                     className="mt-[48px] mb-[76px] w-[88%] m-auto flex flex-wrap gap-[20px] sm:justify-center md:flex-col md:items-center"
                 >
                     {allTickets?.map((ticket) => {
-                        return (<TicketCard ticket={ticket}/>)
+                        return (<TicketCard
+                            id={ticket.id}
+                            name={ticket.name}
+                            image={ticket.image}
+                            price={ticket.price}
+                        />)
                     })}
                 </section>
             )}
@@ -366,15 +355,15 @@ export default function Event() {
                 <h2 className="font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-center text-[#231414]">
                     Location
                 </h2>
-                <motion.div className="flex justify-center items-center">
-                    <motion.div whileHover={{scale: 1.01}}>
-                        <LazyImage
-                            alt=""
-                            src={"./map.png"}
-                            classes="m-auto mb-[20px] mt-[49px] w-[71.23919308357348vw] min-w-[260px] xsm:min-w-[80vw]"
-                        />
-                    </motion.div>
-                </motion.div>
+                {/*<motion.div className="flex justify-center items-center">*/}
+                {/*    <motion.div whileHover={{scale: 1.01}}>*/}
+                {/*        <LazyImage*/}
+                {/*            alt=""*/}
+                {/*            src={"/map.png"}*/}
+                {/*            classes="m-auto mb-[20px] mt-[49px] w-[71.23919308357348vw] min-w-[260px] xsm:min-w-[80vw]"*/}
+                {/*        />*/}
+                {/*    </motion.div>*/}
+                {/*</motion.div>*/}
                 <div className="flex justify-center">
                     <iframe
                         src={`https://www.openstreetmap.org/export/embed.html?bbox=${lat - .02}%2C${lon - .02}%2C${lat + .02}%2C${lon + .02}&layer=mapnik&marker=${lon}%2C${lat}`}
@@ -388,10 +377,10 @@ export default function Event() {
                         initial={{scale: 1, backgroundColor: "#ffffff00"}}
                         whileHover={{
                             scale: 1.02,
-                            backgroundColor: "#eece93",
+                            backgroundColor: "#FB4A04",
                             color: "#fff",
                         }}
-                        className="xsm:mt-[20px] xsm:mb-[50px] border-[2px] border-[#eece93] w-[177px] h-[60px] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26px] font-[700]"
+                        className="xsm:mt-[20px] xsm:mb-[50px] border-[2px] border-[#FB4A04] w-[177px] h-[60px] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26px] font-[700]"
                     >
                         Open In Maps
                     </motion.button>

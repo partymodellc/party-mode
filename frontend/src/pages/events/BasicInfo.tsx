@@ -1,19 +1,21 @@
 import React, {useEffect, useState} from "react"
 import Button from "../../component/general/Button"
-import {useNavigate, useParams} from "react-router-dom"
+import {useLocation, useNavigate, useParams} from "react-router-dom"
 import moment from "moment"
 import "react-toastify/dist/ReactToastify.css"
 import Header from '../../component/general/Header'
 import Footer from '../../component/general/Footer'
-import CreateEventHeader from '../../component/create-event/Header'
-import {IncomingEvent, OutgoingEvent, useEvent} from "../../context/EventProvider"
+import CreateEventNav from '../../component/create-event/CreateEventNav'
+import {OutgoingEvent, useEvent} from "../../context/EventProvider"
+import {toast} from "react-toastify"
 
 export default function BasicInfo() {
     const {eventId} = useParams()
     const {getEvent, updateEventAndNav} = useEvent()
     const navigate = useNavigate()
+    const {state} = useLocation()
 
-    const [eventInfo, setEventInfo] = useState<OutgoingEvent>({})
+    const [eventInfo, setEventInfo] = useState<OutgoingEvent>(state?.outgoingEvent || {})
     const [startDay, setStartDay] = useState<string>("")
     const [startTime, setStartTime] = useState<string>("")
     const [endDay, setEndDay] = useState<string>("")
@@ -29,6 +31,9 @@ export default function BasicInfo() {
                     setEndDay(moment(response.data.endDate).format("YYYY-MM-DD"))
                     setEndTime(moment(response.data.endDate).format("hh:mm"))
                 })
+                .catch(response => {
+                    toast.error(response.message)
+                })
         }
     }, [setEventInfo, setStartDay, setStartTime, setEndDay, setEndTime])
 
@@ -43,10 +48,7 @@ export default function BasicInfo() {
     const handleEventAddressInput = (e: any) => {
         setEventInfo({
             ...eventInfo,
-            location: {
-                ...eventInfo.location,
-                [e.target.name]: e.target.value,
-            },
+            [e.target.name]: e.target.value
         })
     }
 
@@ -89,9 +91,20 @@ export default function BasicInfo() {
                 type: eventInfo.type,
                 category: eventInfo.category,
                 tags: eventInfo.tags,
-                location: eventInfo.location,
+                address: eventInfo.address,
                 startDate: eventInfo.startDate,
                 endDate: eventInfo.endDate
+            })
+        }
+    }
+
+    const handleContinue = () => {
+        if (!eventId) {
+            navigate('/events/details', {
+                state: {
+                    outgoingEvent: eventInfo,
+                    outgoingTickets: state?.outgoingTickets
+                }
             })
         }
     }
@@ -99,7 +112,12 @@ export default function BasicInfo() {
     return (
         <>
             <Header/>
-            <CreateEventHeader/>
+            <CreateEventNav
+                outgoingEvent={eventInfo}
+                outgoingTickets={state?.outgoingTickets}
+                activePage='basic-info'
+                eventId={eventId}
+            />
             <div>
                 <div className="w-[50.72161383285302vw] xsm:w-[90vw] sm:w-[80vw] m-auto divide-y-2">
 
@@ -113,8 +131,8 @@ export default function BasicInfo() {
                         </div>
                         <div className="ml-[75px] mt-[28px]">
                             <p className="font-[400] text-[14px] leading-[22.8px] text-[#231414D4]">
-                                Name your event and tell event-goers why they should come. Add
-                                details that highlight what makes it unique.
+                                Name your event and tell event-goers why they should come. Add details that highlight
+                                what makes it unique.
                             </p>
                             <textarea
                                 className="w-[100%] xsm:w-[100%] sm:w-[90%] h-[58px] border-[1px] border-b-0 border-[#231414D4] font-[400] text-[12px] leading-[19.55px] text-[#231414D4] indent-[16px] pt-[8px] outline-none mt-[12px]"
@@ -127,28 +145,27 @@ export default function BasicInfo() {
                                 className="w-[27.723342939481267vw] xsm:w-[100%] sm:w-[100%] mt-[20px] w-[100%] flex gap-[1.2680115273775217vw] xsm:gap-[20px] sm:gap-[20px] xsm:flex-col sm:flex-col">
                                 <select
                                     onChange={handleEventInfoInput}
-                                    value={eventInfo.type}
-                                    defaultValue={"event-type"}
+                                    value={eventInfo.type || 'event-type'}
                                     name="type"
                                     className="pl-[18px] outline-none flex-1 min-h-[58px] border-[1px] border-b-0 border-[#231414D4] font-[400] text-[12px] leading-[19.55px]"
                                 >
                                     <option value="event-type" disabled>Event Type</option>
-                                    <option>Horror</option>
-                                    <option>Fun</option>
+                                    <option>Party</option>
+                                    <option>Music</option>
+                                    <option>Other</option>
                                 </select>
                                 <select
                                     onChange={handleEventInfoInput}
-                                    value={eventInfo.category}
-                                    defaultValue={"event-category"}
+                                    value={eventInfo.category || 'event-category'}
                                     name="category"
                                     className="pl-[18px] outline-none flex-1 min-h-[58px] border-[1px] border-b-0 border-[#231414D4] font-[400] text-[12px] leading-[19.55px]"
                                 >
                                     <option value="event-category" disabled>Event Category</option>
-                                    <option>Christmas🎅</option>
-                                    <option>Horror</option>
+                                    <option>Festivals</option>
                                     <option>Electronic</option>
                                     <option>Pop Culture</option>
                                     <option>Music Venues</option>
+                                    <option>Comedy</option>
                                     <option>Miami</option>
                                 </select>
                             </div>
@@ -172,7 +189,7 @@ export default function BasicInfo() {
                 ></textarea>
                                     <Button
                                         whileHover={{
-                                            background: "#eece93",
+                                            background: "#FB4A04",
                                             color: "#ffffff",
                                             scale: 1.03,
                                         }}
@@ -203,15 +220,14 @@ export default function BasicInfo() {
                         </div>
                         <div className="ml-[75px] mt-[28px]">
                             <p className="font-[400] text-[14px] leading-[22.8px] text-[#231414D4]">
-                                Help people in the area discover your event and let attendees know
-                                where to show up.
+                                Help people in the area discover your event and let attendees know where to show up.
                             </p>
                             <textarea
                                 className="w-[100%] xsm:w-[100%] sm:w-[90%] h-[58px] border-[1px] border-b-0 border-[#231414D4] font-[400] text-[12px] leading-[19.55px] text-[#231414D4] indent-[16px] pt-[8px] outline-none mt-[12px]"
                                 placeholder="Address"
                                 name="address"
                                 onChange={handleEventAddressInput}
-                                value={eventInfo.location?.address}
+                                value={eventInfo.address}
                             ></textarea>
 
                             {/* TODO: location type options*/}
@@ -220,7 +236,7 @@ export default function BasicInfo() {
                             {/*    <div className="flex gap-[1.1527377521613833vw] pt-[37px] xsm:flex-col sm:flex-col">*/}
                             {/*        <Button*/}
                             {/*            whileHover={{*/}
-                            {/*                background: "#eece93",*/}
+                            {/*                background: "#FB4A04",*/}
                             {/*                color: "white",*/}
                             {/*                scale: 1.03,*/}
                             {/*            }}*/}
@@ -239,7 +255,7 @@ export default function BasicInfo() {
                             {/*        />*/}
                             {/*        <Button*/}
                             {/*            whileHover={{*/}
-                            {/*                background: "#eece93",*/}
+                            {/*                background: "#FB4A04",*/}
                             {/*                color: "white",*/}
                             {/*                scale: 1.03,*/}
                             {/*            }}*/}
@@ -258,7 +274,7 @@ export default function BasicInfo() {
                             {/*        />*/}
                             {/*        <Button*/}
                             {/*            whileHover={{*/}
-                            {/*                background: "#eece93",*/}
+                            {/*                background: "#FB4A04",*/}
                             {/*                color: "white",*/}
                             {/*                scale: 1.03,*/}
                             {/*            }}*/}
@@ -294,8 +310,7 @@ export default function BasicInfo() {
                         </div>
                         <div className="ml-[75px] mt-[28px]">
                             <p className="font-[400] text-[14px] leading-[22.8px] text-[#231414D4]">
-                                Tell event-goers when your event starts and ends so they can make
-                                plans to start
+                                Tell event-goers when your event starts and ends so they can make plans to start
                             </p>
 
                             {/* TODO: support recurring events*/}
@@ -303,7 +318,7 @@ export default function BasicInfo() {
                             {/*    <div className="flex gap-[1.1527377521613833vw] pt-[37px] xsm:flex-col sm:flex-col">*/}
                             {/*        <Button*/}
                             {/*            whileHover={{*/}
-                            {/*                background: "#eece93",*/}
+                            {/*                background: "#FB4A04",*/}
                             {/*                color: "white",*/}
                             {/*                scale: 1.03,*/}
                             {/*            }}*/}
@@ -322,7 +337,7 @@ export default function BasicInfo() {
                             {/*        />*/}
                             {/*        <Button*/}
                             {/*            whileHover={{*/}
-                            {/*                background: "#eece93",*/}
+                            {/*                background: "#FB4A04",*/}
                             {/*                color: "white",*/}
                             {/*                scale: 1.03,*/}
                             {/*            }}*/}
@@ -421,7 +436,7 @@ export default function BasicInfo() {
                         <div className="flex gap-[20px] xsm:flex-col sm:flex-col">
                             <Button
                                 whileHover={{
-                                    background: "#eece93",
+                                    background: "#FB4A04",
                                     color: "#ffffff",
                                     scale: 1.03,
                                 }}
@@ -431,7 +446,7 @@ export default function BasicInfo() {
                                 style={{
                                     minWidth: "213px",
                                     background: "#ffffff",
-                                    color: "#eece93",
+                                    color: "#FB4A04",
                                     border: "1px solid #231414D4",
                                     borderRadius: "10px",
                                     fontSize: "24px",
@@ -442,22 +457,22 @@ export default function BasicInfo() {
                             <Button
                                 whileHover={{
                                     background: "#ffffff",
-                                    color: "#eece93",
+                                    color: "#FB4A04",
                                     scale: 1.03,
-                                    border: "1px solid #eece93",
+                                    border: "1px solid #FB4A04",
                                 }}
                                 width="13.198847262247838vw"
                                 height="65px"
-                                text="Save & Continue"
+                                text={eventId ? "Save & Continue" : "Continue"}
                                 style={{
-                                    background: "#eece93",
+                                    background: "#FB4A04",
                                     color: "#ffffff",
                                     minWidth: "213px",
                                     borderRadius: "10px",
                                     fontSize: "24px",
                                     lineHeight: "39.09px",
                                 }}
-                                onClick={saveAndContinue}
+                                onClick={eventId ? saveAndContinue : handleContinue}
                             />
                         </div>
                     </div>

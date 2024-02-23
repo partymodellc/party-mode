@@ -1,43 +1,25 @@
-const {GridFsStorage} = require("multer-gridfs-storage")
-const multer = require("multer")
 const config = require("../config")
-const {GridFSBucket} = require("mongoose").mongo
+const repository = require('../repository')
+const mongoose = require("mongoose")
 
-let storage
 let gridFSBucket
 
-const configure = function (db) {
-    gridFSBucket = new GridFSBucket(db, {
-        bucketName: 'photos'
-    })
-
-    storage = new GridFsStorage({
-        url: config.mongo.connectionString,
-        options: {dbName: config.mongo.databaseName},
-        file: (req, file) => {
-            //If it is an image, save to photos bucket
-            if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-                return {
-                    bucketName: config.mongo.photosBucketName,
-                    filename: `${Date.now()}_${file.originalname}`,
-                }
-            } else {
-                //Otherwise save to default bucket
-                // return `${Date.now()}_${file.originalname}`
-                return ""
-            }
-        },
+const configure = function () {
+    gridFSBucket = new mongoose.mongo.GridFSBucket(repository.mongoose.connection.db, {
+        bucketName: config.mongo.photosBucketName
     })
 }
 
-const upload = function () {
-    return multer({storage})
+const upload = (file) => {
+    const uploadStream = gridFSBucket.openUploadStream()
+    uploadStream.write(file.buffer)
+    uploadStream.filename = `${Date.now()}_${file.originalname}`
+    uploadStream.end()
+    return uploadStream.id.toString()
 }
 
-const download = function (filename, success, error, end) {
-    let downloadStream = gridFSBucket.openDownloadStreamByName(
-        filename
-    )
+const download = function (imageId, success, error, end) {
+    const downloadStream = gridFSBucket.openDownloadStream(mongoose.Types.ObjectId(imageId))
 
     downloadStream.on("data", function (data) {
         success(data)
@@ -52,8 +34,13 @@ const download = function (filename, success, error, end) {
     })
 }
 
+const deleteImage = (id) => {
+    return gridFSBucket.delete(mongoose.Types.ObjectId(id))
+}
+
 module.exports = {
     configure: configure,
     upload: upload,
-    download: download
+    download: download,
+    deleteImage: deleteImage
 }

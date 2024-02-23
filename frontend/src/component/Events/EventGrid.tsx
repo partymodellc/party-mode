@@ -5,6 +5,7 @@ import React from "react"
 import {IncomingEvent} from "../../context/EventProvider"
 import {useNavigate} from "react-router-dom"
 import {useAuth} from "../../context/AuthProvider"
+import {toast} from "react-toastify"
 
 type Props = {
     allEvents: IncomingEvent[]
@@ -20,10 +21,16 @@ export default function EventGrid({allEvents}: Props) {
                 .then(() => {
                     navigate(0)
                 })
+                .catch(response => {
+                    toast(response.message)
+                })
         } else {
             likeEvent(eventId)
                 .then(() => {
                     navigate(0)
+                })
+                .catch(response => {
+                    toast(response.message)
                 })
         }
     }

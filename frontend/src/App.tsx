@@ -5,7 +5,7 @@ import LoadingAnimation from "./component/general/LoadingAnimation"
 import "react-toastify/dist/ReactToastify.css"
 import PrivateRoutes from "./utils/PrivateRoutes"
 import AuthRoutes from "./utils/AuthRoutes"
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/NotFound"
 
 const Home = lazy(() => import("./pages/Home"))
 const SearchResults = lazy(() => import("./pages/SearchResults"))
@@ -56,11 +56,16 @@ export default function App() {
 
                     {/* protected routes */}
                     <Route element={<PrivateRoutes/>}>
+                        {/* create event */}
+                        <Route path="events/basic-info" element={<BasicInfo/>}/>
+                        <Route path="events/details" element={<Details/>}/>
+                        <Route path="events/tickets" element={<EventTickets/>}/>
+                        <Route path="events/publish" element={<Publish/>}/>
+
+                        {/* edit event */}
                         <Route path="events/:eventId/basic-info" element={<BasicInfo/>}/>
                         <Route path="events/:eventId/details" element={<Details/>}/>
                         <Route path="events/:eventId/tickets" element={<EventTickets/>}/>
-                        {/* TODO: support online event page features */}
-                        {/*<Route path="events/:eventID/online-page-event" element={<OnlinePageEvent/>}/>*/}
                         <Route path="events/:eventId/publish" element={<Publish/>}/>
 
                         <Route path="dashboard" element={<DashboardHome/>}/>

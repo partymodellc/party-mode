@@ -23,7 +23,7 @@ const data = [
 ]
 
 export default function Home() {
-    const {user, getUser} = useAuth()
+    const {user} = useAuth()
 
     const userPicture = user?.image ? user.image : "/profile.png"
 
@@ -33,7 +33,7 @@ export default function Home() {
                 className='w-full pt-[65px] ml-[12.968299711815561vw] xsm:ml-[4vw] sm:ml-[6vw] flex gap-[7.089337175792507vw] xsm:flex-col sm:flex-col'>
                 <div>
                     <h1 className='font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58px] text-[#473a3a] ml-[10px]'>Welcome, <span
-                        className='text-[#eece93]'> {user?.username} </span></h1>
+                        className='text-[#FB4A04]'> {user?.username} </span></h1>
                     <div
                         className='border-2 border-[#D9D9D9] rounded-tl-[20px] rounded-tr-[20px] w-[52.04610951008645vw] xsm:w-[90%] sm:w-[80%] px-[21px] divide-y-2 mt-[99px]'>
                         <div className='mb-[40px]'>
@@ -63,11 +63,11 @@ export default function Home() {
                                 className='text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26.06px]'>Draft:</span> start
                                 November 18 at 00:00 ends by 00:00am</p>
                         </div>
-                        <Button whileHover={{background: "#fff", border: "3px solid #eece93", color: "#eece93"}}
+                        <Button whileHover={{background: "#fff", border: "3px solid #FB4A04", color: "#FB4A04"}}
                                 classes="!max-w-[231px]" width='13.314121037463977vw' height='54px'
                                 text="Continue Editing" style={{
                             borderRadius: "20px",
-                            background: "#eece93",
+                            background: "#FB4A04",
                             fontSize: "16px",
                             marginTop: "33px",
                             marginBottom: "17px",
@@ -85,13 +85,13 @@ export default function Home() {
                         <p className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26.06px] text-[#473a3a] mt-[25px] ml-[33px] xsm:ml-[10px] sm:ml-[10px]'>Take
                             your marketing to the next level</p>
                         <Link to='/community'>
-                            <Button whileHover={{background: "#eece93", border: "3px solid #fff", color: "#fff"}}
+                            <Button whileHover={{background: "#FB4A04", border: "3px solid #fff", color: "#fff"}}
                                     classes={"!max-w-[231px]"} width='13.314121037463977vw' height='54px'
                                     text="Vibe check" style={{
                                 borderRadius: "20px",
                                 background: "#ffff",
-                                border: "3px solid #eece93",
-                                color: "#eece93",
+                                border: "3px solid #FB4A04",
+                                color: "#FB4A04",
                                 fontSize: "16px",
                                 marginTop: "31px",
                                 marginBottom: "22px",
@@ -136,14 +136,14 @@ export default function Home() {
                         <div className='w-full'>
                             <h3 className='mt-[20px] mb-[20px] text-center font-[400] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39.09px] text-[#473a3a]'>{user?.username}</h3>
                             <div className='flex justify-around w-[70%] m-auto mb-[54px] xsm:flex-col xsm:items-center'>
-                                <motion.p whileHover={{color: "#eece93"}}
+                                <motion.p whileHover={{color: "#FB4A04"}}
                                           className='cursor-pointer font-[400] text-[14px] leading-[22.9px] text-[#1977F3]'>View
                                 </motion.p>
-                                <motion.p whileHover={{color: "#eece93"}}
+                                <motion.p whileHover={{color: "#FB4A04"}}
                                           className='cursor-pointer font-[400] text-[14px] leading-[22.9px] text-[#1977F3]'>Edit
                                 </motion.p>
                                 <motion.p
-                                    whileHover={{color: "#eece93"}}
+                                    whileHover={{color: "#FB4A04"}}
                                     className='cursor-pointer font-[400] text-[14px] leading-[22.9px] text-[#1977F3]'
                                 >
                                     Copy Profile Url

@@ -5,19 +5,21 @@ import {FileUploader} from "react-drag-drop-files"
 import "react-toastify/dist/ReactToastify.css"
 import Header from "../../component/general/Header"
 import Footer from '../../component/general/Footer'
-import CreateEventHeader from "../../component/create-event/Header"
+import CreateEventNav from "../../component/create-event/CreateEventNav"
 import {OutgoingEvent, useEvent} from "../../context/EventProvider"
-import {config} from "../../config/Config";
-import {useNavigate} from "react-router-dom";
+import {config} from "../../config/Config"
+import {useLocation, useNavigate} from "react-router-dom"
+import {toast} from "react-toastify"
 
-const fileTypes = ["JPEG", "PNG"];
+const fileTypes = ["JPEG", "PNG"]
 
 export default function Details() {
     const {eventId} = useParams()
     const {getEvent, updateEventAndNav} = useEvent()
     const navigate = useNavigate()
+    const {state} = useLocation()
 
-    const [eventDetails, setEventDetails] = useState<OutgoingEvent>({})
+    const [eventDetails, setEventDetails] = useState<OutgoingEvent>(state?.outgoingEvent || {})
     const [eventImageName, setEventImageName] = useState<string>()
     const [eventImageSource, setEventImageSource] = useState<string>()
     const [eventGallerySources, setEventGallerySources] = useState<string[]>()
@@ -31,6 +33,9 @@ export default function Details() {
                         setEventImageName(decodeURIComponent(response.data.image))
                         setEventImageSource(`${config.backendBaseUri}/images/${response.data.image}`)
                     }
+                })
+                .catch(response => {
+                    toast.error(response.message)
                 })
         }
     }, [setEventDetails])
@@ -85,10 +90,39 @@ export default function Details() {
         }
     }
 
+    const handleContinue = () => {
+        if (!eventId) {
+            navigate('/events/tickets', {
+                state: {
+                    outgoingEvent: eventDetails,
+                    outgoingTickets: state?.outgoingTickets || []
+                }
+            })
+        }
+    }
+
+    const handleBack = () => {
+        if (eventId) {
+            navigate(`/events/${eventId}/basic-info`)
+        } else {
+            navigate(`/events/basic-info`, {
+                state: {
+                    outgoingEvent: eventDetails,
+                    outgoingTickets: state?.outgoingTickets
+                }
+            })
+        }
+    }
+
     return (
         <>
             <Header/>
-            <CreateEventHeader/>
+            <CreateEventNav
+                outgoingEvent={eventDetails}
+                outgoingTickets={state?.outgoingTickets}
+                activePage='details'
+                eventId={eventId}
+            />
             <div className="w-[53.92161383285302vw] xsm:w-[90vw] sm:w-[80vw] m-auto divide-y-2">
                 <div>
                     <div className="mt-[44px]">
@@ -130,7 +164,7 @@ export default function Details() {
                                 {!eventDetails.image ? null : (
                                     <Button
                                         whileHover={{
-                                            background: "#eece93",
+                                            background: "#FB4A04",
                                             color: "#ffffff",
                                             scale: 1.03,
                                         }}
@@ -237,7 +271,7 @@ export default function Details() {
                             className="ml-[75px] xsm:ml-0 flex gap-[2.881844380403458vw] xsm:flex-col sm:flex-col mt-[34px] mb-[90px]">
                             {/*<Button*/}
                             {/*    whileHover={{*/}
-                            {/*        background: "#eece93",*/}
+                            {/*        background: "#FB4A04",*/}
                             {/*        color: "white",*/}
                             {/*        scale: 1.03,*/}
                             {/*    }}*/}
@@ -255,7 +289,7 @@ export default function Details() {
                             {/*/>*/}
                             {/*<Button*/}
                             {/*    whileHover={{*/}
-                            {/*        background: "#eece93",*/}
+                            {/*        background: "#FB4A04",*/}
                             {/*        color: "white",*/}
                             {/*        scale: 1.03,*/}
                             {/*    }}*/}
@@ -273,7 +307,7 @@ export default function Details() {
                             {/*/>*/}
                             {/*<Button*/}
                             {/*    whileHover={{*/}
-                            {/*        background: "#eece93",*/}
+                            {/*        background: "#FB4A04",*/}
                             {/*        color: "white",*/}
                             {/*        scale: 1.03,*/}
                             {/*    }}*/}
@@ -294,43 +328,43 @@ export default function Details() {
                     <div
                         className="ml-[75px] xsm:w-[100%] xsm:items-center xsm:ml-0 flex gap-[20px] justify-end mb-[203px] xsm:flex-col-reverse sm:flex-col-reverse">
                         <Button
-                            whileHover={{background: "#eece93", color: "#ffffff", scale: 1.03}}
+                            whileHover={{background: "#FB4A04", color: "#ffffff", scale: 1.03}}
                             width="229px"
                             height="65px"
                             text="Back"
                             style={{
                                 background: "#ffffff",
-                                color: "#eece93",
+                                color: "#FB4A04",
                                 border: "1px solid #231414D4",
                                 borderRadius: "10px",
                                 fontSize: "24px",
                                 lineHeight: "39.09px",
                             }}
-                            onClick={() => navigate(`/events/${eventId}/basic-info`)}
+                            onClick={handleBack}
                         />
                         <Button
                             whileHover={{
                                 background: "#ffffff",
-                                color: "#eece93",
+                                color: "#FB4A04",
                                 scale: 1.03,
-                                border: "1px solid #eece93",
+                                border: "1px solid #FB4A04",
                             }}
                             width="229px"
                             height="65px"
-                            text="Save & Continue"
+                            text={eventId ? "Save & Continue" : "Continue"}
                             style={{
-                                background: "#eece93",
+                                background: "#FB4A04",
                                 color: "#ffffff",
                                 borderRadius: "10px",
                                 fontSize: "24px",
                                 lineHeight: "39.09px",
                             }}
-                            onClick={saveAndContinue}
+                            onClick={eventId ? saveAndContinue : handleContinue}
                         />
                     </div>
                 </div>
             </div>
-            <Footer showFooterHeaders={false} />
+            <Footer showFooterHeaders={false}/>
         </>
     )
 }

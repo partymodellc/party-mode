@@ -1,4 +1,8 @@
 const {Schema, model} = require('mongoose')
+const config = require('../config')
+const ticket = require('./ticket')
+const logger = require('../logger')
+const storage = require('../storage')
 
 const event = model('event', new Schema({
         // info
@@ -33,13 +37,7 @@ const event = model('event', new Schema({
         },
         view: {
             type: String,
-            enum: ['Public', 'Private'],
-            default: 'Public'
-        },
-        status: {
-            type: String,
-            enum: ['Draft', 'Published', 'Scheduled'],
-            default: 'Draft'
+            enum: ['Public', 'Private']
         },
         // links
         userId: {
@@ -49,13 +47,11 @@ const event = model('event', new Schema({
         // meta
         type: {
             type: String,
-            // TODO: outline types
-            enum: ['type1', 'type2']
+            enum: config.event.types.split(',')
         },
         category: {
             type: String,
-            // TODO: outline categories
-            enum: ['cat1', 'cat2']
+            enum: config.event.categories.split(',')
         },
         tags: {
             type: Array
@@ -83,8 +79,37 @@ const updateEvent = function (eventId, userId, data, cb) {
     event.findOneAndUpdate({_id: eventId, userId: userId}, data, {new: true}, cb)
 }
 
-const deleteEvent = function (eventId, userId, cb) {
-    event.findOneAndDelete({_id: eventId, userId: userId}, {new: false}, cb)
+const deleteEvent = async function (eventId, userId) {
+    const session = await event.startSession()
+    session.startTransaction();
+
+    try {
+        // delete event
+        const deletedEvent = await event.findOneAndDelete({_id: eventId, userId: userId}, {session: session})
+        let image, gallery = []
+        if (deletedEvent) {
+            image = deletedEvent.image
+            gallery = deletedEvent.gallery
+        }
+
+        // delete event images
+        await storage.deleteImage(image)
+        for (const img of gallery) {
+            await storage.deleteImage(img)
+        }
+
+        // delete event tickets
+        await ticket.model.deleteMany({eventId: eventId})
+
+        await session.commitTransaction()
+        session.endSession()
+    } catch (err) {
+        logger.error("Error when deleting event: ", {message: err.toString()})
+        logger.error(err.stack)
+        await session.abortTransaction()
+        session.endSession()
+        throw err
+    }
 }
 
 module.exports = {

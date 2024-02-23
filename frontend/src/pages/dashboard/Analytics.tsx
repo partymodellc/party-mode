@@ -39,7 +39,7 @@ export default function Analytics({}: Props) {
                     <div
                         className='flex xsm:items-center sm:items-center gap-[32.5px] mt-[47px] justify-center xsm:flex-col sm:flex-col'>
                         <div
-                            className='flex flex-col justify-center items-center w-[22.997118155619596vw] xsm:w-[80%] sm:w-[80%] h-[173px] rounded-[10px] bg-[#eece933D]'>
+                            className='flex flex-col justify-center items-center w-[22.997118155619596vw] xsm:w-[80%] sm:w-[80%] h-[173px] rounded-[10px] bg-[#FB4A043D]'>
                             <h2 className='font-[700] text-[20px] leading-[32.58px] text-[#000000]'>Total Revenue</h2>
                             <h1 className='font-[700] text-[36px] leading-[58.64px] text-[#000000]'>$20,000</h1>
                             <div className='flex gap-[10px]'>
@@ -48,7 +48,7 @@ export default function Analytics({}: Props) {
                             </div>
                         </div>
                         <div
-                            className='flex flex-col justify-center items-center w-[22.997118155619596vw] xsm:w-[80%] sm:w-[80%] h-[173px] rounded-[10px] bg-[#eece93B8]'>
+                            className='flex flex-col justify-center items-center w-[22.997118155619596vw] xsm:w-[80%] sm:w-[80%] h-[173px] rounded-[10px] bg-[#FB4A04B8]'>
                             <h2 className='font-[700] text-[20px] leading-[32.58px] text-[#000000]'>Ticket sales </h2>
                             <h1 className='font-[700] text-[36px] leading-[58.64px] text-[#fff]'>$20,000</h1>
                             <div className='flex gap-[10px]'>

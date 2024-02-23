@@ -6,10 +6,6 @@ const comment = model('comment', new Schema({
             type: String
         },
         // links
-        userId: {
-            type: String,
-            require: true,
-        },
         eventId: {
             type: String
         }

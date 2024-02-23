@@ -2,22 +2,27 @@ import React from 'react'
 import Button from '../../component/general/Button'
 import {useNavigate, useParams} from 'react-router-dom'
 import Header from '../../component/general/Header'
-import CreateEventHeader from "../../component/create-event/Header";
+import CreateEventNav from "../../component/create-event/CreateEventNav"
 
 type Props = {}
 
 export default function OnlinePageEvent({}: Props) {
-    const {eventID} = useParams()
+    const {eventId} = useParams()
     const navigate = useNavigate()
 
     const handleSubmit = async () => {
-        navigate(`/create-event/create-ticket/${eventID}`)
+        navigate(`/create-event/create-ticket/${eventId}`)
     }
 
     return (
         <>
             <Header/>
-            <CreateEventHeader/>
+            <CreateEventNav
+                outgoingEvent={{}}
+                outgoingTickets={[]}
+                activePage='online-page'
+                eventId={eventId}
+            />
             <div className='w-[58.96829971181556vw] sm:w-[80vw] xsm:w-[90vw] m-auto '>
                 <div className='divide-y-2'>
                     <div className='flex mt-[24px] xsm:flex-col sm:flex-col xsm:gap-[50px] sm:gap-[50px]'>
@@ -51,7 +56,7 @@ export default function OnlinePageEvent({}: Props) {
                                     access
                                     it.</p>
                                 <div className='flex justify-between items-center mt-[28px] mb-[39px]'>
-                                    <Button whileHover={{background: "#eece93", color: "white", scale: 1.03}}
+                                    <Button whileHover={{background: "#FB4A04", color: "white", scale: 1.03}}
                                             width='191px'
                                             height='50px' text='Zoom' style={{
                                         border: "1px solid #231414D4",
@@ -86,12 +91,12 @@ export default function OnlinePageEvent({}: Props) {
 
                 <div
                     className='ml-[75px] flex gap-[20px] justify-end mb-[203px] mt-[103px] sm:flex-col-reverse xsm:flex-col-reverse sm:items-center xsm:items-center sm:ml-0 xsm:ml-0'>
-                    <Button whileHover={{background: "#eece93", color: "white", scale: 1.03}} width='229px'
+                    <Button whileHover={{background: "#FB4A04", color: "white", scale: 1.03}} width='229px'
                             height='65px'
                             text='Back' style={{
                         minWidth: "200px",
                         background: "transparent",
-                        color: "#eece93",
+                        color: "#FB4A04",
                         border: "1px solid #231414D4",
                         borderRadius: "10px",
                         fontSize: "24px",
@@ -100,9 +105,9 @@ export default function OnlinePageEvent({}: Props) {
                     <Button onClick={handleSubmit}
                             whileHover={{
                                 background: "white",
-                                color: "#eece93",
+                                color: "#FB4A04",
                                 scale: 1.03,
-                                border: "1px solid #eece93"
+                                border: "1px solid #FB4A04"
                             }}
                             width='229px' height='65px' text='Save & Continue'
                             style={{minWidth: "200px", borderRadius: "10px", fontSize: "24px", lineHeight: "39.09px"}}/>

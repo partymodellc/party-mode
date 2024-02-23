@@ -5,9 +5,18 @@ const morgan = require('morgan')
 const middleware = require('./middleware')
 const routes = require('./routes')
 const repository = require('./repository')
+const storage = require('./storage')
 
-const initServer = function () {
+const start = async () => {
+    // connect to Mongo
+    logger.info("Connecting to MongoDB...")
+    await repository.configure()
+
+    // configure MongoDB file storage
+    storage.configure()
+
     // create server
+    logger.info("Creating server...")
     const app = express()
 
     // configure server logger
@@ -17,7 +26,8 @@ const initServer = function () {
             stream: {
                 write: (message) => logger.http(message.trim()),
             }
-        }))
+        }
+    ))
 
     // configure middleware
     middleware.configure(app)
@@ -31,4 +41,7 @@ const initServer = function () {
     })
 }
 
-repository.configure(initServer)
+start()
+    .catch(error => {
+        throw error
+    })

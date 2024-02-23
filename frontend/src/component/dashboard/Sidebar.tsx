@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
-import {NavLink} from "react-router-dom"
+import React from 'react'
+import {NavLink, useNavigate} from "react-router-dom"
 import Search from '../general/Search'
 import {useLocation} from "react-router-dom"
 import {motion} from "framer-motion"
 import {Link} from 'react-router-dom'
-import {IncomingUser, useAuth} from '../../context/AuthProvider'
+import {useAuth} from '../../context/AuthProvider'
 
 type Props = {
     children: any
@@ -44,7 +44,8 @@ let drawer = [
 ]
 
 export default function Sidebar({children}: Props) {
-    const {user, logout} = useAuth()
+    const {user} = useAuth()
+    const navigate = useNavigate()
     const location = useLocation()
 
     const userPicture = user?.image ? user.image : "/profile.png"
@@ -71,7 +72,7 @@ export default function Sidebar({children}: Props) {
             </nav>
             <div className='flex'>
                 <div
-                    className='w-[78px] xsm:w-[57px] sm:w-[57px] bg-[#eece93] h-[1015px] flex flex-col justify-between items-end pt-[65px] '
+                    className='w-[78px] xsm:w-[57px] sm:w-[57px] bg-[#FB4A04] h-[1015px] flex flex-col justify-between items-end pt-[65px] '
                 >
                     <div className='flex flex-col justify-between gap-[12px]'>
                         {drawer.map((item) => {
@@ -79,7 +80,7 @@ export default function Sidebar({children}: Props) {
                                 <NavLink key={item.name} to={item.route} end>
                                     <div
                                         key={item.name} className='w-[57px] h-[61px] flex justify-center items-center'
-                                        style={location.pathname == item.route ? {background: "#ffffff"} : {background: "#eece93"}}
+                                        style={location.pathname == item.route ? {background: "#ffffff"} : {background: "#FB4A04"}}
                                     >
                                         <img
                                             src={location.pathname == item.route ? item.iconInactive : item.iconActive}
@@ -90,7 +91,7 @@ export default function Sidebar({children}: Props) {
                             )
                         })}
                     </div>
-                    <div onClick={logout} className='m-auto my-0 mb-[45px] cursor-pointer'>
+                    <div onClick={() => navigate("/")} className='m-auto my-0 mb-[45px] cursor-pointer'>
                         <img src='/log-out.svg'/>
                     </div>
                 </div>
