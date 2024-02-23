@@ -29,7 +29,7 @@ export type LoginCredentials = {
 type authContextType = {
     user?: IncomingUser
     loading: boolean
-    getUser: () => Promise<AxiosResponse<any, any>>
+    createUser: (username: string, email: string, password: string) => Promise<AxiosResponse<any, any>>
     updateUser: (user: OutgoingUser) => Promise<AxiosResponse<any, any>>
     login: (loginCredentials: LoginCredentials) => Promise<AxiosResponse<any, any>>
     logout: () => void
@@ -40,7 +40,7 @@ type authContextType = {
 const authContextDefaultValues: authContextType = {
     user: undefined,
     loading: true,
-    getUser: () => {
+    createUser: () => {
         return new Promise<any>(() => {
         })
     },
@@ -75,13 +75,28 @@ export function AuthProvider({children}: Props) {
     const [user, setUser] = useState<IncomingUser>()
     const [loading, setLoading] = useState<boolean>(true)
 
-    const getUser = () => {
-        return axios.get(`${config.backendBaseUri}/users/me`, {
+    useEffect(() => {
+        axios.get(`${config.backendBaseUri}/users/me`, {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
             withCredentials: true
+        })
+            .then(response => {
+                setUser(response.data)
+                setLoading(false)
+            })
+            .catch(() => {
+                setLoading(false)
+            })
+    }, [setUser, setLoading])
+
+    const createUser = (username: string, email: string, password: string) => {
+        return axios.post(`${config.backendBaseUri}/auth/register`, {
+            username: username,
+            email: email,
+            password: password
         })
     }
 
@@ -156,24 +171,13 @@ export function AuthProvider({children}: Props) {
     const value: authContextType = {
         user: user,
         loading: loading,
-        getUser: getUser,
+        createUser: createUser,
         updateUser: updateUser,
         login: login,
         logout: logout,
         likeEvent: likeEvent,
         unlikeEvent: unlikeEvent
     }
-
-    useEffect(() => {
-        getUser()
-            .then(response => {
-                setUser(response.data)
-                setLoading(false)
-            })
-            .catch(() => {
-                setLoading(false)
-            })
-    }, [setUser, setLoading])
 
     return (
         <>

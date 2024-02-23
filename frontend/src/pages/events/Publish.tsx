@@ -1,20 +1,24 @@
-import React, {useState, useEffect, BaseSyntheticEvent, SyntheticEvent} from "react"
-import {useNavigate, useParams} from "react-router-dom"
+import React, {useState, useEffect} from "react"
+import {useLocation, useNavigate, useParams} from "react-router-dom"
 import "react-toastify/dist/ReactToastify.css"
 import Header from "../../component/general/Header"
-import CreateEventHeader from "../../component/create-event/Header"
+import CreateEventHeader from "../../component/create-event/CreateEventNav"
 import {OutgoingEvent, useEvent} from "../../context/EventProvider"
 import {config} from "../../config/Config"
 import Button from "../../component/general/Button"
 import Footer from "../../component/general/Footer"
 import moment from "moment"
+import {toast} from "react-toastify"
+import {ApiKeyManager} from "@esri/arcgis-rest-request"
+import {geocode} from "@esri/arcgis-rest-geocoding"
 
 export default function Publish() {
     const {eventId} = useParams()
-    const {getEvent, updateEventAndNav} = useEvent()
+    const {getEvent, updateEventAndNav, createEvent} = useEvent()
     const navigate = useNavigate()
+    const {state} = useLocation()
 
-    const [event, setEvent] = useState<OutgoingEvent>()
+    const [event, setEvent] = useState<OutgoingEvent>(state?.outgoingEvent || {})
     const [eventImageSource, setEventImageSource] = useState<string>()
     const [publishDay, setPublishDay] = useState<string>("")
     const [publishTime, setPublishTime] = useState<string>("")
@@ -28,11 +32,14 @@ export default function Publish() {
                         setEventImageSource(`${config.backendBaseUri}/images/${response.data.image}`)
                     }
                 })
+                .catch(response => {
+                    toast.error(response.message)
+                })
         }
     }, [setEvent])
 
-    const handleEventRadioInput = (event: any) => {
-        const {name, value} = event.target
+    const handleEventRadioInput = (e: any) => {
+        const {name, value} = e.target
         setEvent({
             ...event,
             [name]: value === "" ? undefined : value
@@ -64,10 +71,58 @@ export default function Publish() {
         }
     }
 
+    const handleCreateEvent = () => {
+        // get location coordinates
+        let eventToCreate: OutgoingEvent = event
+        const authentication = ApiKeyManager.fromKey(config.arcGisApiKey)
+        geocode({
+            address: event?.address,
+            authentication,
+        }).then((response) => {
+            if (response.candidates.length > 0) {
+                let loc = response.candidates[0];
+                response.candidates.forEach((res) => {
+                    if (res.score > loc.score) {
+                        loc = res
+                    }
+                })
+
+                eventToCreate.latitude = loc.location.x
+                eventToCreate.longitude = loc.location.y
+
+                createEvent(eventToCreate)
+                    .then(response => {
+                        navigate(`/events/${response.data.id}`)
+                    })
+                    .catch(response => {
+                        toast.error(response.message)
+                    })
+            }
+        })
+    }
+
+    const handleBack = () => {
+        if (eventId) {
+            navigate(`/events/${eventId}/tickets`)
+        } else {
+            navigate(`/events/tickets`, {
+                state: {
+                    outgoingEvent: event,
+                    outgoingTickets: state?.outgoingTickets
+                }
+            })
+        }
+    }
+
     return (
         <>
             <Header/>
-            <CreateEventHeader/>
+            <CreateEventHeader
+                outgoingEvent={event}
+                outgoingTickets={state?.outgoingTickets}
+                activePage='publish'
+                eventId={eventId}
+            />
             <div>
                 {/* TODO: maybe use this? */}
                 {/*<Modal*/}
@@ -264,7 +319,7 @@ export default function Publish() {
                                 fontSize: "24px",
                                 lineHeight: "39.09px",
                             }}
-                            onClick={() => navigate(`/events/${eventId}/tickets`)}
+                            onClick={handleBack}
                         />
                         <Button
                             whileHover={{
@@ -275,7 +330,7 @@ export default function Publish() {
                             }}
                             width="229px"
                             height="65px"
-                            text="Save"
+                            text={eventId ? "Save" : "Create Event"}
                             style={{
                                 background: "#FB4A04",
                                 color: "#ffffff",
@@ -283,12 +338,12 @@ export default function Publish() {
                                 fontSize: "24px",
                                 lineHeight: "39.09px",
                             }}
-                            onClick={handleSaveEvent}
+                            onClick={eventId ? handleSaveEvent : handleCreateEvent}
                         />
                     </div>
                 </div>
             </div>
-            <Footer showFooterHeaders={false} />
+            <Footer showFooterHeaders={false}/>
         </>
     )
 }

@@ -7,7 +7,7 @@ import {config} from '../../config/Config'
 import {useNavigate, useSearchParams} from "react-router-dom"
 import {LoginCredentials, useAuth} from "../../context/AuthProvider"
 import 'react-toastify/dist/ReactToastify.css'
-import {toast} from "react-toastify"
+import {toast, ToastContainer} from "react-toastify"
 
 export default function Login() {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -37,23 +37,13 @@ export default function Login() {
         login(loginCredentials)
             .then(() => {
                 setLoading(false)
-                toast.success("Logged in")
+                toast.success("Logged In")
                 navigate(redirectTo)
                 navigate(0)
             })
-            .catch((err) => {
+            .catch(response => {
                 setLoading(false)
-                toast.error("Unauthorized")
-                toast.error("err.response.data.message", {
-                    position: "bottom-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                })
+                toast.error(response.message)
             })
     }
 
@@ -222,6 +212,12 @@ export default function Login() {
                     </div>
                 </div>
             </section>
+
+            <ToastContainer
+                position="bottom-right"
+                autoClose={false}
+                closeOnClick={false}
+            />
         </>
     )
 }

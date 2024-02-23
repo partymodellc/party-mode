@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
-import {NavLink} from "react-router-dom"
+import React from 'react'
+import {NavLink, useNavigate} from "react-router-dom"
 import Search from '../general/Search'
 import {useLocation} from "react-router-dom"
 import {motion} from "framer-motion"
 import {Link} from 'react-router-dom'
-import {IncomingUser, useAuth} from '../../context/AuthProvider'
+import {useAuth} from '../../context/AuthProvider'
 
 type Props = {
     children: any
@@ -44,7 +44,8 @@ let drawer = [
 ]
 
 export default function Sidebar({children}: Props) {
-    const {user, logout} = useAuth()
+    const {user} = useAuth()
+    const navigate = useNavigate()
     const location = useLocation()
 
     const userPicture = user?.image ? user.image : "/profile.png"
@@ -90,7 +91,7 @@ export default function Sidebar({children}: Props) {
                             )
                         })}
                     </div>
-                    <div onClick={logout} className='m-auto my-0 mb-[45px] cursor-pointer'>
+                    <div onClick={() => navigate("/")} className='m-auto my-0 mb-[45px] cursor-pointer'>
                         <img src='/log-out.svg'/>
                     </div>
                 </div>

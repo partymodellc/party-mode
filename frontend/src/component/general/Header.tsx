@@ -5,11 +5,10 @@ import {motion} from "framer-motion"
 import "react-toastify/dist/ReactToastify.css"
 import '../../pages/Style.css'
 import {useAuth} from "../../context/AuthProvider"
-import {useEvent} from "../../context/EventProvider"
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Header() {
     const {user, logout} = useAuth()
-    const {createEventAndNav} = useEvent()
     const navigate = useNavigate()
     const [openNavMenu, setOpenNavMenu] = useState<boolean>(false)
     const [showMobileNav, setShowMobileNav] = useState<boolean>(false)
@@ -55,7 +54,7 @@ export default function Header() {
 
                     <ul className="xsm:hidden sm:hidden md:hidden text-[#493c3c] text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] flex gap-[2.881844380403458vw] mr-[2vw]">
                         <div className="flex justify-center items-center relative">
-                            <NavLink to={""} onClick={createEventAndNav} className="mx-4">
+                            <NavLink to="/events/basic-info" className="mx-4">
                                 <li className="flex items-center gap-[0.4610951008645533vw]">
                                     <motion.p
                                         whileHover={{color: "#FB4A04"}}
@@ -168,7 +167,7 @@ export default function Header() {
                                 style={showMobileNav ? {maxHeight: "1000px"} : {maxHeight: "0px", overflow: "hidden"}}
                                 className="transition-all xsm:flex sm:flex md:flex flex-col hidden text-[#493c3c] py-[10px] items-center text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] gap-[5.244vw]"
                             >
-                                <NavLink to={""} onClick={createEventAndNav}>
+                                <NavLink to='/events/basic-info'>
                                     <li className="flex items-center gap-[8px]">
                                         <motion.p
                                             whileHover={{color: "#FB4A04"}}

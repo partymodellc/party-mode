@@ -5,19 +5,21 @@ import {FileUploader} from "react-drag-drop-files"
 import "react-toastify/dist/ReactToastify.css"
 import Header from "../../component/general/Header"
 import Footer from '../../component/general/Footer'
-import CreateEventHeader from "../../component/create-event/Header"
+import CreateEventNav from "../../component/create-event/CreateEventNav"
 import {OutgoingEvent, useEvent} from "../../context/EventProvider"
-import {config} from "../../config/Config";
-import {useNavigate} from "react-router-dom";
+import {config} from "../../config/Config"
+import {useLocation, useNavigate} from "react-router-dom"
+import {toast} from "react-toastify"
 
-const fileTypes = ["JPEG", "PNG"];
+const fileTypes = ["JPEG", "PNG"]
 
 export default function Details() {
     const {eventId} = useParams()
     const {getEvent, updateEventAndNav} = useEvent()
     const navigate = useNavigate()
+    const {state} = useLocation()
 
-    const [eventDetails, setEventDetails] = useState<OutgoingEvent>({})
+    const [eventDetails, setEventDetails] = useState<OutgoingEvent>(state?.outgoingEvent || {})
     const [eventImageName, setEventImageName] = useState<string>()
     const [eventImageSource, setEventImageSource] = useState<string>()
     const [eventGallerySources, setEventGallerySources] = useState<string[]>()
@@ -31,6 +33,9 @@ export default function Details() {
                         setEventImageName(decodeURIComponent(response.data.image))
                         setEventImageSource(`${config.backendBaseUri}/images/${response.data.image}`)
                     }
+                })
+                .catch(response => {
+                    toast.error(response.message)
                 })
         }
     }, [setEventDetails])
@@ -85,10 +90,39 @@ export default function Details() {
         }
     }
 
+    const handleContinue = () => {
+        if (!eventId) {
+            navigate('/events/tickets', {
+                state: {
+                    outgoingEvent: eventDetails,
+                    outgoingTickets: state?.outgoingTickets || []
+                }
+            })
+        }
+    }
+
+    const handleBack = () => {
+        if (eventId) {
+            navigate(`/events/${eventId}/basic-info`)
+        } else {
+            navigate(`/events/basic-info`, {
+                state: {
+                    outgoingEvent: eventDetails,
+                    outgoingTickets: state?.outgoingTickets
+                }
+            })
+        }
+    }
+
     return (
         <>
             <Header/>
-            <CreateEventHeader/>
+            <CreateEventNav
+                outgoingEvent={eventDetails}
+                outgoingTickets={state?.outgoingTickets}
+                activePage='details'
+                eventId={eventId}
+            />
             <div className="w-[53.92161383285302vw] xsm:w-[90vw] sm:w-[80vw] m-auto divide-y-2">
                 <div>
                     <div className="mt-[44px]">
@@ -306,7 +340,7 @@ export default function Details() {
                                 fontSize: "24px",
                                 lineHeight: "39.09px",
                             }}
-                            onClick={() => navigate(`/events/${eventId}/basic-info`)}
+                            onClick={handleBack}
                         />
                         <Button
                             whileHover={{
@@ -317,7 +351,7 @@ export default function Details() {
                             }}
                             width="229px"
                             height="65px"
-                            text="Save & Continue"
+                            text={eventId ? "Save & Continue" : "Continue"}
                             style={{
                                 background: "#FB4A04",
                                 color: "#ffffff",
@@ -325,12 +359,12 @@ export default function Details() {
                                 fontSize: "24px",
                                 lineHeight: "39.09px",
                             }}
-                            onClick={saveAndContinue}
+                            onClick={eventId ? saveAndContinue : handleContinue}
                         />
                     </div>
                 </div>
             </div>
-            <Footer showFooterHeaders={false} />
+            <Footer showFooterHeaders={false}/>
         </>
     )
 }

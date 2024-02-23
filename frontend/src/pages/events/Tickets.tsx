@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import Button from "../../component/general/Button"
 import Modal from "../../component/general/Modal"
-import {useNavigate, useParams} from "react-router-dom"
+import {useLocation, useNavigate, useParams} from "react-router-dom"
 import {useEffect} from "react"
 import {FileUploader} from "react-drag-drop-files"
 import TicketCard from "../../component/EventDescriptions/TicketCard"
@@ -9,13 +9,15 @@ import {OutgoingTicket, useEvent} from "../../context/EventProvider"
 import "react-toastify/dist/ReactToastify.css"
 import Header from "../../component/general/Header"
 import Footer from "../../component/general/Footer"
-import CreateEventHeader from "../../component/create-event/Header"
+import CreateEventHeader from "../../component/create-event/CreateEventNav"
 
 export default function Tickets() {
     const {eventId} = useParams()
     const {allTickets, getAllTickets, createTicket} = useEvent()
     const navigate = useNavigate()
+    const {state} = useLocation()
 
+    const [outgoingTickets, setOutgoingTickets] = useState<OutgoingTicket[]>(state?.outgoingTickets || [])
     // TODO: support ticket sections
     // const [showCreateSectionModal, setShowCreateSectionModal] = useState<boolean>(false)
     const [showCreateTicketModal, setShowCreateTicketModal] = useState<boolean>(false)
@@ -61,10 +63,60 @@ export default function Tickets() {
         }
     }
 
+    const addTicket = (e: any) => {
+        e.preventDefault()
+
+        outgoingTickets.push(ticketInfo)
+        handleCancelCreateTicket()
+    }
+
+    const removeTicketHandler = (idx: string) => {
+        const temp: OutgoingTicket[] = []
+        outgoingTickets.forEach((ticket, idxx) => {
+            if (idxx !== Number(idx)) {
+                temp.push(ticket)
+            }
+        })
+        setOutgoingTickets(temp)
+    }
+
+    const handleContinue = () => {
+        if (eventId) {
+            navigate(`/events/${eventId}/publish`)
+        } else {
+            navigate('/events/publish', {
+                state: {
+                    outgoingEvent: state?.outgoingEvent,
+                    outgoingTickets: outgoingTickets
+                }
+            })
+        }
+    }
+
+    const handleBack = () => {
+        if (eventId) {
+            navigate(`/events/${eventId}/details`)
+        } else {
+            navigate(`/events/details`, {
+                state: {
+                    outgoingEvent: state?.outgoingEvent,
+                    outgoingTickets: outgoingTickets
+                }
+            })
+        }
+    }
+
+    const ticketsToShow = eventId ? allTickets : outgoingTickets
+
     return (
         <>
             <Header/>
-            <CreateEventHeader/>
+            <CreateEventHeader
+                outgoingEvent={state?.outgoingEvent}
+                outgoingTickets={outgoingTickets}
+                activePage='tickets'
+                eventId={eventId}
+            />
             <div>
                 {/* TODO: support ticket sections */}
                 {/* create section modal */}
@@ -338,7 +390,7 @@ export default function Tickets() {
                                         }}
                                         width="222px"
                                         height="60px"
-                                        text="Save"
+                                        text={eventId ? "Save" : "Add"}
                                         style={{
                                             background: "#FB4A04",
                                             color: "#ffffff",
@@ -346,7 +398,7 @@ export default function Tickets() {
                                             fontSize: "20px",
                                             lineHeight: "32.58px",
                                         }}
-                                        onClick={saveTicket}
+                                        onClick={eventId ? saveTicket : addTicket}
                                     />
                                 </div>
                             </div>
@@ -410,8 +462,16 @@ export default function Tickets() {
 
                         <section
                             className="mt-[48px] mb-[76px] w-[88%] m-auto flex flex-wrap gap-[20px] justify-center sm:justify-center md:flex-col md:items-center">
-                            {allTickets?.map((ticket) => {
-                                return <TicketCard key={ticket.id} ticket={ticket} phase={"creation"}/>
+                            {ticketsToShow?.map((ticket, idx) => {
+                                return <TicketCard
+                                    key={"id" in ticket ? ticket.id : idx}
+                                    id={"id" in ticket ? ticket.id : idx.toString()}
+                                    name={ticket?.name || ""}
+                                    image={"id" in ticket ? ticket.image : ticket?.image?.name || ""}
+                                    price={ticket?.price || 0}
+                                    phase={"creation" || "edit"}
+                                    removeTicketHandler={removeTicketHandler}
+                                />
                             })}
                         </section>
                     </section>
@@ -431,7 +491,7 @@ export default function Tickets() {
                                 fontSize: "24px",
                                 lineHeight: "39.09px",
                             }}
-                            onClick={() => navigate(`/events/${eventId}/details`)}
+                            onClick={handleBack}
                         />
                         <Button
                             whileHover={{
@@ -450,7 +510,7 @@ export default function Tickets() {
                                 fontSize: "24px",
                                 lineHeight: "39.09px",
                             }}
-                            onClick={() => navigate(`/events/${eventId}/publish`)}
+                            onClick={handleContinue}
                         />
                     </div>
                 </div>

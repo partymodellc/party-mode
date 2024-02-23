@@ -2,22 +2,27 @@ import React from 'react'
 import Button from '../../component/general/Button'
 import {useNavigate, useParams} from 'react-router-dom'
 import Header from '../../component/general/Header'
-import CreateEventHeader from "../../component/create-event/Header";
+import CreateEventNav from "../../component/create-event/CreateEventNav"
 
 type Props = {}
 
 export default function OnlinePageEvent({}: Props) {
-    const {eventID} = useParams()
+    const {eventId} = useParams()
     const navigate = useNavigate()
 
     const handleSubmit = async () => {
-        navigate(`/create-event/create-ticket/${eventID}`)
+        navigate(`/create-event/create-ticket/${eventId}`)
     }
 
     return (
         <>
             <Header/>
-            <CreateEventHeader/>
+            <CreateEventNav
+                outgoingEvent={{}}
+                outgoingTickets={[]}
+                activePage='online-page'
+                eventId={eventId}
+            />
             <div className='w-[58.96829971181556vw] sm:w-[80vw] xsm:w-[90vw] m-auto '>
                 <div className='divide-y-2'>
                     <div className='flex mt-[24px] xsm:flex-col sm:flex-col xsm:gap-[50px] sm:gap-[50px]'>

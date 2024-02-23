@@ -29,10 +29,6 @@ const user = model('user', new Schema({
             type: String
         },
         // links
-        paymentIds: {
-            type: Array,
-            default: []
-        },
         likes: {
             type: Array,
             default: []

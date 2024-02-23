@@ -1,71 +1,54 @@
 import LazyImage from "../general/LazyImage"
 import {motion} from "framer-motion"
-import {IncomingTicket, useEvent} from "../../context/EventProvider"
+import {useEvent} from "../../context/EventProvider"
 import "react-toastify/dist/ReactToastify.css"
-import {useEffect, useState} from "react"
+import {useState} from "react"
 import {config} from "../../config/Config"
 
 type Props = {
-    ticket: IncomingTicket
+    id: string
+    name: string
+    image: string
+    price: number
     phase?: string
+    removeTicketHandler?: (id: string) => void
     addTicketHandler?: () => void
 }
 
-export default function TicketCard({ticket, phase, addTicketHandler}: Props) {
+export default function TicketCard({
+                                       id,
+                                       name,
+                                       image,
+                                       price,
+                                       phase,
+                                       removeTicketHandler,
+                                       addTicketHandler
+                                   }: Props) {
     const {deleteTicket} = useEvent()
     const [purchaseLoading, setPurchaseLoading] = useState(false)
-
-    // const handleCheckout = async () => {
-    //
-    //     try {
-    //         setPurchaseLoading(true)
-    //         const resp = await axios.post(
-    //             `http://localhost:8000/stripe/create-checkout-session`,
-    //             {
-    //                 eventName: eventName,
-    //                 user: user,
-    //                 ItemID: _id,
-    //                 ticketImg,
-    //                 ticketName,
-    //                 price,
-    //                 quantity: 1,
-    //             }
-    //         )
-    //         setPurchaseLoading(false)
-    //
-    //         // console.log(resp)
-    //
-    //         if (resp.data.url) {
-    //             window.location.href = resp.data.url
-    //         }
-    //     } catch (err) {
-    //         setPurchaseLoading(false)
-    //         console.log(err)
-    //     }
-    // }
 
     return (
         <motion.div
             initial={{scale: 0}}
             animate={{scale: 1}}
             whileHover={{scale: 1.01}}
-            key={ticket.id}
+            key={id}
             className="shadow-md md:justify-center flex xsm:flex-col w-[42.305vw] xl:w-[41vw] lg:w-[41vw] md:w-[41vw] sm:w-[80vw] xsm:w-[90vw] md:min-w-[70%]"
         >
-            {ticket.image &&
+            {image &&
                 <LazyImage
                     alt=""
-                    src={`${config.backendBaseUri}/images/${ticket.image}`}
+                    src={`${config.backendBaseUri}/images/${image}`}
                     classes="w-[13.314vw] xsm:min-w-[100%] min-w-[231px]"
                 />
             }
             <div className="flex flex-1">
                 <div className="pl-[1.15vw] flex-1 flex flex-col h-[100%] bg-[#fed4c3] sm:flex-0">
                     <h3 className="mt-[13px] font-[400] leading-[33px] text-[clamp(14px,1.1527377521613833vw,20px)] text-[#231414]">
-                        {ticket.name}
+                        {name}
                     </h3>
                     <h2 className="mt-[12px] font-[700] leading-[53px] xsm:flex xsm:flex-col text-[32px] text-[#231414]">
-                        ${ticket.price}
+                        ${price}
                         {/* TODO: support ticket description */}
                         {/*{ticket.description &&*/}
                         {/*    (<span*/}
@@ -75,9 +58,9 @@ export default function TicketCard({ticket, phase, addTicketHandler}: Props) {
                         {/*}*/}
                     </h2>
                 </div>
-                {phase === "creation" ?
+                {phase === ("creation" || "edit") ?
                     (<div
-                        onClick={() => deleteTicket(ticket.id)}
+                        onClick={() => removeTicketHandler ? removeTicketHandler(id) : deleteTicket(id)}
                         className="cursor-pointer flex justify-center items-center w-[4.43vw] bg-[#FB4A04] xsm:min-w-[77px] sm:min-w-[55px] md:min-w-[60px]"
                     >
                         <LazyImage alt="" src={"/delete.png"}/>

@@ -1,8 +1,8 @@
 import axios, {AxiosResponse} from "axios"
 import React, {ReactNode, createContext, useContext, useState,} from "react"
 import {config} from "../config/Config"
-import {toast} from "react-toastify";
-import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify"
+import {useNavigate} from "react-router-dom"
 
 export type IncomingEvent = {
     id: string
@@ -32,11 +32,9 @@ export type OutgoingEvent = {
     description?: string
     image?: File
     gallery?: File[]
-    location?: {
-        address?: string
-        latitude?: number
-        longitude?: number
-    }
+    address?: string
+    latitude?: number
+    longitude?: number
     startDate?: string
     endDate?: string
     view?: string
@@ -51,10 +49,10 @@ export type OutgoingEvent = {
 export type IncomingTicket = {
     id: string
     name: string
-    image?: string
-    price?: number
+    image: string
+    price: number
     limit?: number
-    sales?: number
+    sales: number
     eventId: string
 }
 
@@ -72,7 +70,7 @@ type eventContextType = {
     getEvent: (eventId: string) => Promise<AxiosResponse<any, any>>
     getAllEvents: (searchFilter?: string | null, ids?: string[]) => void
     getUserEvents: (userId: string) => Promise<AxiosResponse<any, any>>
-    createEventAndNav: () => void
+    createEvent: (outgoingEvent: OutgoingEvent) => Promise<AxiosResponse<any, any>>
     updateEventAndNav: (eventId: string, page: string, event?: OutgoingEvent) => void
     deleteEvent: (eventId: string) => void
     getAllTickets: (eventId: string) => void
@@ -91,7 +89,9 @@ const eventContextDefaultValues: eventContextType = {
         return new Promise<any>(() => {
         })
     },
-    createEventAndNav: () => {
+    createEvent: () => {
+        return new Promise<any>(() => {
+        })
     },
     updateEventAndNav: () => {
         return new Promise<any>(() => {
@@ -118,9 +118,10 @@ export function useEvent() {
 }
 
 export function EventProvider({children}: Props) {
+    const navigate = useNavigate()
+
     const [allEvents, setAllEvents] = useState<IncomingEvent[]>()
     const [allTickets, setAllTickets] = useState<IncomingTicket[]>()
-    const navigate = useNavigate()
 
     const getEvent = (eventId: string) => {
         return axios.get(`${config.backendBaseUri}/events/${eventId}`)
@@ -135,17 +136,21 @@ export function EventProvider({children}: Props) {
             .then(response => {
                 setAllEvents(response.data)
             })
+            .catch(response => {
+                toast.error(response.message)
+            })
     }
 
     const getUserEvents = (userId: string) => {
         return axios.get(`${config.backendBaseUri}/events?userId=${userId}`)
     }
 
-    const createEventAndNav = () => {
-        axios.post(`${config.backendBaseUri}/events`, undefined, {withCredentials: true})
-            .then(response => {
-                navigate(`/events/${response.data.id}/basic-info`)
-            })
+    const createEvent = (outgoingEvent: OutgoingEvent) => {
+        return axios.post(`${config.backendBaseUri}/events`, outgoingEvent, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }, withCredentials: true
+        })
     }
 
     const updateEventAndNav = (eventId: string, page: string, event?: OutgoingEvent) => {
@@ -157,12 +162,18 @@ export function EventProvider({children}: Props) {
             .then(() => {
                 navigate(`/events/${eventId}/${page}`)
             })
+            .catch(response => {
+                toast.error(response.message)
+            })
     }
 
     const deleteEvent = (eventId: string) => {
         axios.delete(`${config.backendBaseUri}/events/${eventId}`, {withCredentials: true})
             .then(response => {
                 toast.success("Event Deleted")
+            })
+            .catch(response => {
+                toast.error(response.message)
             })
     }
 
@@ -171,12 +182,18 @@ export function EventProvider({children}: Props) {
             .then(response => {
                 setAllTickets(response.data)
             })
+            .catch(response => {
+                toast.error(response.message)
+            })
     }
 
     const createTicket = (ticket: OutgoingTicket) => {
         axios.post(`${config.backendBaseUri}/tickets`, ticket, {withCredentials: true})
             .then(() => {
-                toast.success("Ticket created")
+                toast.success("Ticket Created")
+            })
+            .catch(response => {
+                toast.error(response.message)
             })
     }
 
@@ -184,6 +201,9 @@ export function EventProvider({children}: Props) {
         axios.delete(`${config.backendBaseUri}/tickets/${ticketId}`, {withCredentials: true})
             .then(response => {
                 toast.success("Ticket Deleted")
+            })
+            .catch(response => {
+                toast.error(response.message)
             })
     }
 
@@ -193,7 +213,7 @@ export function EventProvider({children}: Props) {
         getEvent: getEvent,
         getAllEvents: getAllEvents,
         getUserEvents: getUserEvents,
-        createEventAndNav: createEventAndNav,
+        createEvent: createEvent,
         updateEventAndNav: updateEventAndNav,
         deleteEvent: deleteEvent,
         getAllTickets: getAllTickets,

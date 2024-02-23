@@ -9,13 +9,13 @@ import {EventProvider} from "./context/EventProvider"
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     // <StrictMode>
-        <BrowserRouter>
-            <AuthProvider>
-                <EventProvider>
-                    <ScrollToTop/>
-                    <App/>
-                </EventProvider>
-            </AuthProvider>
-        </BrowserRouter>
+    <BrowserRouter>
+        <AuthProvider>
+            <EventProvider>
+                <ScrollToTop/>
+                <App/>
+            </EventProvider>
+        </AuthProvider>
+    </BrowserRouter>
     // </StrictMode>
 )

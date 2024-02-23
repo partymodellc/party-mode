@@ -3,12 +3,14 @@ import Button from '../../component/general/Button'
 import LazyImage from '../../component/general/LazyImage'
 import {motion} from 'framer-motion'
 import {Link} from 'react-router-dom'
-import axios from 'axios'
-import {config} from '../../config/Config'
 import {useNavigate} from "react-router-dom"
+import {useAuth} from "../../context/AuthProvider"
+import {toast} from "react-toastify"
 
 export default function Signup() {
+    const {createUser} = useAuth()
     const navigate = useNavigate()
+
     const [user, setUser] = useState({
         username: '', email: '', password: ''
     })
@@ -18,17 +20,18 @@ export default function Signup() {
             ...user, [e.target.name]: e.target.value
         })
     }
+
     const registerUser = (e: any) => {
         e.preventDefault()
-        axios.post(`${config.backendBaseUri}/auth/register`, user)
+        createUser(user.username, user.email, user.password)
             .then(() => {
-                // alert("You're reigstered Successfully.")
                 navigate("/login")
             })
-            .catch((error) => {
-                alert(error)
+            .catch(response => {
+                toast.error(response.message)
             })
     }
+
     return (
         <section className='w-[calc(100vw - 100%)] h-[100vh] flex xsm:flex-col sm:flex-col'>
             <div className='authBackground flex-1 flex justify-center items-center py-[60px]'>

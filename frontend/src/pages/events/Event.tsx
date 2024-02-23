@@ -13,9 +13,8 @@ import {config} from "../../config/Config"
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
-import {ApiKeyManager} from "@esri/arcgis-rest-request"
-import {geocode} from "@esri/arcgis-rest-geocoding"
 import {IncomingEvent, useEvent} from "../../context/EventProvider"
+import {toast} from "react-toastify"
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -32,8 +31,6 @@ export default function Event() {
     const [scrollCounter, setScrollCounter] = useState<number>(0)
     const [showTicketPaymentModal, setShowTicketPaymentModal] = useState<boolean>(false)
     const [showTicketSelectionModal, setShowTicketSelectionModal] = useState<boolean>(false)
-    const [lat, setLat] = useState<number>(0)
-    const [lon, setLon] = useState<number>(0)
 
     useEffect(() => {
         return scrollY.onChange((latest) => {
@@ -47,6 +44,9 @@ export default function Event() {
             getEvent(eventId)
                 .then(response => {
                     setEvent(response.data)
+                })
+                .catch(response => {
+                    toast.error(response.message)
                 })
         }
     }, [])
@@ -73,24 +73,8 @@ export default function Event() {
 
     let desc = event?.description ? event.description : ''
     let image = `${config.backendBaseUri}/images/${event?.image}`
-
-    // get location coordinates
-    const authentication = ApiKeyManager.fromKey(config.arcGisApiKey)
-    geocode({
-        address: event?.location?.address,
-        authentication,
-    }).then((response) => {
-        if (response.candidates.length > 0) {
-            let loc = response.candidates[0];
-            response.candidates.forEach((res) => {
-                if (res.score > loc.score) {
-                    loc = res
-                }
-            })
-            setLat(loc.location.x)
-            setLon(loc.location.y)
-        }
-    })
+    let lat = event?.location?.latitude || 0
+    let lon = event?.location?.longitude || 0
 
     return (
         <>
@@ -330,7 +314,12 @@ export default function Event() {
                     className="mt-[48px] mb-[76px] w-[88%] m-auto flex flex-wrap gap-[20px] sm:justify-center md:flex-col md:items-center"
                 >
                     {allTickets?.map((ticket) => {
-                        return (<TicketCard ticket={ticket}/>)
+                        return (<TicketCard
+                            id={ticket.id}
+                            name={ticket.name}
+                            image={ticket.image}
+                            price={ticket.price}
+                        />)
                     })}
                 </section>
             )}
@@ -366,15 +355,15 @@ export default function Event() {
                 <h2 className="font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-center text-[#231414]">
                     Location
                 </h2>
-                <motion.div className="flex justify-center items-center">
-                    <motion.div whileHover={{scale: 1.01}}>
-                        <LazyImage
-                            alt=""
-                            src={"./map.png"}
-                            classes="m-auto mb-[20px] mt-[49px] w-[71.23919308357348vw] min-w-[260px] xsm:min-w-[80vw]"
-                        />
-                    </motion.div>
-                </motion.div>
+                {/*<motion.div className="flex justify-center items-center">*/}
+                {/*    <motion.div whileHover={{scale: 1.01}}>*/}
+                {/*        <LazyImage*/}
+                {/*            alt=""*/}
+                {/*            src={"/map.png"}*/}
+                {/*            classes="m-auto mb-[20px] mt-[49px] w-[71.23919308357348vw] min-w-[260px] xsm:min-w-[80vw]"*/}
+                {/*        />*/}
+                {/*    </motion.div>*/}
+                {/*</motion.div>*/}
                 <div className="flex justify-center">
                     <iframe
                         src={`https://www.openstreetmap.org/export/embed.html?bbox=${lat - .02}%2C${lon - .02}%2C${lat + .02}%2C${lon + .02}&layer=mapnik&marker=${lon}%2C${lat}`}

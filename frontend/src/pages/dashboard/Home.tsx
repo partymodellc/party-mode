@@ -23,7 +23,7 @@ const data = [
 ]
 
 export default function Home() {
-    const {user, getUser} = useAuth()
+    const {user} = useAuth()
 
     const userPicture = user?.image ? user.image : "/profile.png"
 
