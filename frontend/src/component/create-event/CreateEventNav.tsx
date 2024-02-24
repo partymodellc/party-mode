@@ -12,7 +12,7 @@ type Props = {
 export default function CreateEventNav({outgoingEvent, outgoingTickets, activePage, eventId}: Props) {
     return (
         <div>
-            <nav className='w-full h-[63px] bg-[#FB4A04]'>
+            <nav className='w-full h-[63px] bg-[#0252ED]'>
                 <ul className='flex gap-[3.0547550432276656vw] items-center justify-center h-full'>
                     <Link
                         className={activePage == 'basic-info' ? "border-b-[2px] border-white p-[5px] transition-all" : "border-b-[2px] border-transparent p-[5px] transition-all"}

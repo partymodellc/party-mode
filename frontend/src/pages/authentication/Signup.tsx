@@ -38,7 +38,7 @@ export default function Signup() {
                 <div
                     className='authFliterEffect rounded-[50px] w-[39.76945244956772vw] xsm:min-w-[80vw] sm:min-w-[60vw] h-[331px] flex justify-center items-center ml-[-45px] xsm:ml-0 sm:ml-0 pl-[4.14985590778098vw]'>
                     <h1 className='w-[35vw] xsm:min-w-[70vw] sm:min-w-[50vw] font-[700] text-[48px] leading-[78px] xsm:leading-[40px] sm:leading-[40px] text-[#fff]'>Exclusive <span
-                        className='text-[#FB4A04]'>events,</span> <span
+                        className='text-[#0252ED]'>events,</span> <span
                         className='font-[700] text-[32px] leading-[52px]'>priceless memories.</span></h1>
                 </div>
             </div>
@@ -89,9 +89,9 @@ export default function Signup() {
 
                         {/* <Link to="/interests"> */}
                         <Button onClick={registerUser}
-                                whileHover={{background: "#fff", border: "3px solid #FB4A04", color: "#FB4A04"}}
+                                whileHover={{background: "#fff", border: "3px solid #0252ED", color: "#0252ED"}}
                                 width="27.608069164265128vw" height='57px' text="SignUp"
-                                style={{background: "#FB4A04", color: "#fff", marginTop: "25px", minWidth: "100%"}}/>
+                                style={{background: "#0252ED", color: "#fff", marginTop: "25px", minWidth: "100%"}}/>
                         {/* </Link> */}
 
                         <div className='flex justify-between items-center mt-[37px]'>

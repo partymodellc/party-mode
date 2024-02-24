@@ -58,7 +58,7 @@ export default function Login() {
                     <div
                         className="authFliterEffect rounded-[50px] w-[39.76945244956772vw] xsm:min-w-[80vw] sm:min-w-[60vw] h-[331px] flex justify-center items-center ml-[-45px] xsm:ml-0 sm:ml-0 pl-[4.14985590778098vw]">
                         <h1 className="w-[35vw] xsm:min-w-[70vw] sm:min-w-[50vw] font-[700] text-[48px] leading-[78px] xsm:leading-[40px] sm:leading-[40px] text-[#fff]">
-                            Exclusive<span className="text-[#FB4A04]"> events,</span>
+                            Exclusive<span className="text-[#0252ED]"> events,</span>
                             <span className="font-[700] text-[32px] leading-[52px]"> priceless memories.</span>
                         </h1>
                     </div>
@@ -120,14 +120,14 @@ export default function Login() {
                                     <Button
                                         whileHover={{
                                             background: "#fff",
-                                            border: "3px solid #FB4A04",
-                                            color: "#FB4A04",
+                                            border: "3px solid #0252ED",
+                                            color: "#0252ED",
                                         }}
                                         width="27.608069164265128vw"
                                         height="57px"
                                         text="Loging In..."
                                         style={{
-                                            background: "#FB4A04",
+                                            background: "#0252ED",
                                             color: "#fff",
                                             marginTop: "25px",
                                             minWidth: "100%",
@@ -138,14 +138,14 @@ export default function Login() {
                                     <Button
                                         whileHover={{
                                             background: "#fff",
-                                            border: "3px solid #FB4A04",
-                                            color: "#FB4A04",
+                                            border: "3px solid #0252ED",
+                                            color: "#0252ED",
                                         }}
                                         width="27.608069164265128vw"
                                         height="57px"
                                         text="LogIn"
                                         style={{
-                                            background: "#FB4A04",
+                                            background: "#0252ED",
                                             color: "#fff",
                                             marginTop: "25px",
                                             minWidth: "100%",
@@ -158,8 +158,8 @@ export default function Login() {
                                 <Link to={"/signup"} className="min-w-[100%]">
                                     <Button
                                         whileHover={{
-                                            background: "#FB4A04",
-                                            border: "3px solid #FB4A04",
+                                            background: "#0252ED",
+                                            border: "3px solid #0252ED",
                                             color: "#fff",
                                         }}
                                         width="27.608069164265128vw"
@@ -167,7 +167,7 @@ export default function Login() {
                                         text="SignUp"
                                         style={{
                                             background: "#fff",
-                                            color: "#FB4A04",
+                                            color: "#0252ED",
                                             border: "1px solid #473a3a",
                                             marginTop: "20px",
                                             minWidth: "100%",

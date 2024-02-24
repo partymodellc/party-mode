@@ -13,15 +13,15 @@ export default function Home() {
                     <div
                         className='flex flex-col xsm:items-center sm:items-center justify-center ml-[3.515850144092219vw] xsm:mt-[40px] sm:mt-[40px]'>
                         <h1 className='eventTextFont xsm:text-center sm:text-center w-[40.23054755043228vw] xsm:w-[90%] sm:w-[80%] font-[400] text-[clamp(36px,5.53314121037464vw,96px)] xsm:leading-[60px] sm:leading-[60px] leading-[113px] text-[#231414D4]'>Welcome
-                            To <span className='eventTextFont text-[#FB4A04C2]'>Party Mode</span> Community</h1>
+                            To <span className='eventTextFont text-[#0252EDC2]'>Party Mode</span> Community</h1>
                         {/*<Link to="/community-join">*/}
-                        <Button whileHover={{background: "#FB4A04", color: "#fff"}} width='16.829971181556196vw'
+                        <Button whileHover={{background: "#0252ED", color: "#fff"}} width='16.829971181556196vw'
                                 height='88px' text='Coming Soon' style={{
                             fontSize: "clamp(18px,2.07492795389049vw,32px)",
                             minWidth: "240px",
                             background: "transparent",
-                            border: "3px solid #FB4A04",
-                            color: "#FB4A04",
+                            border: "3px solid #0252ED",
+                            color: "#0252ED",
                             borderRadius: "0px",
                             marginTop: "3.6311239193083575vw"
                         }}/>

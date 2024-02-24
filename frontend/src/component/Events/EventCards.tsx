@@ -10,6 +10,10 @@ type Props = {
 }
 
 export default function EventCards({category, data = []}: Props) {
+    if (data?.length > 0) {
+        data = data?.filter(event => event.category === category)
+    }
+
     return (
         <div className="m-auto w-[86.1671469740634vw]">
             <div className="flex justify-between">
@@ -29,10 +33,10 @@ export default function EventCards({category, data = []}: Props) {
                             }}
                             whileHover={{
                                 scale: 1.09,
-                                backgroundColor: "#FB4A04",
+                                backgroundColor: "#0252ED",
                                 color: "#ffffff",
                             }}
-                            className="w-[9.855907780979827vw] min-w-[120px] h-[53px] border-2 border-[#FB4A04] font-[400] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] text-[#473a3a]"
+                            className="w-[9.855907780979827vw] min-w-[120px] h-[53px] border-2 border-[#0252ED] font-[400] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] text-[#473a3a]"
                         >
                             See More
                         </motion.button>

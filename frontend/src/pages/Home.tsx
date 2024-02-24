@@ -7,6 +7,8 @@ import Header from '../component/general/Header'
 import {useEvent} from "../context/EventProvider"
 import {useEffect} from "react"
 
+const categories = ['Festivals', 'Electronic', 'Pop Culture', 'Music Venues', 'Comedy', 'Miami']
+
 export default function Home() {
     const {allEvents, getAllEvents} = useEvent()
 
@@ -18,7 +20,7 @@ export default function Home() {
         <>
             <Header/>
             <div className='w-[calc(100vw - 100%)] '>
-                <div className='relative'>
+                <div className='relative pb-[216px]'>
                     <section className='eventsMainBackground h-[778px] w-[100%] flex relative '>
                         <div
                             className='flex flex-col justify-center absolute top-[39%] left-[65.24495677233429vw] xsm:left-[10vw] sm:left-[50vw]'>
@@ -27,12 +29,12 @@ export default function Home() {
                             </h1>
                             <Link to='/search'>
                                 <Button
-                                    initial={{scale: 1, backgroundColor: '#FB4A04', color: "#fff"}}
+                                    initial={{scale: 1, backgroundColor: '#0252ED', color: "#fff"}}
                                     whileHover={{
                                         scale: 1.02,
                                         backgroundColor: "#ffffff",
-                                        border: "3px solid #FB4A04",
-                                        color: "#FB4A04"
+                                        border: "3px solid #0252ED",
+                                        color: "#0252ED"
                                     }}
                                     width={"17.75vw"}
                                     height={"61px"}
@@ -45,7 +47,7 @@ export default function Home() {
 
                     <div
                         className='bg-white relative top-[-28px] p-[14px] eventDivBoxShadow w-[85.76368876080691vw] m-auto'>
-                        <div className='pt-[5px] pb-[18px] pl-[10px] border-l-[2px] border-[#FB4A04]'>
+                        <div className='pt-[5px] pb-[18px] pl-[10px] border-l-[2px] border-[#0252ED]'>
                             <h2 className='mb-[8px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] text-[#473a3a]'>
                                 Do events help you find connection?
                             </h2>
@@ -56,42 +58,23 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <section id='checkin' className="mt-[40px]">
+                    <section id='checkin' className="mt-[40px] mb-[27px]">
                         <div className='flex flex-col justify-center items-center'>
                             <h2 className="font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-[#473a3a]">
                                 Check out trending categories
                             </h2>
-                            <hr className='mt-[23px] w-[232px] !h-[2px] border-[#FB4A04] !p-0'></hr>
+                            <hr className='mt-[23px] w-[232px] !h-[2px] border-[#0252ED] !p-0'></hr>
                         </div>
                     </section>
 
-                    <section className='mt-[120px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards category='Christmas🎅' data={allEvents}/>
-                    </section>
-
-                    <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards category='Festivals' data={allEvents}/>
-                    </section>
-
-                    <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards category='Electronic' data={allEvents}/>
-                    </section>
-
-                    <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards category='Pop Culture' data={allEvents}/>
-                    </section>
-
-                    <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards category='Music Venues' data={allEvents}/>
-                    </section>
-
-                    <section className='mt-[93px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards category='Music Venues' data={allEvents}/>
-                    </section>
-
-                    <section className='mt-[93px] mb-[216px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
-                        <EventCards category='Miami' data={allEvents}/>
-                    </section>
+                    {categories.map((cat, idx) => {
+                        return (
+                            <section key={idx}
+                                     className='mt-[120px] xsm:w-full sm:w-full md:w-full lg:w-full m-auto w-full'>
+                                <EventCards category={cat} data={allEvents}/>
+                            </section>
+                        )
+                    })}
 
                     {/* TODO: figure how to make this functional */}
                     {/*<section className='mb-[216px]'>*/}
@@ -107,7 +90,7 @@ export default function Home() {
                     {/*        />*/}
                     {/*    </div>*/}
                     {/*    <div className='w-[86.1671469740634vw] m-auto'>*/}
-                    {/*        <hr className='mt-[23px] w-[119px] !h-[2px] border-[#FB4A04] !p-0'/>*/}
+                    {/*        <hr className='mt-[23px] w-[119px] !h-[2px] border-[#0252ED] !p-0'/>*/}
                     {/*    </div>*/}
                     {/*</section>*/}
                 </div>

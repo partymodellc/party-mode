@@ -93,7 +93,7 @@ export default function OrderRow({data}: any) {
                 >
                     <table
                         className=" table-auto w-[78.32853025936599vw] mt-[43px] relative z-10 border-collapse border border-slate-500 ">
-                        <thead className="bg-[#fed4c3] border-collapse border border-slate-500">
+                        <thead className="bg-[#9fb9f4] border-collapse border border-slate-500">
                         <tr className="">
                             <th className="py-[17px] border-collapse border border-slate-500">
                                 Ticket Name
