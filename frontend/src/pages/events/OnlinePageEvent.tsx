@@ -56,7 +56,7 @@ export default function OnlinePageEvent({}: Props) {
                                     access
                                     it.</p>
                                 <div className='flex justify-between items-center mt-[28px] mb-[39px]'>
-                                    <Button whileHover={{background: "#FB4A04", color: "white", scale: 1.03}}
+                                    <Button whileHover={{background: "#0252ED", color: "white", scale: 1.03}}
                                             width='191px'
                                             height='50px' text='Zoom' style={{
                                         border: "1px solid #231414D4",
@@ -91,12 +91,12 @@ export default function OnlinePageEvent({}: Props) {
 
                 <div
                     className='ml-[75px] flex gap-[20px] justify-end mb-[203px] mt-[103px] sm:flex-col-reverse xsm:flex-col-reverse sm:items-center xsm:items-center sm:ml-0 xsm:ml-0'>
-                    <Button whileHover={{background: "#FB4A04", color: "white", scale: 1.03}} width='229px'
+                    <Button whileHover={{background: "#0252ED", color: "white", scale: 1.03}} width='229px'
                             height='65px'
                             text='Back' style={{
                         minWidth: "200px",
                         background: "transparent",
-                        color: "#FB4A04",
+                        color: "#0252ED",
                         border: "1px solid #231414D4",
                         borderRadius: "10px",
                         fontSize: "24px",
@@ -105,9 +105,9 @@ export default function OnlinePageEvent({}: Props) {
                     <Button onClick={handleSubmit}
                             whileHover={{
                                 background: "white",
-                                color: "#FB4A04",
+                                color: "#0252ED",
                                 scale: 1.03,
-                                border: "1px solid #FB4A04"
+                                border: "1px solid #0252ED"
                             }}
                             width='229px' height='65px' text='Save & Continue'
                             style={{minWidth: "200px", borderRadius: "10px", fontSize: "24px", lineHeight: "39.09px"}}/>

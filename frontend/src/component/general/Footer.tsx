@@ -18,7 +18,7 @@ export default function Footer({showFooterHeaders = true}: Props) {
             />
 
             <footer
-                className={showFooterHeaders ? "flex flex-col justify-between w-[100%] bg-[#FB4A04] text-[#ffffff] xsm:h-auto sm:h-auto h-auto" : "flex flex-col justify-between w-[100%] bg-[#FB4A04] text-[#ffffff] xsm:h-auto"}>
+                className={showFooterHeaders ? "flex flex-col justify-between w-[100%] bg-[#0252ED] text-[#ffffff] xsm:h-auto sm:h-auto h-auto" : "flex flex-col justify-between w-[100%] bg-[#0252ED] text-[#ffffff] xsm:h-auto"}>
                 {
                     showFooterHeaders &&
                     <motion.div

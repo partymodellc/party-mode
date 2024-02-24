@@ -100,7 +100,7 @@ export default function Event() {
                                 Card Number
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#0252ED3D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
@@ -109,7 +109,7 @@ export default function Event() {
                                 CVC
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#0252ED3D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
@@ -118,18 +118,18 @@ export default function Event() {
                                 Expire Date
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#0252ED3D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
                         <motion.button
-                            initial={{scale: 1, backgroundColor: "#FB4A04"}}
+                            initial={{scale: 1, backgroundColor: "#0252ED"}}
                             whileHover={{
                                 scale: 1.02,
                                 backgroundColor: "transparent",
-                                color: "#FB4A04",
+                                color: "#0252ED",
                             }}
-                            className="my-[79px] text-[white] border-2 border-[#FB4A04] w-[100%] h-[79px] rounded-[20px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px]"
+                            className="my-[79px] text-[white] border-2 border-[#0252ED] w-[100%] h-[79px] rounded-[20px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px]"
                         >
                             Book Ticket
                         </motion.button>
@@ -164,7 +164,7 @@ export default function Event() {
                                 Name*
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#0252ED3D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
@@ -173,7 +173,7 @@ export default function Event() {
                                 Email address
                             </label>
                             <input
-                                className="w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]"
+                                className="w-full h-[79px] border-[1px] border-[#0252ED3D] rounded-[20px]"
                                 type="text"
                             />
                         </div>
@@ -181,26 +181,26 @@ export default function Event() {
                             <label className="font-[400] text-[20px] text-[#231414D4] leading0[32.58px]">
                                 Choose Ticket
                             </label>
-                            <select className=" w-full h-[79px] border-[1px] border-[#FB4A043D] rounded-[20px]">
-                                <option className="bg-[#FB4A041A] hover:bg-[#FB4A04]">
+                            <select className=" w-full h-[79px] border-[1px] border-[#0252ED3D] rounded-[20px]">
+                                <option className="bg-[#0252ED1A] hover:bg-[#0252ED]">
                                     Fast Pass Admission
                                 </option>
-                                <option className="bg-[#FB4A041A] hover:bg-[#FB4A04]">
+                                <option className="bg-[#0252ED1A] hover:bg-[#0252ED]">
                                     Immediate Admission
                                 </option>
-                                <option className="bg-[#FB4A041A] hover:bg-[#FB4A04]">
+                                <option className="bg-[#0252ED1A] hover:bg-[#0252ED]">
                                     Stream Live
                                 </option>
                             </select>
                         </div>
                         <motion.button
-                            initial={{scale: 1, backgroundColor: "#FB4A04"}}
+                            initial={{scale: 1, backgroundColor: "#0252ED"}}
                             whileHover={{
                                 scale: 1.02,
                                 backgroundColor: "transparent",
-                                color: "#FB4A04",
+                                color: "#0252ED",
                             }}
-                            className="my-[79px] text-[white] border-2 border-[#FB4A04] w-[100%] h-[79px] rounded-[20px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px]"
+                            className="my-[79px] text-[white] border-2 border-[#0252ED] w-[100%] h-[79px] rounded-[20px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px]"
                         >
                             Proceed
                         </motion.button>
@@ -234,11 +234,11 @@ export default function Event() {
                         }
                     >
                         <Link to="/">
-                            <motion.li whileHover={{color: "#FB4A04"}} className="text-inherit">Events</motion.li>
+                            <motion.li whileHover={{color: "#0252ED"}} className="text-inherit">Events</motion.li>
                         </Link>
 
                         <Link to="/login">
-                            <motion.li whileHover={{color: "#FB4A04"}} className="text-inherit">Login</motion.li>
+                            <motion.li whileHover={{color: "#0252ED"}} className="text-inherit">Login</motion.li>
                         </Link>
                     </motion.ul>
                 </motion.nav>
@@ -294,7 +294,7 @@ export default function Event() {
                             (
                                 <motion.button
                                     initial={{scale: 1, backgroundColor: "#ffffff00"}}
-                                    whileHover={{scale: 1.02, backgroundColor: "#FB4A04"}}
+                                    whileHover={{scale: 1.02, backgroundColor: "#0252ED"}}
                                     className="mt-[15px] w-[231px] h-[47px] font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[39px] border-[4px] border-white"
                                     onClick={() => {
                                         !readMore ? setReadMore(true) : setReadMore(false)
@@ -351,7 +351,7 @@ export default function Event() {
             {/*</section>*/}
 
             {/* event location */}
-            <section className="w-[100%] py-[46px] xsm:h-auto bg-[#fed4c3]">
+            <section className="w-[100%] py-[46px] xsm:h-auto bg-[#9fb9f4]">
                 <h2 className="font-[700] text-[clamp(20px,2.07492795389049vw,36px)] leading-[58.64px] text-center text-[#231414]">
                     Location
                 </h2>
@@ -377,10 +377,10 @@ export default function Event() {
                         initial={{scale: 1, backgroundColor: "#ffffff00"}}
                         whileHover={{
                             scale: 1.02,
-                            backgroundColor: "#FB4A04",
+                            backgroundColor: "#0252ED",
                             color: "#fff",
                         }}
-                        className="xsm:mt-[20px] xsm:mb-[50px] border-[2px] border-[#FB4A04] w-[177px] h-[60px] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26px] font-[700]"
+                        className="xsm:mt-[20px] xsm:mb-[50px] border-[2px] border-[#0252ED] w-[177px] h-[60px] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26px] font-[700]"
                     >
                         Open In Maps
                     </motion.button>

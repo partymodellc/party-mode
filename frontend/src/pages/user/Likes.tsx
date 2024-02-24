@@ -23,7 +23,7 @@ export default function () {
         <>
             <Header/>
             <div className='mt-[100px] ml-[14.351585014409222vw] xsm:ml-[12vw] mb-[219px]'>
-                <h1 className='font-[700] text-[48px] leading-[78px] text-[#FB4A04] self-start mb-[26px]'>Likes</h1>
+                <h1 className='font-[700] text-[48px] leading-[78px] text-[#0252ED] self-start mb-[26px]'>Likes</h1>
 
                 {allEvents?.length || 0 > 0 ? (allEvents?.map((event, index) => {
                     return (
@@ -43,7 +43,7 @@ export default function () {
                                             {event.title}
                                         </motion.h2>
                                     </Link>
-                                    <p className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[33px] text-[#FB4A0483]'>
+                                    <p className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[33px] text-[#0252ED83]'>
                                         {moment(event.startDate).format("MMM D, h:m A")}
                                     </p>
                                     {/* TODO: what are we downloading here? */}

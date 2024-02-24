@@ -43,7 +43,7 @@ export default function TicketCard({
                 />
             }
             <div className="flex flex-1">
-                <div className="pl-[1.15vw] flex-1 flex flex-col h-[100%] bg-[#fed4c3] sm:flex-0">
+                <div className="pl-[1.15vw] flex-1 flex flex-col h-[100%] bg-[#9fb9f4] sm:flex-0">
                     <h3 className="mt-[13px] font-[400] leading-[33px] text-[clamp(14px,1.1527377521613833vw,20px)] text-[#231414]">
                         {name}
                     </h3>
@@ -61,14 +61,14 @@ export default function TicketCard({
                 {phase === ("creation" || "edit") ?
                     (<div
                         onClick={() => removeTicketHandler ? removeTicketHandler(id) : deleteTicket(id)}
-                        className="cursor-pointer flex justify-center items-center w-[4.43vw] bg-[#FB4A04] xsm:min-w-[77px] sm:min-w-[55px] md:min-w-[60px]"
+                        className="cursor-pointer flex justify-center items-center w-[4.43vw] bg-[#0252ED] xsm:min-w-[77px] sm:min-w-[55px] md:min-w-[60px]"
                     >
                         <LazyImage alt="" src={"/delete.png"}/>
                     </div>)
                     :
                     (<div
                         onClick={() => addTicketHandler && addTicketHandler()}
-                        className="cursor-pointer flex justify-center items-center w-[4.43vw] bg-[#FB4A04] xsm:min-w-[77px] sm:min-w-[55px] md:min-w-[60px]"
+                        className="cursor-pointer flex justify-center items-center w-[4.43vw] bg-[#0252ED] xsm:min-w-[77px] sm:min-w-[55px] md:min-w-[60px]"
                     >
                         {purchaseLoading ?
                             (<div>

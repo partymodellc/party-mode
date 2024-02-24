@@ -10,11 +10,11 @@ export default function PayButton() {
         <div>
             <Button
                 onClick={() => handleCheckout()}
-                whileHover={{background: "#ffffff", border: "3px solid #FB4A04", color: "#FB4A04"}}
+                whileHover={{background: "#ffffff", border: "3px solid #0252ED", color: "#0252ED"}}
                 width="27.608069164265128vw"
                 height='57px'
                 text="Sign Up"
-                style={{background: "#FB4A04", color: "#ffffff", marginTop: "25px", minWidth: "100%"}}
+                style={{background: "#0252ED", color: "#ffffff", marginTop: "25px", minWidth: "100%"}}
             />
         </div>
     )

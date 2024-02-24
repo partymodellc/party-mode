@@ -4,9 +4,7 @@ import Footer from '../component/general/Footer'
 import LazyImage from '../component/general/LazyImage'
 import { motion } from "framer-motion"
 
-type Props = {}
-
-export default function HelpSub({ }: Props) {
+export default function HelpSub() {
     return (
         <div>
             <motion.nav style={{ boxShadow: "1px 1px 8px #00000020" }} className='fixed transition-all z-[1000] flex gap-[8.24207492795389vw] items-center w-[100%] bg-white'>
@@ -15,10 +13,10 @@ export default function HelpSub({ }: Props) {
                 </Link>
                 <motion.ul className='text-[#473a3a] text-[clamp(12px,0.9221902017291066vw,16px)] font-[700] flex gap-[5.244vw] mr-[8.94vw]'>
                     <Link to="/contact-us">
-                        <motion.li whileHover={{ color: "#FB4A04" }} className="text-inherit">Help centers</motion.li>
+                        <motion.li whileHover={{ color: "#0252ED" }} className="text-inherit">Help centers</motion.li>
                     </Link>
                     <Link to="/">
-                        <motion.li whileHover={{ color: "#FB4A04" }} className="text-inherit">Events</motion.li>
+                        <motion.li whileHover={{ color: "#0252ED" }} className="text-inherit">Events</motion.li>
                     </Link>
                 </motion.ul>
             </motion.nav>

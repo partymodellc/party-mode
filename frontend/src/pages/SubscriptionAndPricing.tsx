@@ -161,8 +161,8 @@ export default function SubscriptionAndPricing() {
                                 }}
                                 whileHover={{scale: 1.03}}
                                 className='w-[27.738616714697405vw] xsm:min-w-[92vw] sm:min-w-[62vw] mb-[20px] h-[724px] xsm:mb-[50px] sm:mb-[50px] md:mb-[50px] bg-white rounded-[50px] overflow-hidden min-w-[280px] mt-[50px]'>
-                                <div className='w-full h-[109px] bg-[#FB4A04]'>
-                                    <div className='w-full h-[109px] bg-[#FB4A04] flex justify-center items-center'>
+                                <div className='w-full h-[109px] bg-[#0252ED]'>
+                                    <div className='w-full h-[109px] bg-[#0252ED] flex justify-center items-center'>
                                         <div className='flex flex-col justify-center items-center gap-[4px]'>
                                             <div className='min-w-[108px] min-h-[3px] bg-[#fff]'></div>
                                             <h2 className='font-[400] text-[32px] leading-[52px] text-[#fff]'>
@@ -178,13 +178,13 @@ export default function SubscriptionAndPricing() {
                                         $24.99 per/month
                                     </h3>
                                     <Button
-                                        whileHover={{background: "#fff", color: "#FB4A04", border: "3px solid #FB4A04"}}
+                                        whileHover={{background: "#fff", color: "#0252ED", border: "3px solid #0252ED"}}
                                         width='22.76657060518732vw'
                                         height='55px'
                                         text="Sign Up Now"
                                         style={{
                                             minWidth: "200px",
-                                            background: "#FB4A04",
+                                            background: "#0252ED",
                                             color: "#fff",
                                             borderRadius: "0px",
                                             marginBottom: "19px"
