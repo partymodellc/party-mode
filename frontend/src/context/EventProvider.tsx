@@ -188,7 +188,11 @@ export function EventProvider({children}: Props) {
     }
 
     const createTicket = (ticket: OutgoingTicket) => {
-        axios.post(`${config.backendBaseUri}/tickets`, ticket, {withCredentials: true})
+        axios.post(`${config.backendBaseUri}/tickets`, ticket, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }, withCredentials: true
+        })
             .then(() => {
                 toast.success("Ticket Created")
             })

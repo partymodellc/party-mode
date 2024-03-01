@@ -309,7 +309,7 @@ export default function Event() {
             </section>
 
             {/* tickets */}
-            {allTickets?.length || 0 > 0 && (
+            {(allTickets?.length || 0) > 0 && (
                 <section
                     className="mt-[48px] mb-[76px] w-[88%] m-auto flex flex-wrap gap-[20px] sm:justify-center md:flex-col md:items-center"
                 >
