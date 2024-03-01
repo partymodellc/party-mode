@@ -2,7 +2,7 @@ name: party-mode-prod-deploy
 'on':
   push:
     branches:
-      - develop
+      - main
   workflow_dispatch: { }
 concurrency:
   group: 'party-mode-prod-deploy-${{ github.ref }}'
@@ -16,6 +16,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      # #############################
+      # ###### FIREWALL #############
+      # #############################
       - name: Setup Firewall
         uses: garygrossgarten/github-action-ssh@0.7.0
         with:
@@ -26,11 +29,12 @@ jobs:
             echo 'y' | ufw enable
             ufw allow 'OpenSSH'
             ufw allow 'Nginx HTTPS'
-            ufw allow 'Nginx HTTP'
-            ufw allow 8081
             ufw default deny incoming
             ufw default allow outgoing
             ufw status verbose
+      # #############################
+      # ###### NGINX ################
+      # #############################
       - name: Install Nginx App Server
         uses: garygrossgarten/github-action-ssh@0.7.0
         with:
@@ -45,7 +49,7 @@ jobs:
             
             # setup ssl certificate and key
             mkdir /etc/nginx/ssl
-                  
+            
             cat > /etc/nginx/ssl/party-mode.pem << EOF
             ${{ secrets.DEPLOY_SERVER_SSL_CERT }}
             EOF
@@ -58,14 +62,6 @@ jobs:
         with:
           local: deployment/nginx/nginx.conf
           remote: /etc/nginx/nginx.conf
-          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
-          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
-          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
-      - name: Set Nginx Server Configuration
-        uses: TwanLuttik/gh-action-scp@1.0.1
-        with:
-          local: deployment/nginx/party-mode
-          remote: /etc/nginx/sites-available/party-mode
           host: '${{ secrets.DEPLOY_SERVER_HOST }}'
           username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
           password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
@@ -92,10 +88,30 @@ jobs:
           username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
           password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
           command: |
-            ln -s /etc/nginx/sites-available/party-mode /etc/nginx/sites-enabled/party-mode
             ln -s /etc/nginx/sites-available/party-mode-frontend /etc/nginx/sites-enabled/party-mode-frontend
             ln -s /etc/nginx/sites-available/party-mode-backend /etc/nginx/sites-enabled/party-mode-backend
             service nginx restart
+      # #############################
+      # ###### APPLICATION ##########
+      # #############################
+      - name: Maintenance Mode Enabled
+        if: secrets.MAINTENANCE_MODE_ENABLED == true
+        uses: TwanLuttik/gh-action-scp@1.0.1
+        with:
+          local: deployment/nginx/maintenance_on.html
+          remote: /usr/share/nginx/html/maintenance_on.html
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+      - name: Maintenance Mode Disabled
+        if: secrets.MAINTENANCE_MODE_ENABLED != true
+        uses: garygrossgarten/github-action-ssh@0.7.0
+        with:
+          host: '${{ secrets.DEPLOY_SERVER_HOST }}'
+          username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
+          password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
+          command: |
+            rm /usr/share/nginx/html/maintenance_on.html
       - name: Install Application
         uses: garygrossgarten/github-action-ssh@0.7.0
         with:
@@ -122,7 +138,7 @@ jobs:
             
             # re-set frontend environment variables
             cat > /app/party-mode/frontend/.env << 'EOF'
-            VITE_BACKEND_BASE_URI=https://partymode.com:8083
+            VITE_BACKEND_BASE_URI=https://partymode.com:8082
             EOF
 
             # re-set backend environment variables
@@ -130,9 +146,9 @@ jobs:
             cat > /etc/party-mode/party-mode-backend.conf << 'EOF'
             NODE_ENV=production
             PORT=8080
-            CALLBACK_BASE_URL=http://localhost:8082
+            CALLBACK_BASE_URL=https://partymode.com:8082
             LOG_LEVEL=info
-            CORS_ORIGIN=https://partymode.com:8081
+            CORS_ORIGIN=https://partymode.com
             SESSION_SECRET=${{ secrets.BACKEND_SESSION_SECRET }}
             SESSION_MAX_AGE=604800000
             MONGODB_CONNECTIONSTRING=${{ secrets.BACKEND_MONGODB_CONNECTIONSTRING }}
