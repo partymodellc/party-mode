@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import LazyImage from '../General/LazyImage'
+import LazyImage from '../general/LazyImage'
 import {filterProps, motion} from "framer-motion";
 import {useNavigate} from "react-router-dom"
 import Carousel from "react-simply-carousel";

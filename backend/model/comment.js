@@ -1,13 +1,11 @@
 const {Schema, model} = require('mongoose')
 
 const comment = model('comment', new Schema({
+        // data
         text: {
             type: String
         },
-        userId: {
-            type: String,
-            require: true,
-        },
+        // links
         eventId: {
             type: String
         }

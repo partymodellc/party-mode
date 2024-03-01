@@ -1,34 +1,32 @@
 const {Schema, model} = require('mongoose')
 
 const ticket = model('ticket', new Schema({
+        // info
         name: {
-            type: String,
-            require: true
+            type: String
         },
-        type: {
-            type: String,
-            require: true
+        // data
+        image: {
+            type: String
         },
         price: {
             type: Number,
+            default: 0
         },
-        sales: {
+        limit: {
             type: Number,
         },
-        image: {
-            type: String,
-            require: true,
+        // meta
+        sales: {
+            type: Number,
+            default: 0
+        },
+        // links
+        userId: {
+            type: String
         },
         eventId: {
-            type: String,
-            require: true
-        },
-        section: {
-            type: String,
-            require: true,
-        },
-        promoCodes: {
-            type: Array
+            type: String
         }
     },
     {
@@ -37,7 +35,7 @@ const ticket = model('ticket', new Schema({
     }
 ))
 
-const getTicketsByEventId = function (eventId, cb) {
+const getAllTicketsByEventId = function (eventId, cb) {
     ticket.find({eventId: eventId}, cb)
 }
 
@@ -45,12 +43,13 @@ const createTicket = function (data, cb) {
     ticket.create(data, cb)
 }
 
-const deleteTicket = function (id, cb) {
-    ticket.findByIdAndDelete(id, cb)
+const deleteTicket = function (id, userId, cb) {
+    ticket.findOneAndDelete({_id: id, userId: userId}, null, cb)
 }
 
 module.exports = {
-    getTicketsByEventId: getTicketsByEventId,
+    model: ticket,
+    getAllTicketsByEventId: getAllTicketsByEventId,
     createTicket: createTicket,
     deleteTicket: deleteTicket
 }

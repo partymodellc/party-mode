@@ -2,6 +2,7 @@ const {Schema, model} = require('mongoose')
 const logger = require('../logger')
 
 const user = model('user', new Schema({
+        // info
         username: {
             type: String,
             require: true
@@ -10,6 +11,7 @@ const user = model('user', new Schema({
             type: String,
             require: true
         },
+        // data
         password: {
             type: String,
             require: true
@@ -23,15 +25,13 @@ const user = model('user', new Schema({
             enum: ['starter', 'member', 'creator'],
             default: 'starter'
         },
-        picture: {
-            type: String,
-            require: true
+        image: {
+            type: String
         },
-        eventIds: {
-            type: Array
-        },
-        paymentIds: {
-            type: Array
+        // links
+        likes: {
+            type: Array,
+            default: []
         }
     },
     {
@@ -58,8 +58,27 @@ const getUserByEmail = function (email, cb) {
     user.findOne({email: email}, cb)
 }
 
-const updateUser = function (id, data, cb) {
-    user.findByIdAndUpdate(id, data, cb)
+const updateUser = function (id, username, password, cb) {
+    let filter = {
+        username: username,
+        password: password
+    }
+
+    Object.keys(filter).forEach(key => {
+        if (filter[key] === undefined) {
+            delete filter[key]
+        }
+    })
+
+    user.findByIdAndUpdate(id, filter, cb)
+}
+
+const addUserLike = function (id, like, cb) {
+    user.findByIdAndUpdate(id, {$addToSet: {likes: like}}, cb)
+}
+
+const removeUserLike = function (id, like, cb) {
+    user.findByIdAndUpdate(id, {$pull: {likes: {$in: like}}}, cb)
 }
 
 module.exports = {
@@ -67,5 +86,7 @@ module.exports = {
     getOrCreateUserByEmail: getOrCreateUserByEmail,
     getUserById: getUserById,
     getUserByEmail: getUserByEmail,
-    updateUser: updateUser
+    updateUser: updateUser,
+    addUserLike: addUserLike,
+    removeUserLike: removeUserLike
 }

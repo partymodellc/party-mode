@@ -4,41 +4,44 @@ const express = require('express')
 const morgan = require('morgan')
 const middleware = require('./middleware')
 const routes = require('./routes')
-const mongoose = require('mongoose').default
+const repository = require('./repository')
+const storage = require('./storage')
 
-// create server
-const app = express()
+const start = async () => {
+    // connect to Mongo
+    logger.info("Connecting to MongoDB...")
+    await repository.configure()
 
-// configure server logger
-app.use(morgan(
-    ':method :url :status :res[content-length] - :response-time ms',
-    {
-        stream: {
-            write: (message) => logger.http(message.trim()),
+    // configure MongoDB file storage
+    storage.configure()
+
+    // create server
+    logger.info("Creating server...")
+    const app = express()
+
+    // configure server logger
+    app.use(morgan(
+        ':method :url :status :res[content-length] - :response-time ms',
+        {
+            stream: {
+                write: (message) => logger.http(message.trim()),
+            }
         }
-    }))
+    ))
 
-// configure middleware
-middleware.configure(app)
+    // configure middleware
+    middleware.configure(app)
 
-// configure routes
-routes.configure(app)
+    // configure routes
+    routes.configure(app)
 
-// start server
-// connect to MongoDB
-mongoose.set('strictQuery', false)
-mongoose.connect(config.mongo.connectionString, {
-    dbName: config.mongo.databaseName,
-    autoIndex: false,
-}, function (err) {
-    if (err && err instanceof Error) {
-        throw new Error(`Error connecting to MongoDB: ${err.message}`)
-    }
-
-    logger.debug("Connected to MongoDB")
-
+    // start server
     app.listen(config.port, '0.0.0.0', () => {
         logger.info(`Express server listening on port ${config.port} in mode ${config.nodeEnv}`)
     })
-})
+}
 
+start()
+    .catch(error => {
+        throw error
+    })

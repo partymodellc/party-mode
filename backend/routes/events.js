@@ -1,176 +1,320 @@
 const express = require('express')
+const {checkSchema, matchedData} = require('express-validator')
 const router = express.Router()
 const event = require('../model/event')
-const authHelper = require('./auth-helper')
+const authVerification = require('../middleware/auth/auth-verification')
+const storage = require('../storage')
+const validation = require('./validation')
+const config = require('../config')
+const multer = require("multer")
+const logger = require('../logger')
 
-router.get('/', (req, res) => {
-    let filter = {}
-    // TODO: support query params
-    event.getAllEvents(filter, function (err, events) {
-        if (err) {
-            return res.status(500).json({ message: err.message })
+const eventRequestValidations = checkSchema({
+    title: validation.stringValidators,
+    summary: validation.stringValidators,
+    description: validation.stringValidators,
+    address: validation.stringValidators,
+    latitude: validation.numberValidators,
+    longitude: validation.numberValidators,
+    startDate: validation.dateValidators,
+    endDate: validation.dateValidators,
+    view: validation.stringValidators,
+    type: {
+        ...validation.stringValidators,
+        isIn: {
+            options: [config.event.types.split(',')],
+            errorMessage: "Invalid type. Valid types: " + config.event.types
         }
+    },
+    category: {
+        ...validation.stringValidators,
+        isIn: {
+            options: [config.event.categories.split(',')],
+            errorMessage: "Invalid category. Valid categories: " + config.event.categories
+        }
+    },
+    tags: {
+        ...validation.stringArrayValidators,
+        optional: {
+            options: {values: null}
+        }
+    },
+    'tags.*': validation.stringValidators
+}, ['body'])
 
-        return res.status(200).json(events)
+const validateEventRequest = async (req, res, next) => {
+    // validate text fields
+    const result = await eventRequestValidations.run(req)
+    let errors = []
+    result.forEach(result => {
+        if (result.array().length > 0) {
+            errors = errors.concat(result.array())
+        }
     })
-})
 
-router.get('/:eventId', (req, res) => {
-    event.getEventById(req.params.eventId, function (err, user) {
-        if (err) {
-            return res.status(500).json({ message: err.message })
-        }
+    // validate file fields
+    if (req.files?.length === (0 || undefined)) {
+        errors = errors.concat({
+            type: "field",
+            msg: "image is required",
+            path: "image",
+            location: "body"
+        })
+    } else {
+        let imageFieldExists = false
+        req.files.forEach(file => {
+            if (file.mimetype !== "image/jpeg" && file.mimetype !== "image/png") {
+                errors = errors.concat({
+                    type: "field",
+                    value: file.originalname,
+                    msg: "file type can only be JPEG,JPG, or PNG",
+                    path: file.fieldname,
+                    location: "body"
+                })
+            }
 
-        if (user) {
-            return res.status(200).json({
-                username: user.username,
-                email: user.email,
-                membership: user.membership,
-                picture: user.picture,
-                events: user.eventIds,
-                payments: user.paymentIds
+            if (file.fieldname === 'image') {
+                imageFieldExists = true
+            }
+        })
+
+        if (!imageFieldExists) {
+            errors = errors.concat({
+                type: "field",
+                msg: "field 'image' is required",
+                path: "image",
+                location: "body"
             })
         }
+    }
 
-        return res.status(404)
-    })
-})
+    if (errors.length > 0) {
+        return res.status(400).json(errors)
+    }
 
-router.post('/',
-    // TODO: can all types of users create events?
-    authHelper.requireAuthentication,
-    (req, res) => {
-        const {
-            title,
-            summary,
-            description,
-            images,
-            location,
-            startDate,
-            endDate,
-            view,
-            userId,
-            type,
-            tickets,
-            category,
-            tags
-        } = req.body
+    next()
+}
 
-        console.log(req.files)
+const storeImages = async (req, res, next) => {
+    res.locals.galleryFilenames = []
+    try {
+        for (const file of req.files) {
+            if (file.fieldname === 'gallery') {
+                res.locals.galleryFilenames.push(storage.upload(file))
+            } else if (file.fieldname === 'image') {
+                res.locals.imageFilename = storage.upload(file)
+            }
+        }
+    } catch (err) {
+        logger.error("Error storing image(s): ", {message: err.toString()})
+        logger.error(err.stack)
+        return res.status(500).json({error: err.toString()})
+    }
 
-        event.createEvent({
-            title: title,
-            summary: summary,
-            description: description,
-            image: req.files['event-image'],
-            images: images,
-            location: location,
-            startDate: startDate,
-            endDate: endDate,
-            view: view,
-            userId: userId,
-            type: type,
-            tickets: tickets,
-            category: category,
-            tags: tags
-        }, function (err, event) {
+    next()
+}
+
+const generateEventResponse = (event) => {
+    return {
+        id: event.id,
+        title: event.title,
+        summary: event.summary,
+        description: event.description,
+        image: event.image ? encodeURIComponent(event.image) : event.image,
+        location: event.location,
+        startDate: event.startDate,
+        endDate: event.endDate,
+        view: event.view,
+        userId: event.userId,
+        type: event.type,
+        category: event.category,
+        tags: event.tags
+    }
+}
+
+module.exports.getEventsRouter = () => {
+    router.get('/', (req, res) => {
+        const {userId, ids} = req.query
+
+        let filter = {}
+        if (userId) {
+            filter = {
+                ...filter,
+                userId: userId
+            }
+        }
+        if (ids) {
+            filter = {
+                ...filter,
+                _id: {$in: ids.split(',')}
+            }
+        }
+
+        event.getAllEvents(filter, function (err, events) {
             if (err) {
-                return res.status(500).json({ message: err.message })
+                return res.status(500).json({message: err.toString()})
+            }
+
+            let eventsResponse = []
+            events.forEach(event => eventsResponse.push(generateEventResponse(event)))
+
+            return res.status(200).json(eventsResponse)
+        })
+    })
+
+    router.get('/:eventId', (req, res) => {
+        event.getEventById(req.params.eventId, function (err, event) {
+            if (err) {
+                return res.status(500).json({message: err.toString()})
             }
 
             if (event) {
-                return res.status(201).json(event)
+                return res.status(200).json(generateEventResponse(event))
             }
 
-            return res.status(500).json({ message: 'unexpected error creating event' })
+            return res.status(404).send()
         })
-    }
-)
+    })
 
-router.put('/:eventId',
-    authHelper.requireAuthentication,
-    (req, res) => {
-        // TODO: support query params
-        const {
-            title,
-            summary,
-            description,
-            image,
-            images,
-            location,
-            startDate,
-            endDate,
-            view,
-            userId,
-            type,
-            tickets,
-            category,
-            tags
-        } = req.body
+    router.post('/',
+        authVerification.requireAuthentication,
+        multer().any(), // parse multipart/form-data
+        validateEventRequest,
+        storeImages,
+        (req, res) => {
+            const {
+                title,
+                summary,
+                description,
+                address,
+                latitude,
+                longitude,
+                startDate,
+                endDate,
+                view,
+                type,
+                category,
+                tags
+            } = matchedData(req)
 
-        // const eventImageName = req.files.eventImage[0].filename
-        // const eventImageName = []
-        // for(let i = 0; i<req.files.eventImage.length; i++){
-        //   const oneFile = req.files.eventImage[i];
-        //   if (oneFile.fieldname === 'eventImage'){
-        //     eventImageName.push(file.fieldname);
-        //   }
-        // }
-        // const eventImage = req.files.eventImage
+            let image = undefined
+            if (res.locals.imageFilename) {
+                image = res.locals.imageFilename
+            }
 
-        // const eventImagesNames = [];
-        // for (let i = 0; i < req.files.eventImages.length; i++) {
-        //
-        //     const file = req.files.eventImages[i];
-        //     if (file.fieldname === 'eventImages') {
-        //         eventImagesNames.push(file.filename);
-        //     }
-        // }
+            let gallery = undefined
+            if (res.locals.galleryFilenames) {
+                gallery = res.locals.galleryFilenames
+            }
 
-        event.updateEvent(req.params.eventId, {
-            title: title,
-            summary: summary,
-            description: description,
-            image: image,
-            images: images,
-            location: location,
-            startDate: startDate,
-            endDate: endDate,
-            view: view,
-            userId: userId,
-            type: type,
-            tickets: tickets,
-            category: category,
-            tags: tags
-        },
-            (err, event) => {
+            event.createEvent({
+                title: title,
+                summary: summary,
+                description: description,
+                image: image,
+                gallery: gallery,
+                location: {
+                    address: address,
+                    latitude: latitude,
+                    longitude: longitude
+                },
+                startDate: startDate,
+                endDate: endDate,
+                view: view,
+                userId: req.user.id,
+                type: type,
+                category: category,
+                tags: tags
+            }, function (err, event) {
                 if (err) {
-                    return res.status(500).json({ message: err.message })
+                    return res.status(500).json({message: err.toString()})
                 }
 
-                return res.status(200).json(event)
+                if (event) {
+                    return res.status(201).json(generateEventResponse(event))
+                }
+
+                return res.status(500).json({message: 'unexpected error creating event'})
+            })
+        }
+    )
+
+    router.put('/:eventId',
+        authVerification.requireAuthentication,
+        multer().any(), // parse multipart/form-data
+        validateEventRequest,
+        storeImages,
+        (req, res) => {
+            const {
+                title,
+                summary,
+                description,
+                address,
+                latitude,
+                longitude,
+                startDate,
+                endDate,
+                view,
+                type,
+                category,
+                tags
+            } = matchedData(req)
+
+            let image = undefined
+            if (res.locals.imageFilename) {
+                image = res.locals.imageFilename
             }
-        )
-    }
-)
 
-router.delete('/:eventId',
-    authHelper.requireAuthentication,
-    (req, res) => {
-        // TODO: event should only be deleted under certain guidelines
-        event.deleteEvent(req.params.eventId, function (err, event) {
-            if (err) {
-                return res.status(500).json({ message: err.message })
+            let gallery = undefined
+            if (res.locals.galleryFilenames) {
+                gallery = res.locals.galleryFilenames
             }
 
-            if (event) {
-                res.status(204)
-            }
+            event.updateEvent(req.params.eventId, req.user.id, {
+                    title: title,
+                    summary: summary,
+                    description: description,
+                    image: image,
+                    gallery: gallery,
+                    location: {
+                        address: address,
+                        latitude: latitude,
+                        longitude: longitude
+                    },
+                    startDate: startDate,
+                    endDate: endDate,
+                    view: view,
+                    type: type,
+                    category: category,
+                    tags: tags
+                },
+                (err, event) => {
+                    if (err) {
+                        return res.status(500).json({message: err.toString()})
+                    }
 
-            res.status(500).json({ message: 'Unexpected error deleting event' })
-        })
+                    if (event) {
+                        return res.status(200).json(generateEventResponse(event))
+                    }
 
-    }
-)
+                    return res.status(404).send()
+                }
+            )
+        }
+    )
 
-module.exports = router
+    router.delete('/:eventId',
+        authVerification.requireAuthentication,
+        (req, res) => {
+            event.deleteEvent(req.params.eventId, req.user.id)
+                .then(() => {
+                    return res.status(204).send()
+                })
+                .catch(err => {
+                    return res.status(500).json({error: err.toString()})
+                })
+        }
+    )
+
+    return router
+}

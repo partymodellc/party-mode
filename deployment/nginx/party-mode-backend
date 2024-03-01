@@ -1,5 +1,5 @@
 server {
-  listen 8083 ssl;
+  listen 8082 ssl;
   server_name $host;
   ssl_certificate /etc/nginx/ssl/party-mode.pem;
   ssl_certificate_key /etc/nginx/ssl/nginx.key;

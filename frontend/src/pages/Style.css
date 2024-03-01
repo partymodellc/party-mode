@@ -1,19 +1,20 @@
-.SignInBtn{
-    background-color:rgb(251, 74, 4);
-    padding:10px 30px;
-    border-radius:20px;
+.SignInBtn {
+    background-color: #0252ed;
+    padding: 10px 30px;
+    border-radius: 20px;
     color: White;
 }
-.SignInBtn:hover{
-    background-color:rgb(255, 120, 66);
-    border-radius:30px !important;
+
+.SignInBtn:hover {
+    background-color: #9fb9f4;
+    border-radius: 30px !important;
     box-sizing: border-box;
     color: black;
 }
 
 
 @media screen and (max-width: 770px) {
-    .forMobile{
+    .forMobile {
         display: none;
     }
 }

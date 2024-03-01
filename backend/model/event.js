@@ -1,63 +1,61 @@
 const {Schema, model} = require('mongoose')
+const config = require('../config')
+const ticket = require('./ticket')
+const logger = require('../logger')
+const storage = require('../storage')
 
 const event = model('event', new Schema({
         // info
         title: {
-            type: String,
-            require: true,
+            type: String
         },
         summary: {
             type: String
         },
+        // data
         description: {
             type: String
         },
         image: {
-            type: String,
-            require: true
+            type: String
         },
-        images: {
+        gallery: {
             type: Array
         },
-        // data
         location: {
-            name: String,
+            address: {
+                type: String
+            },
             latitude: Number,
             longitude: Number
         },
-        startDate: Date,
-        endDate: Date,
-        status: {
-            type: String,
-            require: true,
+        startDate: {
+            type: Date
+        },
+        endDate: {
+            type: Date
         },
         view: {
             type: String,
-            default: "public"
+            enum: ['Public', 'Private']
         },
+        // links
         userId: {
             type: String,
             require: true
         },
-        type: {
-            type: Array
-        },
-        ticketIds: {
-            type: Array,
-            default: [],
-            require: true
-        },
         // meta
+        type: {
+            type: String,
+            enum: config.event.types.split(',')
+        },
         category: {
-            type: Array
+            type: String,
+            enum: config.event.categories.split(',')
         },
         tags: {
             type: Array
-        },
-        likes: {
-            type: Number,
-            default: 0
-        },
+        }
     },
     {
         timestamps: true,
@@ -77,12 +75,41 @@ const createEvent = function (data, cb) {
     event.create(data, cb)
 }
 
-const updateEvent = function (id, data, cb) {
-    event.findByIdAndUpdate(id, data, cb)
+const updateEvent = function (eventId, userId, data, cb) {
+    event.findOneAndUpdate({_id: eventId, userId: userId}, data, {new: true}, cb)
 }
 
-const deleteEvent = function (id, cb) {
-    event.findByIdAndDelete(id, cb)
+const deleteEvent = async function (eventId, userId) {
+    const session = await event.startSession()
+    session.startTransaction();
+
+    try {
+        // delete event
+        const deletedEvent = await event.findOneAndDelete({_id: eventId, userId: userId}, {session: session})
+        let image, gallery = []
+        if (deletedEvent) {
+            image = deletedEvent.image
+            gallery = deletedEvent.gallery
+        }
+
+        // delete event images
+        await storage.deleteImage(image)
+        for (const img of gallery) {
+            await storage.deleteImage(img)
+        }
+
+        // delete event tickets
+        await ticket.model.deleteMany({eventId: eventId})
+
+        await session.commitTransaction()
+        session.endSession()
+    } catch (err) {
+        logger.error("Error when deleting event: ", {message: err.toString()})
+        logger.error(err.stack)
+        await session.abortTransaction()
+        session.endSession()
+        throw err
+    }
 }
 
 module.exports = {

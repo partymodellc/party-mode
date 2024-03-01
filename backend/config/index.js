@@ -35,7 +35,14 @@ let config = {
     // mongo
     mongo: {
         connectionString: process.env.MONGODB_CONNECTIONSTRING || 'mongodb://localhost:27017',
-        databaseName: process.env.MONGODB_DATABASENAME || 'party-mode'
+        databaseName: process.env.MONGODB_DATABASENAME || 'party-mode',
+        photosBucketName: process.env.MONGODB_PHOTOS_BUCKET_NAME || 'photos'
+    },
+
+    // event constants
+    event: {
+        categories: process.env.EVENT_CATEGORIES || 'Festivals,Electronic,Pop Culture,Music Venues,Comedy,Miami',
+        types: process.env.EVENT_TYPES || 'Party,Music,Other'
     }
 }
 

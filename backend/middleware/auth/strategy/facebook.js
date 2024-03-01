@@ -2,7 +2,7 @@ const config = require('../../../config')
 const passport = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy
 
-passport.use(new FacebookStrategy({
+passport.use('facebook', new FacebookStrategy({
         clientID: config.auth.facebook.clientId,
         clientSecret: config.auth.facebook.clientSecret,
         callbackURL: `${config.callbackBaseUrl}/auth/facebook/callback`,

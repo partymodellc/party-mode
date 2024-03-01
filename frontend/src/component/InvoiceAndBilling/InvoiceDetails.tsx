@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import TableRowOrder from '../EventsDashboard/TableRowOrder'
-import Button from '../General/Button'
-import LazyImage from '../General/LazyImage'
-import Modal from '../General/Modal'
+import TableRowOrder from '../dashboard/TableRowOrder'
+import Button from '../general/Button'
+import LazyImage from '../general/LazyImage'
+import Modal from '../general/Modal'
 import InvoiceTableRow from './InvoiceTableRow'
 import {motion} from "framer-motion"
 
@@ -96,15 +96,15 @@ export default function InvoiceDetails({ }: Props) {
                             <label >Ticket Sales :</label>
                             <p className='font-[400]' >$1500</p>
                         </div>
-                        <div className='flex h-[41px] items-center text-center font-[700] text-[20px] leading-[32.58px] text-[#fff] bg-[#FB4A04] pl-[2%] ml-[-2%]'>
+                        <div className='flex h-[41px] items-center text-center font-[700] text-[20px] leading-[32.58px] text-[#fff] bg-[#0252ED] pl-[2%] ml-[-2%]'>
                             <label >Tax :</label>
                             <p className='font-[400]' >$250</p>
                         </div>
 
                     </div>
                     <div className='flex flex-col items-center '>
-                        <Button whileHover={{background:"#fff",color:"#FB4A04",border:"1px solid #FB4A04"}} width='13.544668587896254vw' height="61px" text="Pay with Stripe" style={{ borderRadius: "20px", background: "#FB4A04", marginTop: "68px" }} />
-                        <Button whileHover={{background:"#FB4A04",color:"#fff",border:"1px solid #fff"}} onClick={() => { hideShowModalHandler(); ShowModalhandler1(); }} width='13.544668587896254vw' height="61px" text="Pay with Bank" style={{ borderRadius: "20px", background: "transparent", color: "#FB4A04", border: "1px solid #FB4A04", marginTop: "29px" }} />
+                        <Button whileHover={{background:"#fff",color:"#0252ED",border:"1px solid #0252ED"}} width='13.544668587896254vw' height="61px" text="Pay with Stripe" style={{ borderRadius: "20px", background: "#0252ED", marginTop: "68px" }} />
+                        <Button whileHover={{background:"#0252ED",color:"#fff",border:"1px solid #fff"}} onClick={() => { hideShowModalHandler(); ShowModalhandler1(); }} width='13.544668587896254vw' height="61px" text="Pay with Bank" style={{ borderRadius: "20px", background: "transparent", color: "#0252ED", border: "1px solid #0252ED", marginTop: "29px" }} />
                     </div>
                 </div>
             </Modal>
@@ -115,22 +115,22 @@ export default function InvoiceDetails({ }: Props) {
                     <div className='w-[27.953890489913544vw] m-auto mt-[94px] flex flex-col gap-[30px]'>
                         <div className='flex-1 flex flex-col'>
                             <label className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26.06px] text-[#473a3a] mb-[0px]'>Card Number*</label>
-                            <input className=' h-[61px] rounded-[20px] border-[1px] border-[#FB4A043D]' />
+                            <input className=' h-[61px] rounded-[20px] border-[1px] border-[#0252ED3D]' />
                         </div>
                         <div className="flex gap-[20px] mt-[20px]">
                             <div className='flex-1 flex flex-col'>
                                 <label className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26.06px] text-[#473a3a] mb-[0px]'>CVV</label>
-                                <input className=' h-[61px] rounded-[20px] border-[1px] border-[#FB4A043D]' />
+                                <input className=' h-[61px] rounded-[20px] border-[1px] border-[#0252ED3D]' />
                             </div>
                             <div className='flex-1 flex flex-col'>
                                 <label className='font-[400] text-[clamp(12px,0.9221902017291066vw,16px)] leading-[26.06px] text-[#473a3a] mb-[0px]'>Expiry Date*</label>
-                                <input className=' h-[61px] rounded-[20px] border-[1px] border-[#FB4A043D]' />
+                                <input className=' h-[61px] rounded-[20px] border-[1px] border-[#0252ED3D]' />
                             </div>
 
                         </div>
                     </div>
                     <div className='flex flex-col items-center '>
-                        <Button whileHover={{background:"transparent",color:"#FB4A04",border:"1px solid #FB4A04"}} onClick={() => { hideShowModalHandler1(); ShowModalhandler2(); }} width='13.544668587896254vw' height="61px" text="Confirm" style={{ borderRadius: "20px", background: "#FB4A04", marginTop: "151px" }} />
+                        <Button whileHover={{background:"transparent",color:"#0252ED",border:"1px solid #0252ED"}} onClick={() => { hideShowModalHandler1(); ShowModalhandler2(); }} width='13.544668587896254vw' height="61px" text="Confirm" style={{ borderRadius: "20px", background: "#0252ED", marginTop: "151px" }} />
                     </div>
                 </div>
             </Modal>
@@ -142,9 +142,9 @@ export default function InvoiceDetails({ }: Props) {
                     <div className='mb-[47px] flex justify-center'>
                         <LazyImage src='./modalMain.svg' />
                     </div>
-                    <h2 className='text-center font-[700] text-[40px] leading-[65.16px] text-[#FB4A04] mb-[30px]'>Payment Successful</h2>
+                    <h2 className='text-center font-[700] text-[40px] leading-[65.16px] text-[#0252ED] mb-[30px]'>Payment Successful</h2>
                     <div className='flex flex-col items-center '>
-                        <Button whileHover={{background:"transparent",color:"#FB4A04",border:"1px solid #FB4A04"}} onClick={() => { hideShowModalHandler2() }} width='13.544668587896254vw' height="61px" text="Close" style={{ borderRadius: "20px", background: "#FB4A04",}} />
+                        <Button whileHover={{background:"transparent",color:"#0252ED",border:"1px solid #0252ED"}} onClick={() => { hideShowModalHandler2() }} width='13.544668587896254vw' height="61px" text="Close" style={{ borderRadius: "20px", background: "#0252ED",}} />
                     </div>
                 </div>
             </Modal>
@@ -167,7 +167,7 @@ export default function InvoiceDetails({ }: Props) {
 
                 <div className='w-full whitespace-nowrap overflow-auto'>
                 <table className="transition-all min-w-[1000px] table-fixed w-full mt-[43px] relative z-10 mb-[50px]">
-                    <thead className='bg-[#fed4c3]'>
+                    <thead className='bg-[#9fb9f4]'>
                         <tr className=''>
                             <th className='py-[17px]'>No</th>
                             <th className='py-[17px]'>Date</th>

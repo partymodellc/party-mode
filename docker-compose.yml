@@ -1,9 +1,24 @@
-version: '2'
+version: '3.8'
 services:
   mongodb:
     image: mongo:6.0.8
+    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
     ports:
       - "27017:27017"
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'localhost:27017',priority:1}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      retries: 30
+  mongo-seed:
+    image: mongo:6.0.8
+    links:
+      - mongodb
+    volumes:
+      - ./docker/mongo-seed:/mongo-seed
+    command:
+      /mongo-seed/import.sh
   party-mode-backend:
     build:
       context: backend
@@ -23,3 +38,12 @@ services:
       - "8080:8080"
     depends_on:
       - mongodb
+  party-mode-frontend:
+    build:
+      context: frontend
+    environment:
+      VITE_BACKEND_BASE_URI: http://party-mode-backend:8080
+    ports:
+      - "80:80"
+    depends_on:
+      - party-mode-backend

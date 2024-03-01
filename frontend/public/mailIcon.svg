@@ -1,5 +1,14 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M57.1423 8H6.85659C4.33185 8 2.28516 10.0467 2.28516 12.5714V51.4286C2.28516 53.9534 4.33185 56 6.85659 56H57.1423C59.6671 56 61.7137 53.9534 61.7137 51.4286V12.5714C61.7137 10.0467 59.6671 8 57.1423 8Z" fill="#FB4A04"/>
-<path d="M57.1423 8H6.85659C4.33185 8 2.28516 10.0467 2.28516 12.5714V51.4286C2.28516 53.9534 4.33185 56 6.85659 56H57.1423C59.6671 56 61.7137 53.9534 61.7137 51.4286V12.5714C61.7137 10.0467 59.6671 8 57.1423 8Z" stroke="white" stroke-width="4.57143" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M2.28516 13.7143L29.0737 36.5714C29.8952 37.2556 30.9304 37.6303 31.9994 37.6303C33.0685 37.6303 34.1037 37.2556 34.9252 36.5714L61.7137 13.7143" stroke="white" stroke-width="4.57143" stroke-linecap="round" stroke-linejoin="round"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 28.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg width="64" height="64" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#024DDF;}
+	.st1{fill:none;stroke:#FFFFFF;stroke-width:4.5714;stroke-linecap:round;stroke-linejoin:round;}
+</style>
+<path class="st0" d="M57.1,8H6.9c-2.5,0-4.6,2-4.6,4.6v38.9c0,2.5,2,4.6,4.6,4.6h50.3c2.5,0,4.6-2,4.6-4.6V12.6
+	C61.7,10,59.7,8,57.1,8z"/>
+<path class="st1" d="M57.1,8H6.9c-2.5,0-4.6,2-4.6,4.6v38.9c0,2.5,2,4.6,4.6,4.6h50.3c2.5,0,4.6-2,4.6-4.6V12.6
+	C61.7,10,59.7,8,57.1,8z"/>
+<path class="st1" d="M2.3,13.7l26.8,22.9c0.8,0.7,1.9,1.1,2.9,1.1c1.1,0,2.1-0.4,2.9-1.1l26.8-22.9"/>
 </svg>
