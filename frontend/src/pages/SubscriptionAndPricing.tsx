@@ -52,7 +52,7 @@ export default function SubscriptionAndPricing() {
             <Header/>
             <main>
                 <div className='relative '>
-                    <section className='w-full bg-[#ffe7de]'>
+                    <section className='w-full bg-[#9fb9f4]'>
                         <div className='flex flex-col items-center overflow-hidden'>
                             <div className='flex justify-center pt-[129px]'>
                                 <LazyImage

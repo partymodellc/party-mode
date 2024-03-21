@@ -29,41 +29,44 @@ export default function Footer({showFooterHeaders = true}: Props) {
                                 className='font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] mb-[25px] xsm:mb-[15px]'>
                                 Use Site
                             </h3>
-                            <HashLink smooth to="/community-join#top-vibe">
-                                <motion.li whileHover={{color: "#473a3a"}}>Partymode vibe check</motion.li>
-                            </HashLink>
+                            {/*<HashLink smooth to="/community-join#top-vibe">*/}
+                            {/*    <motion.li whileHover={{color: "#473a3a"}}>Partymode vibe check</motion.li>*/}
+                            {/*</HashLink>*/}
                             <Link to={'/subscription-and-pricing'}>
                                 <motion.li whileHover={{color: "#473a3a"}}>Pricing</motion.li>
                             </Link>
-                            <Link to="/ticket">
-                                <motion.li whileHover={{color: "#473a3a"}}>Partymode mobile ticket</motion.li>
-                            </Link>
+                            {/*<Link to="/ticket">*/}
+                            {/*    <motion.li whileHover={{color: "#473a3a"}}>Partymode mobile ticket</motion.li>*/}
+                            {/*</Link>*/}
                             <a href="https://partymode.com/" target="_blank">
-                                <motion.li whileHover={{color: "#473a3a"}}>Partymode marketplace</motion.li>
-                            </a>
-                            <a href="https://partymoderadio.com/" target="_blank">
-                                <motion.li whileHover={{color: "#473a3a"}}>Partymode Radio</motion.li>
+                                <motion.li whileHover={{color: "#473a3a"}}>Marketplace</motion.li>
                             </a>
                             <HashLink smooth to={'/subscription-and-pricing#faq'}>
                                 <motion.li whileHover={{color: "#473a3a"}}>FAQ</motion.li>
                             </HashLink>
+                            <a href="https://partymodeclothing.com/" target="_blank">
+                                <motion.li whileHover={{color: "#473a3a"}}>Party Mode Clothing</motion.li>
+                            </a>
+                            <a href="https://partymoderadio.com/" target="_blank">
+                                <motion.li whileHover={{color: "#473a3a"}}>Party Mode Radio</motion.li>
+                            </a>
                         </ul>
 
                         <ul>
                             <h3 className='font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] mb-[25px] '>
                                 Plan Events
                             </h3>
-                            <Link to="/ticket">
-                                <motion.li whileHover={{color: "#473a3a"}}>Sell tickets online</motion.li>
-                            </Link>
+                            {/*<Link to="/ticket">*/}
+                            {/*    <motion.li whileHover={{color: "#473a3a"}}>Sell tickets online</motion.li>*/}
+                            {/*</Link>*/}
                             <Link to="/help-sub">
-                                <motion.li whileHover={{color: "#473a3a"}}>Live streaming events</motion.li>
+                                <motion.li whileHover={{color: "#473a3a"}}>Live Streaming Events</motion.li>
                             </Link>
-                            <Link to="/create-event">
-                                <motion.li whileHover={{color: "#473a3a"}}>Create event</motion.li>
+                            <Link to="/events/basic-info">
+                                <motion.li whileHover={{color: "#473a3a"}}>Create Event</motion.li>
                             </Link>
                             <Link to="/subscription-and-pricing">
-                                <motion.li whileHover={{color: "#473a3a"}}>Event payment</motion.li>
+                                <motion.li whileHover={{color: "#473a3a"}}>Event Payment</motion.li>
                             </Link>
                         </ul>
 
@@ -71,11 +74,8 @@ export default function Footer({showFooterHeaders = true}: Props) {
                             <h3 className='font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] mb-[25px] '>
                                 Find Events
                             </h3>
-                            <Link to="/help-sub">
-                                <motion.li whileHover={{color: "#473a3a"}}>Live streaming</motion.li>
-                            </Link>
-                            <Link to="/">
-                                <motion.li whileHover={{color: "#473a3a"}}>Online events</motion.li>
+                            <Link to="/search">
+                                <motion.li whileHover={{color: "#473a3a"}}>Search Events</motion.li>
                             </Link>
                         </ul>
 
@@ -83,9 +83,9 @@ export default function Footer({showFooterHeaders = true}: Props) {
                             <h3 className='font-[700] text-[clamp(16px,1.38328530259366vw,24px)] leading-[40px] mb-[25px]'>
                                 Connect With Us
                             </h3>
-                            <motion.li whileHover={{color: "#473a3a"}}>
-                                <a target={"_blank"}>Contact support</a>
-                            </motion.li>
+                            {/*<motion.li whileHover={{color: "#473a3a"}}>*/}
+                            {/*    <a target={"_blank"}>Contact support</a>*/}
+                            {/*</motion.li>*/}
                             <motion.li whileHover={{color: "#473a3a"}}>
                                 <a href="https://fb.watch/gJthIVVA0p/" target={"_blank"}>Facebook</a>
                             </motion.li>
@@ -105,12 +105,12 @@ export default function Footer({showFooterHeaders = true}: Props) {
                                     target={"_blank"}
                                 >Twitter</a>
                             </motion.li>
-                            <motion.li whileHover={{color: "#473a3a"}}>
-                                <a
-                                    href="https://open.spotify.com/track/3UGNdLrhhsK0SY9gNqe8TT?si=RBDLUrG-R8CqHlZrz865rw"
-                                    target={"_blank"}
-                                >Podcast</a>
-                            </motion.li>
+                            {/*<motion.li whileHover={{color: "#473a3a"}}>*/}
+                            {/*    <a*/}
+                            {/*        href="https://open.spotify.com/track/3UGNdLrhhsK0SY9gNqe8TT?si=RBDLUrG-R8CqHlZrz865rw"*/}
+                            {/*        target={"_blank"}*/}
+                            {/*    >Podcast</a>*/}
+                            {/*</motion.li>*/}
                         </ul>
                     </motion.div>
                 }

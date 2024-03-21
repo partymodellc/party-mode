@@ -22,9 +22,9 @@ export default function SearchResults() {
                 <motion.div
                     className="overflow-x-auto scrollbar-hide md:scrollbar-default  snap-center flex justify-between mt-[25px] flex-wrap xsm:justify-center sm:justify-center md:justify-center lg:justify-center xsm:gap-[5vw] sm:gap-[5vw] md:gap-[5vw] lg:gap-[5vw]"
                 >
-                    {allEvents ?
+                    {allEvents && allEvents.length > 0 ?
                         (<EventGrid allEvents={allEvents}/>) :
-                        (<div>no results</div>)}
+                        (<div>No Results</div>)}
                 </motion.div>
             </div>
             <Footer showFooterHeaders={false}/>
