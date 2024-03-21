@@ -5,15 +5,15 @@ server {
   ssl_certificate_key /etc/nginx/ssl/nginx.key;
   ssl_password_file /etc/nginx/ssl/ssl.pass;
 
+  root /app/party-mode/frontend/dist;
+  index index.html;
+
   location / {
     if (-f /usr/share/nginx/html/maintenance_on.html) {
       return 503;
     }
 
-    root /app/party-mode/frontend/dist;
-    index index.html;
-
-    try_files $uri $uri/ /index.html;
+    try_files $uri /index.html;
   }
 
   error_page 503 /maintenance_on.html;
