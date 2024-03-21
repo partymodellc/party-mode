@@ -125,7 +125,7 @@ jobs:
             
             # re-clone repo
             cd /app
-            git clone --branch develop https://github.com/partymodellc/party-mode.git
+            git clone --branch main https://github.com/partymodellc/party-mode.git
             
             # re-setup node cli
             cd /app/party-mode/bin/nodejs
