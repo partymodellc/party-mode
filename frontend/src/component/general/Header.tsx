@@ -39,7 +39,7 @@ export default function Header() {
                                 <img src="/Logo.png" className="ml-[8px] min-w-[80px]" alt=""/>
                             </Link>
                             <form onSubmit={searchOnSubmit} style={{flex: "1"}}>
-                                <Search whileHover={{scale: 1.03}}/>
+                                <Search id="search" whileHover={{scale: 1.03}}/>
                             </form>
 
                             {/* mobile nav menu button */}
@@ -265,7 +265,9 @@ export default function Header() {
                             <Link to="/">
                                 <img src="/Logo.png" className="ml-[8px] min-w-[80px]" alt=""/>
                             </Link>
-                            <Search whileHover={{scale: 1.03}} style={{flex: "1"}}/>
+                            <form onSubmit={searchOnSubmit} style={{flex: "1"}}>
+                                <Search whileHover={{scale: 1.03}} style={{flex: "1"}}/>
+                            </form>
 
                             {/* mobile nav menu button */}
                             <div onClick={() => setShowMobileNav(!showMobileNav)}

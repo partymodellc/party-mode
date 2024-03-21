@@ -134,7 +134,7 @@ const generateEventResponse = (event) => {
 
 module.exports.getEventsRouter = () => {
     router.get('/', (req, res) => {
-        const {userId, ids} = req.query
+        const {userId, ids, title} = req.query
 
         let filter = {}
         if (userId) {
@@ -147,6 +147,12 @@ module.exports.getEventsRouter = () => {
             filter = {
                 ...filter,
                 _id: {$in: ids.split(',')}
+            }
+        }
+        if (title) {
+            filter = {
+                ...filter,
+                title: {$regex: title}
             }
         }
 
