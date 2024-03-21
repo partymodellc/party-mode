@@ -104,7 +104,7 @@ jobs:
           username: '${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}'
           password: '${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}'
       - name: Maintenance Mode Disabled
-        if: ${{ vars.MAINTENANCE_MODE_ENABLED != 'true' }}
+        if: ${{ vars.REMOVE_MAINTENANCE_MODE == 'true' }}
         uses: garygrossgarten/github-action-ssh@0.7.0
         with:
           host: '${{ secrets.DEPLOY_SERVER_HOST }}'
