@@ -156,8 +156,6 @@ jobs:
             AUTH_GOOGLE_CLIENT_SECRET=${{ secrets.BACKEND_AUTH_GOOGLE_CLIENT_SECRET }}
             AUTH_FACEBOOK_CLIENT_ID=${{ secrets.BACKEND_AUTH_FACEBOOK_CLIENT_ID }}
             AUTH_FACEBOOK_CLIENT_SECRET=${{ secrets.BACKEND_AUTH_FACEBOOK_CLIENT_SECRET }}
-            DEPLOY_SERVER_SSH_USERNAME=${{ secrets.DEPLOY_SERVER_SSH_USERNAME }}
-            DEPLOY_SERVER_SSH_PASSWORD=${{ secrets.DEPLOY_SERVER_SSH_PASSWORD }}
             EOF
             
             # npm install
